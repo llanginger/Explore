@@ -1,0 +1,14 @@
+{
+		"files" : [
+			"src/client/app.ts"
+		],
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": false,
+        "sourceMap": false,
+				"noEmitOnError": false,
+				"jsx": "react",
+        "lib": ["es2015", "dom"]
+    }
+}
