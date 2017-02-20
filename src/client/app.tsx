@@ -1,6 +1,21 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
 
+const MainBody = (props) => {
+	return(
+		<div
+			id="mainApp"
+			style={{
+				position: "relative",
+				width: "375px",
+				height: "667px",
+				marginLeft: "100px"
+		}}>
+			<Hello name={"John"}/>
+		</div>
+	)
+}
+
 const Hello = (props) => {
 	return (
 		<div>
@@ -9,4 +24,6 @@ const Hello = (props) => {
 	)
 }
 
-ReactDOM.render(<Hello name={"Barry"} />, document.getElementById("app"))
+
+
+ReactDOM.render(<MainBody />, document.getElementById("app"))

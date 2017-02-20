@@ -4,6 +4,7 @@ var source = require("vinyl-source-stream");
 var watchify = require("watchify");
 var tsify = require("tsify");
 var gutil = require("gulp-util");
+var sass = require("gulp-sass")
 var paths = {
 	pages: ["src/server/*.html"]
 }
@@ -18,7 +19,17 @@ var watchedBrowserify = watchify(browserify({
 
 gulp.task("copy-html", function () {
     return gulp.src(paths.pages)
-			.pipe(gulp.dest("build/server"));
+			.pipe(gulp.dest("build"));
+});
+
+gulp.task('sass', function () {
+  return gulp.src('./src/styles/*.scss')
+    .pipe(sass.sync().on('error', sass.logError))
+    .pipe(gulp.dest('./build'));
+});
+
+gulp.task('sass:watch', function () {
+  gulp.watch('./src/styles/*.scss', ['sass']);
 });
 
 function bundle() {
@@ -26,9 +37,9 @@ function bundle() {
 		.bundle()
 		.on('error', function (error) { console.error(error.toString()); })
 		.pipe(source("bundle.js"))
-		.pipe(gulp.dest("build/server"))
+		.pipe(gulp.dest("build"))
 }
-gulp.task("default", ["copy-html"], bundle)
+gulp.task("default", ["copy-html", "sass:watch"], bundle)
 
 watchedBrowserify.on("update", bundle);
 watchedBrowserify.on("log", gutil.log)
