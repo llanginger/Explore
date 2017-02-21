@@ -28,6 +28,11 @@ gulp.task('sass', function () {
     .pipe(gulp.dest('./build'));
 });
 
+gulp.task("copy-css", function() {
+	return gulp.src("./src/styles/vendor/*")
+		.pipe(gulp.dest("./build"))
+})
+
 gulp.task('sass:watch', function () {
   gulp.watch('./src/styles/*.scss', ['sass']);
 });
@@ -39,7 +44,7 @@ function bundle() {
 		.pipe(source("bundle.js"))
 		.pipe(gulp.dest("build"))
 }
-gulp.task("default", ["copy-html", "sass:watch"], bundle)
+gulp.task("default", ["copy-html", "sass:watch", "copy-css"], bundle)
 
 watchedBrowserify.on("update", bundle);
 watchedBrowserify.on("log", gutil.log)

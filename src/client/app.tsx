@@ -1,5 +1,16 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
+import { createStore, applyMiddleware } from "redux"
+import * as thunk from "redux-thunk"
+import * as logger from "redux-logger"
+
+import { InputTest } from "./components/input"
+import { Hamburger } from "./components/Hamburger"
+import { appState } from "./Store"
+
+// const middleware = applyMiddleware(thunk, logger())
+
+
 
 const MainBody = (props) => {
 	return(
@@ -11,7 +22,12 @@ const MainBody = (props) => {
 				height: "667px",
 				marginLeft: "100px"
 		}}>
-			<Hello name={"John"}/>
+			<InputTest
+				style={{marginTop: "100px"}}
+				placeholder={"What Do You Want?"}
+				disabled={false}
+			/>
+			<Hamburger store={props.store}/>
 		</div>
 	)
 }
@@ -26,4 +42,4 @@ const Hello = (props) => {
 
 
 
-ReactDOM.render(<MainBody />, document.getElementById("app"))
+ReactDOM.render(<MainBody store={ createStore(appState)}/>, document.getElementById("app"))

@@ -1,6 +1,7 @@
 {
-		"files" : [
-			"src/client/app.ts"
+		"include": [
+			"src/**.*",
+			"src/components/**.*"
 		],
     "compilerOptions": {
         "module": "commonjs",
