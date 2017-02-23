@@ -3,6 +3,8 @@ import * as classNames from "classNames"
 
 
 export class Hamburger extends React.Component<any, any> {
+
+	private unsubscribe: Function;
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -26,8 +28,6 @@ export class Hamburger extends React.Component<any, any> {
   }
 
 	_isActive() {
-		console.log("Clicked hmaburger")
-		console.log("Hamburger props: ", this.props.store.getState())
 		return "c-hamburger c-hamburger--htx" + (this.props.store.getState().settingsMenu === "OPEN_MENU" ? " is-active" : "")
 
 	}

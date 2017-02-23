@@ -9,7 +9,7 @@ import { Hamburger } from "./components/Hamburger"
 import { appState } from "./Store"
 import { Body } from "./components/Body"
 
-// const middleware = applyMiddleware(thunk, logger())
+const middleware = applyMiddleware(thunk, logger())
 
 const fakeArray = [
 	"Thing 1",
@@ -18,7 +18,7 @@ const fakeArray = [
 	"Thing 4"
 ]
 
-let store = createStore(appState)
+let store = createStore(appState, applyMiddleware(logger()))
 
 
 

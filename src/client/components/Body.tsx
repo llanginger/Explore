@@ -2,14 +2,7 @@ import * as React from "react"
 import { InputTest } from "./Input"
 import { Hamburger } from "./Hamburger"
 import { MapElement } from "./NewMap"
-import { 
-	queryFourSquare, 
-	getFourSquarePhotos, 
-	getFourSquareReviews,
-	testRequest,
-	Query, 
-	Venue 
-} from "../queryFoursquare"
+import { FourSquareWrapper } from "./FourSquareWrapper"
 
 const fakeArray = [
 	"Thing 1",
@@ -30,13 +23,7 @@ const fakeArray = [
 
 // console.log("FSTwo: ", FSTwo)
 
-testRequest({
-	params: {
-		near: "Seattle",
-		category: "Donuts",
-		limit: 10	
-	}
-})
+
 
 let init_lng = -98.5795
 let init_lat = 39.8282
@@ -85,6 +72,7 @@ export const Body = (props) => {
 					filter: "drop-shadow(5px 5px 5px #333)"
 				}}
 			/>
+			<FourSquareWrapper store={props.store}/>
 		</div>
 	)
 }
