@@ -1,3 +1,5 @@
+// TODO: Move requests to server, push data from requests to Redux, manipulate THAT data here and then return the results to file that imports THESE functions.
+
 import * as axios from "axios"
 import * as request from "request"
 
@@ -29,17 +31,17 @@ const fSets = {
 }
 
 export const testRequest = (query) => {
-  let fourSqSearch_URL = fSets.baseUrl +
-    fSets.search +
-    "near=" + query.near + "&" +
-    fSets.clientID +
-    fSets.clientSecret + "&v=20130815" +
-    "&query=" + query.category +
-    "&limit=" + query.limit;
+  // let fourSqSearch_URL = fSets.baseUrl +
+  //   fSets.search +
+  //   "near=" + query.near + "&" +
+  //   fSets.clientID +
+  //   fSets.clientSecret + "&v=20130815" +
+  //   "&query=" + query.category +
+  //   "&limit=" + query.limit;
 
-    request(fourSqSearch_URL, (error, response, body) => {
-      console.log(fourSqSearch_URL)
-      console.log(JSON.parse(body).response)
+
+    axios.get("queryFourSquare", query).then((response) => {
+      console.log(response)
     })
 }
 

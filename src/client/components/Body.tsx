@@ -31,9 +31,11 @@ const fakeArray = [
 // console.log("FSTwo: ", FSTwo)
 
 testRequest({
-	near: "Seattle",
-	category: "Donuts",
-	limit: 10
+	params: {
+		near: "Seattle",
+		category: "Donuts",
+		limit: 10	
+	}
 })
 
 let init_lng = -98.5795
