@@ -1,7 +1,7 @@
 {
 		"include": [
 			"src/**.*",
-			"src/components/**.*"
+			"src/client/components/**.*"
 		],
     "compilerOptions": {
         "module": "commonjs",

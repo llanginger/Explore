@@ -33,7 +33,7 @@ var Hamburger = (function (_super) {
     };
     Hamburger.prototype.render = function () {
         var _this = this;
-        return (React.createElement("button", { onClick: function () {
+        return (React.createElement("button", { style: this.props.styles, onClick: function () {
                 if (_this.props.store.getState().settingsMenu === "CLOSE_MENU") {
                     _this.props.store.dispatch({
                         type: "OPEN_MENU"

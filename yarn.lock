@@ -17,6 +17,16 @@
   version "1.5.20"
   resolved "https://registry.yarnpkg.com/@types/dom4/-/dom4-1.5.20.tgz#ccf636d3b794fe65a4191ebc7ff979a78efea6c2"
 
+"@types/form-data@*":
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/@types/form-data/-/form-data-0.0.33.tgz#c9ac85b2a5fd18435b8c85d9ecb50e6d6c893ff8"
+  dependencies:
+    "@types/node" "*"
+
+"@types/node@*":
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.5.tgz#96a0f0a618b7b606f1ec547403c00650210bfbb7"
+
 "@types/pure-render-decorator":
   version "0.2.27"
   resolved "https://registry.yarnpkg.com/@types/pure-render-decorator/-/pure-render-decorator-0.2.27.tgz#f819234b6935ec125e9d7e2aa91f35a4b7221883"
@@ -43,6 +53,13 @@
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-0.14.23.tgz#cecfcfad754b4c2765fe5d29b81b301889ad6c2e"
   dependencies:
     "@types/react" "*"
+
+"@types/request":
+  version "0.0.40"
+  resolved "https://registry.yarnpkg.com/@types/request/-/request-0.0.40.tgz#0a7b0e2843fa9073199ec572d38e1bbd235e5dc6"
+  dependencies:
+    "@types/form-data" "*"
+    "@types/node" "*"
 
 "@types/tether@^1.1.27":
   version "1.4.0"
@@ -1881,6 +1898,10 @@ glogg@^1.0.0:
   dependencies:
     sparkles "^1.0.0"
 
+google-maps:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/google-maps/-/google-maps-3.2.1.tgz#c0758f2b175a4a8d110c1abb1fc4cc38c1176e06"
+
 graceful-fs@^3.0.0:
   version "3.0.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-3.0.11.tgz#7613c778a1afea62f25c630a086d7f3acbbdd818"
@@ -3508,7 +3529,7 @@ replace-ext@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-0.0.1.tgz#29bbd92078a739f0bcce2b4ee41e837953522924"
 
-request@^2.61.0, request@^2.79.0, request@2:
+request, request@^2.61.0, request@^2.79.0, request@2:
   version "2.79.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.79.0.tgz#4dfe5bf6be8b8cdc37fcf93e04b65577722710de"
   dependencies:

@@ -1,9 +1,6 @@
 import * as React from "react"
 import * as classNames from "classNames"
 
-interface Hamburger {
-	onClick: () => any;
-}
 
 export class Hamburger extends React.Component<any, any> {
 	constructor(props) {
@@ -38,6 +35,7 @@ export class Hamburger extends React.Component<any, any> {
 	render() {
 		return(
 			<button
+				style={ this.props.styles }
 				onClick={() => {
 					if ( this.props.store.getState().settingsMenu === "CLOSE_MENU" ) {
 						this.props.store.dispatch({
