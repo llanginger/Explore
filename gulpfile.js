@@ -22,6 +22,11 @@ gulp.task("copy-html", function () {
 			.pipe(gulp.dest("build"));
 });
 
+gulp.task("copy-resources", function() {
+	return gulp.src("./src/client/resources/icons/*")
+		.pipe(gulp.dest("./build/resources/icons/"))
+})
+
 gulp.task('sass', function () {
   return gulp.src('./src/styles/*.scss')
     .pipe(sass.sync().on('error', sass.logError))

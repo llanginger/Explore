@@ -1,8 +1,9 @@
 import * as React from "react"
-import { InputTest } from "./Input"
+import { HomeInput } from "./Input"
 import { Hamburger } from "./Hamburger"
 import { MapElement } from "./NewMap"
 import { FourSquareWrapper } from "./FourSquareWrapper"
+import * as axios from "axios"
 
 const fakeArray = [
 	"Thing 1",
@@ -10,6 +11,8 @@ const fakeArray = [
 	"Thing 3",
 	"Thing 4"
 ]
+
+
 
 // const FSOne = queryFourSquare({
 // 	near: "Seattle",
@@ -58,10 +61,10 @@ export const Body = (props) => {
 				init_lng={init_lng}
 				nps_source={nps_url}
 			/>
-			<InputTest
+			<HomeInput
 				style={{marginTop: "100px"}}
-				placeholder={"What Do You Want?"}
-				disabled={false}
+				placeholder="What Would You Like?"
+				store={props.store}
 			/>
 			<Hamburger
 				store={props.store}
@@ -72,7 +75,6 @@ export const Body = (props) => {
 					filter: "drop-shadow(5px 5px 5px #333)"
 				}}
 			/>
-			<FourSquareWrapper store={props.store}/>
 		</div>
 	)
 }

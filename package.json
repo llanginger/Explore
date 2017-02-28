@@ -9,11 +9,13 @@
   },
   "dependencies": {
     "@blueprintjs/core": "^1.9.0",
+    "@types/async": "^2.0.38",
     "@types/pure-render-decorator": "^0.2.27",
     "@types/react": "^15.0.11",
     "@types/react-addons-css-transition-group": "^15.0.1",
     "@types/react-dom": "^0.14.23",
     "@types/request": "^0.0.40",
+    "async": "^2.1.5",
     "axios": "^0.15.3",
     "classnames": "^2.2.5",
     "express": "^4.14.1",

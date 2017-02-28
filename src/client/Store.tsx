@@ -18,7 +18,12 @@ const settingsMenu = (state = "CLOSE_MENU", action) => {
 	}
 }
 
-const fourSquareResults = (state = [], action) => {
+const fourSquareResults = (state = 
+[{
+	queryInfo: {},
+	results: []
+}]
+, action) => {
 	switch (action.type) {
 		case "FETCHING_VENUES":
 			return state

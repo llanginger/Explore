@@ -1,5 +1,7 @@
 // TODO: Move requests to server, push data from requests to Redux, manipulate THAT data here and then return the results to file that imports THESE functions.
 
+// PROBABLY REDUNDANT - SCOUR FOR USEFUL BITS
+
 import * as axios from "axios"
 import * as request from "request"
 import * as React from "react"
@@ -28,21 +30,6 @@ interface Venue {
   reviews?: string[];
 }
 
-// const fSets = {
-//   baseUrl: "https://api.foursquare.com/v2/venues/",
-//   search: "explore?",
-//   clientID: "client_id=" + "WGMJMEF5PGBY0Z2VPGOTUV4IZWYTZS5V1E0TPIJHBSHRXNWS",
-//   clientSecret: "&client_secret=" + "MPIRWAHDMNBZVY2LSAVR1Y0WLQEP5SLDQHIXJZLVFILJHJDQ"
-// }
-
-
-const testRequest = (query) => {
-
-    axios.get("queryFourSquare", query).then((response) => {
-      return response;
-    })
-}
-
 export class FourSquareWrapper extends React.Component<any, any> {
   
   private unsubscribe: Function;
@@ -64,18 +51,27 @@ export class FourSquareWrapper extends React.Component<any, any> {
     this.unsubscribe();
   }
 
+  // TODO: add to dispatch payload information about the request parameters 
   _queryFourSquare() {
     this.props.store.dispatch({
       type: "FETCHING_VENUES",
       payload: "Spinner?"
     })
-    axios.get("queryFourSquare", testParams).then((response) => {
-      this.props.store.dispatch({
-        type: "FETCHED_VENUES",
-        payload: response
-      })
-      // return response;
-    })
+    axios.get("queryFourSquare", testParams)
+        .then((response) => {
+            console.log("FourSquare response: ", response.data)
+            this.props.store.dispatch({
+                type: "FETCHED_VENUES",
+                payload: {
+                    queryInfo: {
+                        near: "Seattle",
+                        category: "Donuts",
+                        limit: 10	
+                    },
+                    results: response.data
+                }
+            })
+        })
   }
 
   render() {
@@ -89,9 +85,6 @@ export class FourSquareWrapper extends React.Component<any, any> {
     
   }
 }
-
-
-
 
 
 

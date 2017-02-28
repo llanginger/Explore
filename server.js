@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var request = require("request")
+var async = require("async")
 
 app.use(express.static(path.join(__dirname, './build')));
 
@@ -13,12 +14,14 @@ app.get("/", function(req, res) {
 var port = process.env.PORT || 3000
 
 app.listen(port, function(){
-  console.log("Example app listening on port " + port);
+  console.log('"Go Explore!", running on port: ' + port);
 })
 
+// ==================================== //
+// ----- FourSquare Query Section ----- //
+// ==================================== //
 
-// ---------------- FourSquare Query Section ---------------------- //
-
+// Url settings object. TODO: Extract this to file and read here with fs
 const fSets = {
   baseUrl: "https://api.foursquare.com/v2/venues/",
   search: "explore?",
@@ -26,12 +29,17 @@ const fSets = {
   clientSecret: "&client_secret=" + "MPIRWAHDMNBZVY2LSAVR1Y0WLQEP5SLDQHIXJZLVFILJHJDQ"
 }
 
-app.get("/queryFourSquare", function(req, res) {
-  console.log("Back end request ok")
+// --- Initialize arrays --- //
+let asyncPhotoFunctionArray   = []
+let asyncReviewFunctionArray  = []
+let InitialFourSquareResults  = []
 
-  // ------ Log out query params ------ //
-  console.log("query: ", req.query)
+// --- Initial Venue Request --- //
 
+app.get("/queryFourSquare", (req, res) => {
+  console.log("Initial Foursquare Request Ok")
+
+  // --- Construct get request url based on parameters passed from the client --- //
   let fourSqSearch_URL = fSets.baseUrl +
     fSets.search +
     "near=" + req.query.near + "&" +
@@ -40,23 +48,104 @@ app.get("/queryFourSquare", function(req, res) {
     "&query=" + req.query.category +
     "&limit=" + req.query.limit;
 
-  let resultsArray = []
-  let photoResultsArray = []
-
   request(fourSqSearch_URL, (error, response, body) => {
-    console.log(fourSqSearch_URL)
-    console.log(JSON.parse(body).response.groups[0].items)
-
     const venues = JSON.parse(body).response.groups[0].items;
     for (const venue of venues) {
-    resultsArray.push ({
+    InitialFourSquareResults.push ({
         name: venue.venue.name,
         lat: venue.venue.location.lat,
         lng: venue.venue.location.lng,
         id: venue.venue.id
       });
     }
-    res.send(resultsArray)
-          // return resultsArray
+    
+    // --- Populate PhotoFunctionArray --- //
+    fillAsyncPhotoFunctionArray(InitialFourSquareResults)
+
+    // --- Execute PhotoFunctionArray to retrieve venue photos --- //
+    async.parallel(asyncPhotoFunctionArray, (err, result) => {
+
+      // --- Populate ReviewFunctionArray --- //
+      fillAsyncReviewFunctionArray(result)
+      async.parallel(asyncReviewFunctionArray, (err, result) => {
+
+        // --- Finally, return results to client --- //
+        res.send(result)
+        resetArrays()
+        return;
+      })
+    })
   })
 })
+
+// --- Call createAsyncPhotoFunction for each venue in array --- //
+const fillAsyncPhotoFunctionArray = (objArray) => {
+  for (const venue of objArray) {
+    asyncPhotoFunctionArray.push(createAsyncPhotoFunction(venue))
+  }
+}
+
+// --- Call createAsyncReviewFunction for each venue in array --- //
+const fillAsyncReviewFunctionArray = (objArray) => {
+  for (const venue of objArray) {
+    asyncReviewFunctionArray.push(createAsyncReviewFunction(venue))
+  }
+}
+
+// --- Create functions for retrieving venue photo urls --- //
+const createAsyncPhotoFunction = (venue) => {
+  const getPhotoUrl = fSets.baseUrl +
+      venue.id + "/photos?" +
+      fSets.clientID +
+      fSets.clientSecret + "&v=20130815"
+  return (callback) => {
+    request(getPhotoUrl, (err, response, body) => {
+      const photos = JSON.parse(body).response.photos.items
+      let photoAlbum = []
+
+      for (const photo of photos) {
+        photoAlbum.push(photo.prefix + "300x200" + photo.suffix)
+      }
+
+      if (photoAlbum.length > 0) {
+        venue.photoSrc = photoAlbum
+      } else {
+        venue.photoSrc = ["No image here!"]
+      }
+      callback(null, venue)
+    })
+  }
+}
+
+// --- Create functions for retrieving venue reviews --- //
+const createAsyncReviewFunction = (venue) => {
+  const getReviewUrl = fSets.baseUrl +
+      venue.id + "/tips?" +
+      fSets.clientID +
+      fSets.clientSecret + "&v=20130815"
+  return (callback) => {
+    request(getReviewUrl, (err, response, body) => {
+      const reviews = JSON.parse(body).response.tips.items
+      let reviewList = []
+
+      for (const review of reviews) {
+        reviewList.push(review.text)
+      }
+
+      if (reviewList.length > 0) {
+        venue.reviews = reviewList
+      } else {
+        venue.reviews = ["No Reviews!"]
+      }
+      callback(null, venue)
+    })
+  }
+}
+
+const resetArrays = () => {
+  asyncPhotoFunctionArray   = []
+  asyncReviewFunctionArray  = []
+  InitialFourSquareResults  = []
+}
+
+
