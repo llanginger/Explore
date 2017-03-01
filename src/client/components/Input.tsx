@@ -39,7 +39,18 @@ const HomeInputContainerStyles = {
 	boxShadow: "5px 5px 5px #333"
 }
 
-
+const clearButton = (store) => {
+	return (
+		<Button 
+			iconName="pt-icon-delete"
+			onClick={() => {
+				store.dispatch({
+					type: "CLEAR_VENUES"
+				})
+			}}
+		/>
+	)
+}
 
 export class HomeInput extends React.Component <any, any> {
 	private unsubscribe: Function;
@@ -113,7 +124,8 @@ export class HomeInput extends React.Component <any, any> {
 				<InputGroup
 					className="pt-large testInput"
 					intent={Intent.PRIMARY}
-					leftIconName="filter"
+					leftIconName="pt-icon-shop"
+					rightElement={clearButton(store)}
 					placeholder={props.placeholder}
 					value={state.category}
 					disabled={false}

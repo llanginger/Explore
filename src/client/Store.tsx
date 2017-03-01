@@ -1,4 +1,5 @@
-import { combineReducers } from "redux"
+import { combineReducers, Reducer } from "redux"
+
 
 const initState = (state = "init", action) => {
 	switch (action.type) {
@@ -18,12 +19,29 @@ const settingsMenu = (state = "CLOSE_MENU", action) => {
 	}
 }
 
-const fourSquareResults = (state = 
-[{
-	queryInfo: {},
-	results: []
-}]
-, action) => {
+const visited = (state = [], action) => {
+	switch (action.type) {
+		case "REMOVE_VENUE":
+			return "Removing venue"
+		case "UNDO_REMOVE_VENUE":
+			return "Undoing remove venue"
+		default:
+			return state
+	}
+}
+
+const currentResults = (state = { queryInfo: {}, results: [] }, action) => {
+	switch (action.type) {
+		case "FETCHED_VENUES":
+			return action.payload
+		case "CLEAR_VENUES":
+			return { queryInfo: {}, results: [] }
+		default:
+			return state
+	}
+}
+
+const fourSquareResults = (state = [{ queryInfo: {}, results: [] }], action) => {
 	switch (action.type) {
 		case "FETCHING_VENUES":
 			return state
@@ -34,8 +52,11 @@ const fourSquareResults = (state =
 	}
 }
 
+
 export const appState = combineReducers({
 	initState,
 	settingsMenu,
-	fourSquareResults
+	fourSquareResults,
+	visited,
+	currentResults
 })
