@@ -9,7 +9,8 @@ export class ResultsMenu extends React.Component<any, any> {
     }
 
     public render() {
-        const venues = this.props.store.currentResults
+        
+        const venues = this.props.store.getState().currentResults
         console.log("Menu props: ", this.props)
         console.log("last store results: ", venues)
 
@@ -24,10 +25,13 @@ export class ResultsMenu extends React.Component<any, any> {
 
     }
 
-    public makeMenu() {
-        const venues = this.props.store.currentResults
+    
 
-        if (venues.results.length > 0) {
+    public makeMenu() {
+        const venues = this.props.store.getState().currentResults
+        const inputState = this.props.store.getState().homeInputState
+
+        if (venues.results.length > 0 && inputState.active === true) {
             return (
                 <Menu>
                     {this.mapPropsToChildren(venues)}
@@ -38,19 +42,33 @@ export class ResultsMenu extends React.Component<any, any> {
         }
     }
     public mapPropsToChildren(venues) {
-        return venues.results.map((item, i) => {
-            return (
-                <MenuItem
-                    iconName="pt-icon-dot"
-                    onClick={this.handleClick}
-                    text={item.name}
-                    key={i}
-                />
-            )
+
+        return venues.results.map((venue, i) => {
+            if (venue.visited && venue.visited === true) {
+                return
+            } else {
+                return (
+                    <MenuItem
+                        iconName="pt-icon-dot"
+                        onClick={() => {
+                            this.props.store.dispatch({
+                                type: "VISITED_VENUE",
+                                id: venue.id
+                            })
+                        }}
+                        text={venue.name}
+                        key={i}
+                    />
+                )   
+            }
         })
     }
  
-    private handleClick(e) {
+    public handleClick(e) {
+        // this.props.store.dispatch({
+        //     type: "BLUR_INPUT"
+        // })
+        // console.log("Handle click props: ", this.props.store.getState())
         console.log("clicked", (e.target as HTMLElement).textContent);
     }
 }

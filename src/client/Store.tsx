@@ -19,24 +19,35 @@ const settingsMenu = (state = "CLOSE_MENU", action) => {
 	}
 }
 
-const visited = (state = [], action) => {
-	switch (action.type) {
-		case "REMOVE_VENUE":
-			return "Removing venue"
-		case "UNDO_REMOVE_VENUE":
-			return "Undoing remove venue"
-		default:
-			return state
-	}
-}
-
 const currentResults = (state = { queryInfo: {}, results: [] }, action) => {
 	switch (action.type) {
+		case "VISITED_VENUE":
+			const newState = state.results.map((venue) => {
+				if (venue.id === action.id) {
+					return {...venue, visited: true}
+				} else {
+					return venue
+				}
+			})
+
+			return {...state, results: newState}
 		case "FETCHED_VENUES":
 			return action.payload
 		case "CLEAR_VENUES":
 			return { queryInfo: {}, results: [] }
 		default:
+			return state
+	}
+}
+
+const homeInputState = (state = { active: false }, action) => {
+	switch (action.type) {
+		case "FOCUS_INPUT":
+		case "CLEAR_VENUES":
+			return { active: true }
+		case "BLUR_INPUT":
+			return { active: false }
+		default: 
 			return state
 	}
 }
@@ -57,6 +68,6 @@ export const appState = combineReducers({
 	initState,
 	settingsMenu,
 	fourSquareResults,
-	visited,
-	currentResults
+	currentResults,
+	homeInputState
 })

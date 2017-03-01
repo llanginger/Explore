@@ -57,6 +57,7 @@ export const Body = (props) => {
 					width: "100%"
 				}}
 				className="mapiv"
+				store={props.store}
 				init_lat={init_lat}
 				init_lng={init_lng}
 				nps_source={nps_url}
@@ -66,7 +67,12 @@ export const Body = (props) => {
 				placeholder="What Would You Like?"
 				store={props.store}
 			/>
-			<Hamburger
+			
+		</div>
+	)
+}
+
+{/*<Hamburger
 				store={props.store}
 				styles={{
 					position: "absolute",
@@ -74,7 +80,4 @@ export const Body = (props) => {
 					left: "5px",
 					filter: "drop-shadow(5px 5px 5px #333)"
 				}}
-			/>
-		</div>
-	)
-}
+			/>*/}

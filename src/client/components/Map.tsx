@@ -19,6 +19,7 @@ export class NpsForecastMap extends React.Component<any, any> {
 	markers = [];
 
 	render() {
+
 		return <div
 			style={ this.props.styles }
 			className="NpsForecastMap"
