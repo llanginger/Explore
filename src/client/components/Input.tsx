@@ -127,18 +127,20 @@ export class HomeInput extends React.Component <any, HomeInputState> {
 		}
 
 		const clearButton = (store) => {
-			return (
-				<Button 
-					iconName="pt-icon-delete"
-					onClick={() => {
-						this.setState({ category: ""})
-						store.dispatch({
-							type: "CLEAR_VENUES"
-						})
-						this.homeInput.focus()
-					}}
-				/>
-			)
+			if (this.state.category.length > 0) {
+				return (
+					<Button 
+						iconName="pt-icon-delete"
+						onClick={() => {
+							this.setState({ category: ""})
+							store.dispatch({
+								type: "CLEAR_VENUES"
+							})
+							this.homeInput.focus()
+						}}
+					/>
+				)
+			}
 		}
 
 		const HomeInputContainerStyles = {

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Menu, MenuItem, MenuDivider, Checkbox } from "@blueprintjs/core";
+import { Menu, MenuItem, MenuDivider, Checkbox, Button, Intent } from "@blueprintjs/core";
 
 
 export class ResultsMenu extends React.Component<any, any> {
@@ -33,9 +33,16 @@ export class ResultsMenu extends React.Component<any, any> {
 
         if (venues.results.length > 0 && inputState.active === true) {
             return (
-                <Menu>
-                    {this.mapPropsToChildren(venues)}
-                </Menu>
+                <div>
+                     <Menu>
+                        {this.mapPropsToChildren(venues)}
+                    </Menu>
+                    <Button 
+                        text="Let's go!"
+                        className="pt-fill"
+                        intent={Intent.SUCCESS}
+                    />
+                </div>
             )
         } else {
             return
