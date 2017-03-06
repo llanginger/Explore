@@ -17,12 +17,12 @@
   margin-top: 50%;
 }
 
-.resultsMenu {
-  display: flex;
-  flex-wrap: wrap;
-  max-height: 450px;
-  overflow-y: scroll;
-}
+// .resultsMenu {
+//   display: flex;
+//   flex-wrap: wrap;
+//   max-height: 450px;
+//   overflow-y: scroll;
+// }
 
 .resultsMenu::-webkit-scrollbar {
   display: none;

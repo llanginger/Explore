@@ -37,7 +37,6 @@ let InitialFourSquareResults  = []
 // --- Initial Venue Request --- //
 
 app.get("/queryFourSquare", (req, res) => {
-  console.log("Initial Foursquare Request Ok")
 
   // --- Construct get request url based on parameters passed from the client --- //
   let fourSqSearch_URL = fSets.baseUrl +
@@ -51,11 +50,14 @@ app.get("/queryFourSquare", (req, res) => {
   request(fourSqSearch_URL, (error, response, body) => {
     const venues = JSON.parse(body).response.groups[0].items;
     for (const venue of venues) {
-    InitialFourSquareResults.push ({
-        name: venue.venue.name,
-        lat: venue.venue.location.lat,
-        lng: venue.venue.location.lng,
-        id: venue.venue.id
+      const v = venue.venue
+      // --- Push desired values into initial results array --- //
+      InitialFourSquareResults.push ({
+        name: v.name,
+        lat: v.location.lat,
+        lng: v.location.lng,
+        id: v.id,
+        rating: v.rating ? v.rating : "No rating"
       });
     }
     
