@@ -49,7 +49,7 @@ export class HomeInput extends React.Component <any, HomeInputState> {
 		this.state = {
 			category: "",
 			near: "Seattle",
-			limit: 10,
+			limit: 40,
 			inputActive: false
 		}
 
@@ -97,6 +97,7 @@ export class HomeInput extends React.Component <any, HomeInputState> {
 		const { store } = props
 		const { category } = state
 		const inputState = store.getState().homeInputState.active
+		const spinnerState = store.getState().spinner
 		console.log("Input state: ", inputState)
 
 		const handleInputChange = (event) => {
@@ -152,6 +153,19 @@ export class HomeInput extends React.Component <any, HomeInputState> {
 			transition: "all, .3s"
 		}
 
+		const displaySpinner = () => {
+			if (spinnerState === true) {
+				return (
+					<Spinner
+						intent={Intent.PRIMARY}
+						className={"centerAbsolute marginTop50P pt-large"}
+					/>
+				)
+			} else {
+				return
+			}
+		}
+
 		return (
 			<div 
 				className="inputGroup"
@@ -171,6 +185,7 @@ export class HomeInput extends React.Component <any, HomeInputState> {
 					onKeyDown={handleKeyDown}
 				/>
 				<ResultsMenu store={store}/>
+				{displaySpinner()}
 			</div>
 		)
 	}

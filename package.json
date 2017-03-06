@@ -5,7 +5,10 @@
   "author": "llanginger <llanginger@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "clean-build": "make clean-build"
+    "clean-build": "make clean-build",
+    "test": "mocha -r ts-node/register src/client/**/test.ts",
+    "test-reducers": "mocha -r ts-node/register src/client/reducers/**/test.ts",
+    "test-reducers-1": "mocha -r ts-node/register src/client/reducers/**/testing.ts"
   },
   "dependencies": {
     "@blueprintjs/core": "^1.9.0",
@@ -32,11 +35,14 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "@types/chai": "^3.4.35",
+    "@types/mocha": "^2.2.39",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.1.8",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
     "browserify": "^14.1.0",
+    "chai": "^3.5.0",
     "expect": "^1.20.2",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
@@ -44,8 +50,12 @@
     "gulp-typescript": "^3.1.5",
     "gulp-uglify": "^2.0.1",
     "gulp-util": "^3.0.8",
+    "jest": "^19.0.2",
+    "mocha": "^3.2.0",
     "redux-devtools": "^3.3.2",
     "redux-logger": "^2.8.1",
+    "tape": "^4.6.3",
+    "ts-node": "^2.1.0",
     "tsify": "^3.0.1",
     "typescript": "^2.1.6",
     "vinyl-buffer": "^1.0.0",

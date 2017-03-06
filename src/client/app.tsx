@@ -4,9 +4,7 @@ import { createStore, applyMiddleware } from "redux"
 import * as thunk from "redux-thunk"
 import * as logger from "redux-logger"
 
-import { InputTest } from "./components/input"
-import { Hamburger } from "./components/Hamburger"
-import { appState } from "./Store"
+import { Store } from "./Store"
 import { Body } from "./components/Body"
 
 const middleware = applyMiddleware(thunk, logger())
@@ -18,7 +16,7 @@ const fakeArray = [
 	"Thing 4"
 ]
 
-let store = createStore(appState, applyMiddleware(logger()))
+let store = createStore(Store, applyMiddleware(logger()))
 
 
 
