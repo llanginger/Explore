@@ -1,38 +1,22 @@
 import * as React from "react"
 import { HomeInput } from "./Input"
 import { Hamburger } from "./Hamburger"
-import { MapElement } from "./NewMap"
-import { FourSquareWrapper } from "./FourSquareWrapper"
+import { ExploreMap } from "./ExploreMap"
+import { BaseReduxProps } from "../Interfaces"
 import * as axios from "axios"
-
-const fakeArray = [
-	"Thing 1",
-	"Thing 2",
-	"Thing 3",
-	"Thing 4"
-]
-
-
-
-// const FSOne = queryFourSquare({
-// 	near: "Seattle",
-// 	category: "Donuts",
-// 	limit: 10
-// })
-
-// console.log("FSOne: ", FSOne)
-
-// const FSTwo = getFourSquarePhotos(FSOne)
-
-// console.log("FSTwo: ", FSTwo)
-
-
 
 let init_lng = -98.5795
 let init_lat = 39.8282
 let nps_url = "https://raw.githubusercontent.com/gizm00/blog_code/master/appendto/react_nps/np.geojson"
 
+interface BodyProps extends BaseReduxProps {
+
+}
+
 export const Body = (props) => {
+
+	const { store } = props.store
+
 	return(
 		<div
 			id="mainApp"
@@ -51,7 +35,7 @@ export const Body = (props) => {
 				}}
 			>
 			</div>
-			<MapElement
+			<ExploreMap
 				styles={{
 					height: "80%",
 					width: "100%"

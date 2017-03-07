@@ -57,7 +57,7 @@ app.get("/queryFourSquare", (req, res) => {
         lat: v.location.lat,
         lng: v.location.lng,
         id: v.id,
-        rating: v.rating ? v.rating : "No rating"
+        rating: v.rating ? v.rating : -1
       });
     }
     

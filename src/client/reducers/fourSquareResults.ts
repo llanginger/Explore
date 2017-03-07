@@ -1,4 +1,16 @@
-export const fourSquareResults = (state = [{ queryInfo: {}, results: [] }], action) => {
+import { Venue } from "../Interfaces"
+
+export interface fourSquareResults {
+	queryInfo: any;
+	results: Venue[];
+}
+
+export const fourSquareResults = (state: fourSquareResults[] = [
+	{ 
+		queryInfo: {}, 
+		results: [] 
+	}
+], action) => {
 	switch (action.type) {
 		case "FETCHING_VENUES":
 			return state

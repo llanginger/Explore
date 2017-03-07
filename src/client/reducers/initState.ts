@@ -1,4 +1,8 @@
-export const initState = (state = {
+export interface initState {
+	showMainInputHelp: boolean;
+}
+
+export const initState = (state: initState = {
 	showMainInputHelp: true
 }, action) => {
 	switch (action.type) {

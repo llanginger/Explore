@@ -1,4 +1,11 @@
-export const visitedVenues = (state = {
+import { Venue } from "../Interfaces"
+
+export interface visitedVenues {
+	visitedIds: string[];
+	visitedVenues: Venue[];
+}
+
+export const visitedVenues = (state: visitedVenues = {
 	visitedIds: [],
 	visitedVenues: []
 }, action) => {

@@ -1,13 +1,15 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
-import { createStore, applyMiddleware } from "redux"
+import { createStore, applyMiddleware, Store} from "redux"
 import * as thunk from "redux-thunk"
 import * as logger from "redux-logger"
 
-import { Store } from "./Store"
+import { Reducers} from "./Store"
 import { Body } from "./components/Body"
 
 const middleware = applyMiddleware(thunk, logger())
+
+
 
 const fakeArray = [
 	"Thing 1",
@@ -16,8 +18,8 @@ const fakeArray = [
 	"Thing 4"
 ]
 
-let store = createStore(Store, applyMiddleware(logger()))
-
+let store: Store<Reducers> = createStore(Reducers, applyMiddleware(logger()))
+console.log("Logging store: ", store)
 
 
 ReactDOM.render(

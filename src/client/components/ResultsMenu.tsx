@@ -8,32 +8,23 @@ import {
     Intent,
     Spinner
 } from "@blueprintjs/core";
+import { ResultItem } from "./ResultItem"
+import { BaseReduxProps } from "../Interfaces"
 
 
-export class ResultsMenu extends React.Component<any, any> {
+export class ResultsMenu extends React.Component<BaseReduxProps, any> {
 
     constructor(props) {
         super(props)
     }
 
     public render() {
-        
-        const venues = this.props.store.getState().currentResults
-        console.log("Menu props: ", this.props)
-        console.log("last store results: ", venues)
-
         return (
             <div>
                 {this.makeMenu()}
             </div>
         );
-    }
-
-    public removeVenue() {
-
-    }
-
-    
+    }    
 
     public makeMenu() {
         const venues = this.props.store.getState().currentResults
@@ -41,7 +32,7 @@ export class ResultsMenu extends React.Component<any, any> {
         const menuStyles = {
             display: "flex",
             flexWrap: "wrap",
-            maxHeight: "450px",
+            maxHeight: "350px",
             overflowY: "scroll",
             margin: "0",
             borderRadius: "3px",
@@ -115,45 +106,10 @@ export class ResultsMenu extends React.Component<any, any> {
             if (venue.visited && venue.visited === true || visitedId.indexOf(venue.id) !== -1) {
                 return
             } else {
-                /*return (
-                    <MenuItem
-                        iconName="pt-icon-dot"
-                        onClick={this.visitedVenue(venue)}
-                        text={venue.name}
-                        key={i}
-                    />
-                )   */
                 return (
-                    <div 
-                        style={{
-                            margin: "1%",
-                            width: "48%",
-                            height: "150px",
-                            padding: "10px",
-                            backgroundImage: "url('" + venue.photoSrc[0] + "')",
-                            cursor: "pointer"
-                        }}
-                        onClick={this.visitedVenue(venue)}
-                    >
-                        <span
-                            style={{
-                                color: "white",
-                                background: "purple",
-                                padding: "2px"      
-                            }}
-                        >{venue.name}</span>                        
-                    </div>
+                    <ResultItem venue={venue} store={store}/> 
                 )
             }
         })
     }
-
-    public visitedVenue = (venue) => () => {
-        this.props.store.dispatch({
-            type: "VISITED_VENUE",
-            venue: venue,
-            id: venue.id
-        })
-    }
- 
 }

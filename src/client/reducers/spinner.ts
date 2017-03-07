@@ -1,4 +1,5 @@
-export const spinner = (state = false, action) => {
+
+export const spinner = (state: Boolean = false, action) => {
     switch(action.type) {
         case "FETCHING_VENUES":
             return true;

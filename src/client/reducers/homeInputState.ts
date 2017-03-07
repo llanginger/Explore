@@ -1,4 +1,8 @@
-export const homeInputState = (state = { active: false }, action) => {
+export interface homeInputState {
+	active: boolean
+}
+
+export const homeInputState = (state: homeInputState = { active: false }, action) => {
 	switch (action.type) {
 		case "FOCUS_INPUT":
 		case "CLEAR_VENUES":

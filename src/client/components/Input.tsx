@@ -5,6 +5,7 @@
 import * as classNames from "classnames";
 import * as React from "react"
 import * as axios from "axios"
+import { BaseReduxProps } from "../Interfaces"
 
 import {
     Button,
@@ -31,7 +32,10 @@ export interface InputGroupState {
 	tagValue?: string;
 }
 
-
+interface InputProps extends BaseReduxProps {
+	placeholder: string;
+	style: {}
+}
 
 interface HomeInputState {
 	category: string;
@@ -40,7 +44,7 @@ interface HomeInputState {
 	inputActive: boolean;
 }
 
-export class HomeInput extends React.Component <any, HomeInputState> {
+export class HomeInput extends React.Component <InputProps, HomeInputState> {
 	private unsubscribe: Function;
 	private homeInput: HTMLElement
 

@@ -1,8 +1,20 @@
 @import "blueprint.css";
 
+// Mobile testing:
+
+// body {
+//   margin: 0
+// }
+
+// #mainApp {
+//   width: 100% !important;
+//   margin-left: 0px !important;
+// }
+
+//  End of mobile testing styles
 
 #mainApp {
-	background-color: purple;
+	background-color: #0732a2;
 }
 
 .centerAbsolute {
@@ -17,24 +29,22 @@
   margin-top: 50%;
 }
 
-// .resultsMenu {
-//   display: flex;
-//   flex-wrap: wrap;
-//   max-height: 450px;
-//   overflow-y: scroll;
-// }
+.resultItem:nth-child(even) {
+  margin: 1% 1% 1% 0px;
+}
+
+.resultItem:nth-child(odd) {
+  margin: 1% 0px 1% 1%;
+}
+
 
 .resultsMenu::-webkit-scrollbar {
   display: none;
 }
 
-// .testInput {
-// 	position: absolute;
-// 	top: 100px;
-// 	width: 90%;
-// 	left: 5%;
-// 	box-shadow: 5px 5px 15px #333;
-// }
+.red {
+  background: red
+}
 
 .c-hamburger {
   display: block;

@@ -1,3 +1,10 @@
+import { Venue } from "../Interfaces"
+
+export interface currentResults {
+	queryInfo: {};
+	results: Venue[]
+}
+
 export const currentResults = (state = { 
 	queryInfo: {}, results: [] 
 }, action) => 

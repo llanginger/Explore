@@ -1,4 +1,4 @@
-import { currentResults }       from "./currentResults"
+import { currentResults,  }       from "./currentResults"
 import { fourSquareResults }    from "./fourSquareResults"
 import { homeInputState }       from "./homeInputState"
 import { initState }            from "./initState"
@@ -7,7 +7,7 @@ import { visitedVenues }        from "./visitedVenues"
 import { spinner }              from "./spinner"
 
 export { 
-    currentResults, 
+    currentResults,
     fourSquareResults, 
     homeInputState,
     initState,
