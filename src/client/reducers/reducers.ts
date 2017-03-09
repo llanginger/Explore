@@ -5,8 +5,10 @@ import { initState }            from "./initState"
 import { settingsMenu }         from "./settingsMenu"
 import { visitedVenues }        from "./visitedVenues"
 import { spinner }              from "./spinner"
+import { bottomArea }           from "./bottomArea"
 
-export { 
+export {
+    bottomArea,
     currentResults,
     fourSquareResults, 
     homeInputState,

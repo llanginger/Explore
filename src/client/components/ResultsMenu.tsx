@@ -10,6 +10,7 @@ import {
 } from "@blueprintjs/core";
 import { ResultItem } from "./ResultItem"
 import { BaseReduxProps } from "../Interfaces"
+import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 
 
 export class ResultsMenu extends React.Component<BaseReduxProps, any> {
@@ -49,7 +50,20 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                 <div>
                     <div style={menuStyles} className="resultsMenu">
                     {this.showInputToolTip()}
-                    {this.mapVenuesToMenuItems(venues)}
+                    {/*<ReactCSSTransitionGroup
+                        style={{
+                            display: "flex",
+                            flexWrap: "wrap"
+                        }}
+                        className="Hi"
+                        transitionName="fade"
+                        transitionEnterTimeout={1000}
+                        transitionLeaveTimeout={1000}
+                        transitionAppear={true}
+                        transitionAppearTimeout={1000}
+                    >*/}
+                        {this.mapVenuesToMenuItems(venues)}
+                    {/*</ReactCSSTransitionGroup>*/}
                     </div>
                     {this.letsGoButton()}
                 </div>
@@ -67,7 +81,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                 intent={Intent.SUCCESS}
                 onClick={() => {
                     this.props.store.dispatch({
-                        type: "BLUR_INPUT"
+                        type: "LETS_GO"
                     })
                 }}
             />
@@ -107,7 +121,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                 return
             } else {
                 return (
-                    <ResultItem venue={venue} store={store}/> 
+                    <ResultItem venue={venue} store={store} key={i}/> 
                 )
             }
         })

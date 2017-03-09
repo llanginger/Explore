@@ -5,7 +5,7 @@ export interface currentResults {
 	results: Venue[]
 }
 
-export const currentResults = (state = { 
+export const currentResults = (state: currentResults = { 
 	queryInfo: {}, results: [] 
 }, action) => 
 {
@@ -22,6 +22,11 @@ export const currentResults = (state = {
 			return {...state, results: newState}
 		case "FETCHED_VENUES":
 			return action.payload
+		case "FETCHING_VENUES":
+			return {
+				queryInfo: {},
+				results: []
+			}
 		case "CLEAR_VENUES":
 			return { queryInfo: {}, results: [] }
 		default:

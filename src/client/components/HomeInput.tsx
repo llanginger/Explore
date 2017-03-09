@@ -72,7 +72,6 @@ export class HomeInput extends React.Component <InputProps, HomeInputState> {
 		})
 		axios.get("queryFourSquare", params)
 			.then((response) => {
-				console.log("FourSquare response: ", response.data)
 				this.props.store.dispatch({
 					type: "FETCHED_VENUES",
 					payload: {
@@ -102,13 +101,10 @@ export class HomeInput extends React.Component <InputProps, HomeInputState> {
 		const { category } = state
 		const inputState = store.getState().homeInputState.active
 		const spinnerState = store.getState().spinner
-		console.log("Input state: ", inputState)
 
 		const handleInputChange = (event) => {
 			this.setState({ category: event.target.value})
 			// console.log(state)
-			console.log("store: ")
-			console.log(store.getState())
 			// console.log({thing1: "thing1", thing2: "thing2"})
 		}
 		const formatString = (string) => {
@@ -150,7 +146,7 @@ export class HomeInput extends React.Component <InputProps, HomeInputState> {
 
 		const HomeInputContainerStyles = {
 			position: "absolute",
-			top: inputState ? "0px" : "100px",
+			top: inputState ? "0px" : "11%",
 			width: inputState ? "100%" : "90%",
 			left: inputState ? "0px" : "5%",
 			boxShadow: inputState ? "" : "5px 5px 5px #333",

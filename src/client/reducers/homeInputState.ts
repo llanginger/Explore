@@ -7,7 +7,7 @@ export const homeInputState = (state: homeInputState = { active: false }, action
 		case "FOCUS_INPUT":
 		case "CLEAR_VENUES":
 			return {active: true}
-		case "BLUR_INPUT":
+		case "LETS_GO":
 			return { active: false }
 		default: 
 			return state

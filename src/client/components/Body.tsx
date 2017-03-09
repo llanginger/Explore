@@ -1,9 +1,9 @@
 import * as React from "react"
-import { HomeInput } from "./Input"
-import { Hamburger } from "./Hamburger"
-import { ExploreMap } from "./ExploreMap"
-import { BaseReduxProps } from "../Interfaces"
 import * as axios from "axios"
+import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
+import { BaseReduxProps } from "../Interfaces"
+import { BottomArea, BottomButtons, HomeInput, Hamburger, ExploreMap, InfoCard } from "./Components"
+
 
 let init_lng = -98.5795
 let init_lat = 39.8282
@@ -13,47 +13,69 @@ interface BodyProps extends BaseReduxProps {
 
 }
 
-export const Body = (props) => {
+export class Body extends React.Component<BodyProps, any> {
 
-	const { store } = props.store
+	private unsubscribe: Function;
+	constructor(props) {
+		super(props)
+	}
 
-	return(
-		<div
-			id="mainApp"
-			style={{
-				position: "relative",
-				width: "375px",
-				height: "667px",
-				marginLeft: "100px"
-		}}>
+	componentDidMount() {
+		const { store } = this.props;
+		this.unsubscribe = store.subscribe(() => {
+			this.forceUpdate()
+		})
+	}
+
+	componentWillUnmount() {
+		this.unsubscribe()
+	}
+	
+	render() {
+		const { store } = this.props
+		return(
 			<div
+				id="mainApp"
 				style={{
-					position: "absolute",
-					width: "100%",
-					height: "70%",
-					backgroundColor: "yellow"
-				}}
-			>
+					position: "relative",
+					width: "375px",
+					height: "667px",
+					marginLeft: "100px",
+					overflow: "hidden"
+			}}>
+				<div
+					style={{
+						position: "absolute",
+						width: "100%",
+						height: "70%",
+						backgroundColor: "yellow"
+					}}
+				>
+				</div>
+				<ExploreMap
+					styles={{
+						height: "100%",
+						width: "100%"
+					}}
+					className="mapiv"
+					store={ store }
+					init_lat={init_lat}
+					init_lng={init_lng}
+					nps_source={nps_url}
+				/>
+				<HomeInput
+					style={{marginTop: "100px"}}
+					placeholder="What Would You Like?"
+					store={ store }
+				/>
+				<InfoCard store={ store }/>
+				<BottomButtons store={ store } />
+				<BottomArea store={ store }/>
+				
 			</div>
-			<ExploreMap
-				styles={{
-					height: "80%",
-					width: "100%"
-				}}
-				className="mapiv"
-				store={props.store}
-				init_lat={init_lat}
-				init_lng={init_lng}
-				nps_source={nps_url}
-			/>
-			<HomeInput
-				style={{marginTop: "100px"}}
-				placeholder="What Would You Like?"
-				store={props.store}
-			/>
-			
-		</div>
-	)
+		)
+
+	}
 }
 
 {/*<Hamburger

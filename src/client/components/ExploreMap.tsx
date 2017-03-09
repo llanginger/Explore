@@ -23,7 +23,6 @@ interface Marker {
 
 export class ExploreMap extends React.Component<ExploreMapProps, any> {
 
-	
 	public map: any
 	private unsubscribe: Function;
 
@@ -71,56 +70,38 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 	venueMarkers = []
 
 	_loadFeatures() {
-		for (var i of this.venueMarkers) {
-          i.setMap(null);
-        }
-
 		const props = this.props
 		const { store } = props
-
-		// temp venue data:
-		const venues = store.getState()
 		let self = this
-		let infoWindow = new google.maps.InfoWindow()
 
+		const venues = store.getState().currentResults.results
+		this._loadMarkers(venues, this.map)
+		
+		
+	}
 
+	_loadMarkers(venues, map) {
+		const venuesToMark = [...venues]
 
-		const venuesToMark = [...store.getState().currentResults.results]
-		for (let val of venuesToMark) {
+		// Ensure only new markers are rendered
+		if (venuesToMark.length !== this.venueMarkers.length) {
+			for (var i of this.venueMarkers) {
+				i.setMap(null);
+			}
+			this.venueMarkers = []
+			for (let val of venuesToMark) {
 
-			let marker: Marker = self._createMarker(val, self.map)
+				let marker: Marker = this._createMarker(val, map)
 
-			// Click func to open/close infowindows
-			marker.addListener("click", function() {
-				const colorPicker = (rating) => {
-					if (rating > 6.9) {
-						return "goodRating"
-					} else if (rating > 3.5) {
-						return "mediumRating"
-					} else  if (rating > -1) {
-						return "badRating"
-					} else {
-						return "noRating"
-					}
-				}
-				infoWindow.close()
-				const infoContent = (
-					"<div id='iwContainer'>" + "<div class='iwTitle'>" + marker.name + "</div>" + 
-					"<div class='iwContent'>" + marker.reviews[0].substr(0, 49) + "..." + "</div>" + "<br>" +
-					"<span class='ratingCircle " + colorPicker(marker.rating) + "'>" + marker.rating + "</span>" + "<br>" + 
-					"</div>"
-				)
-			
-				// infoWindow.setContent(infoContent)
-				infoWindow.setOptions({
-					content: infoContent,
-					maxWidth: 200
-				})
-				infoWindow.open(self.map, this)
+				// Click func to open/close infowindows
+				marker.addListener("click", function() {
+					console.log(marker.name);
+				});
 
-			});
-
-			this.venueMarkers.push(marker)
+				this.venueMarkers.push(marker)
+			}
+		} else {
+			return
 		}
 	}
 
