@@ -25,6 +25,16 @@
   margin-right: auto;
 }
 
+.ratingCircle {
+  position: absolute;
+  bottom: 13px;
+  right: 3px;
+  margin-bottom: 2px;
+  padding: 8px 12px 8px 12px;
+  color: white;
+  border-radius: 50%;
+}
+
 .marginTop50P {
   margin-top: 50%;
 }
@@ -45,6 +55,52 @@
 .red {
   background: red
 }
+
+.goodRating {
+  background: #0F9960;
+}
+
+.mediumRating {
+  background: #D9822B;
+}
+
+.badRating {
+  background: #F55656;
+}
+
+.noRating {
+  background: #669EFF;
+}
+
+#iw-container {
+
+}
+
+.iwTitle {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 400;
+  padding: 10px;
+  background-color: #0732a2;
+  color: white;
+  border-radius: 5px 5px 0 0;
+}
+
+.iwContent {
+  font-size: 16px;
+  background: #669EFF;
+  padding: 5px 5px 10px 5px;
+  text-align: center;
+  color: white;
+  font-weight: 400;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.gm-style-iw {
+   top: 15px !important; // move the infowindow 15px down
+   left: 0 !important;
+}
+
 
 .c-hamburger {
   display: block;

@@ -7,6 +7,8 @@ import * as logger from "redux-logger"
 import { Reducers} from "./Store"
 import { Body } from "./components/Body"
 
+import { PresentGoogleMap } from "./components/CreateMap"
+
 const middleware = applyMiddleware(thunk, logger())
 
 
@@ -26,3 +28,8 @@ ReactDOM.render(
 	<Body store={ store }/>,
 	document.getElementById("app")
 )
+
+// ReactDOM.render(
+// 	<PresentGoogleMap />,
+// 	document.getElementById("app")
+// )

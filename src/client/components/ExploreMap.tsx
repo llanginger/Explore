@@ -1,4 +1,5 @@
 import * as GoogleMapsLoader from "google-maps"
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import * as React from "react"
 import * as axios from "axios"
 import { BaseReduxProps, Venue } from "../Interfaces"
@@ -16,12 +17,13 @@ interface Marker {
 	map: any;
 	name: string;
 	reviews: string[]
+	rating: number;
 	addListener: Function;
 }
 
-
 export class ExploreMap extends React.Component<ExploreMapProps, any> {
 
+	
 	public map: any
 	private unsubscribe: Function;
 
@@ -29,7 +31,7 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 		super(props)
 		this._loadFeatures = this._loadFeatures.bind(this)
 	}
-
+	cl
 	state = {
 		forecast: []
 	};
@@ -72,6 +74,7 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 		for (var i of this.venueMarkers) {
           i.setMap(null);
         }
+
 		const props = this.props
 		const { store } = props
 
@@ -89,9 +92,24 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 
 			// Click func to open/close infowindows
 			marker.addListener("click", function() {
-				
+				const colorPicker = (rating) => {
+					if (rating > 6.9) {
+						return "goodRating"
+					} else if (rating > 3.5) {
+						return "mediumRating"
+					} else  if (rating > -1) {
+						return "badRating"
+					} else {
+						return "noRating"
+					}
+				}
 				infoWindow.close()
-				const infoContent = '<div class="red">' + marker.name + "<br>" + this.reviews[0] + '</div>'
+				const infoContent = (
+					"<div id='iwContainer'>" + "<div class='iwTitle'>" + marker.name + "</div>" + 
+					"<div class='iwContent'>" + marker.reviews[0].substr(0, 49) + "..." + "</div>" + "<br>" +
+					"<span class='ratingCircle " + colorPicker(marker.rating) + "'>" + marker.rating + "</span>" + "<br>" + 
+					"</div>"
+				)
 			
 				// infoWindow.setContent(infoContent)
 				infoWindow.setOptions({
@@ -115,6 +133,7 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 			position: pointval,
 			map: map,
 			name: val.name,
+			rating: val.rating.toFixed(0),
 			reviews: val.reviews
 		})
 
@@ -132,3 +151,142 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 	}
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*export class ExploreMap extends React.Component<ExploreMapProps, any> {
+
+	private map: any
+	private unsubscribe: Function;
+
+	constructor(props) {
+		super(props)
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return false
+	}
+
+	componentDidMount() {
+		const { store } = this.props
+		this.unsubscribe = store.subscribe(() => {
+			this.forceUpdate();
+		})
+	}
+
+	componentWillUnmount() {
+		this.unsubscribe()
+	}
+
+	renderGoogleMap() {
+		const key = "Yosemite Valley";
+		const lat = 37.8651;
+		const lng = 119.5383; 
+		const markers = [{
+		position: {
+			lat,
+			lng,
+		},
+		key,
+		defaultAnimation: 2,
+		infoContent: (
+			<div>
+				<div>
+				I am an infoWindow!
+				</div>
+			</div>
+			)
+		}];
+
+		const GettingStartedGoogleMap = withGoogleMap(props => (
+		<GoogleMap
+			ref={props.onMapLoad}
+			onClick={props.onMapClick}
+			options={{
+			zoom: 6,
+			center: { lat, lng },
+			disableDefaultUI: true
+			}}
+		>
+			{props.markers.map(marker => (
+			<Marker
+			{...marker}
+			onClick={() =>{
+				console.log(marker.key);
+			}}
+			onRightClick={() => props.onMarkerRightClick(marker)}
+			>
+			<InfoWindow>
+				<div>{marker.infoContent}</div>
+			</InfoWindow>
+			</Marker>
+		))}
+		</GoogleMap>
+		));
+
+		return (
+			<GettingStartedGoogleMap
+			containerElement={
+			<div style={{ height: "100%", width: "100%" }} />
+			}
+			mapElement={
+				<div style={{ height: '100%' }} />
+			}
+			onMapLoad={this.handleMapLoad}
+			onMapClick={() => {
+				console.log("Mapp clicked");
+			}}
+			markers={markers}
+			onMarkerRightClick={this.handleMarkerRightClick}
+			/>
+		);
+	}
+	render() {
+		return (
+			<div
+				style={this.props.styles}
+			>
+				{this.renderGoogleMap()}
+			</div>
+		);
+	}
+	
+}*/
