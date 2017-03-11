@@ -1,8 +1,10 @@
 import * as React from "react"
 import * as axios from "axios"
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
+import * as Transition from 'react-inline-transition-group';
+
 import { BaseReduxProps } from "../Interfaces"
-import { BottomArea, BottomButtons, HomeInput, Hamburger, ExploreMap, InfoCard } from "./Components"
+import { BottomArea, BottomButtons, HomeInput, Hamburger, ExploreMap, InfoCard, Overlay } from "./Components"
 
 
 let init_lng = -98.5795
@@ -33,6 +35,28 @@ export class Body extends React.Component<BodyProps, any> {
 	
 	render() {
 		const { store } = this.props
+
+        // --- Set up reducer shortcuts --- //
+        const showOverlay = store.getState().initState.showOverlay
+        const venues = store.getState().currentResults.results
+        const showBottomArea = store.getState().bottomArea.show
+
+        // --- Set up render conditionals --- //
+        const renderOverlay = () => {
+            if (showOverlay === true) {
+                return (<Overlay key={1} store={ store }/>)
+            } else {
+                return
+            }
+        }
+        const renderBottomArea = () => {
+            if (showBottomArea === true && venues.length > 0) {
+                return <BottomArea store={ store }/>
+            } else {
+                return
+            }
+        }
+
 		return(
 			<div
 				id="mainApp"
@@ -43,15 +67,6 @@ export class Body extends React.Component<BodyProps, any> {
 					marginLeft: "100px",
 					overflow: "hidden"
 			}}>
-				<div
-					style={{
-						position: "absolute",
-						width: "100%",
-						height: "70%",
-						backgroundColor: "yellow"
-					}}
-				>
-				</div>
 				<ExploreMap
 					styles={{
 						height: "100%",
@@ -63,6 +78,24 @@ export class Body extends React.Component<BodyProps, any> {
 					init_lng={init_lng}
 					nps_source={nps_url}
 				/>
+                <ReactCSSTransitionGroup
+                    transitionName="overlayFade"
+                    transitionEnterTimeout={300}
+                    transitionLeaveTimeout={300}
+                    transitionAppear={true}
+                    transitionAppearTimeout={1200}
+                >
+                    {renderOverlay()}
+                </ReactCSSTransitionGroup>
+				<Hamburger
+					store={ store }
+					styles={{
+						position: "absolute",
+						top: "5px",
+						left: "5px",
+						filter: "drop-shadow(5px 5px 5px #333)"
+					}}
+				/>
 				<HomeInput
 					style={{marginTop: "100px"}}
 					placeholder="What Would You Like?"
@@ -70,20 +103,21 @@ export class Body extends React.Component<BodyProps, any> {
 				/>
 				<InfoCard store={ store }/>
 				<BottomButtons store={ store } />
-				<BottomArea store={ store }/>
-				
+                <ReactCSSTransitionGroup
+                    transitionName="bottomAreaRise"
+                    transitionEnterTimeout={300}
+                    transitionLeaveTimeout={300}
+                >
+			        {renderBottomArea()}
+                </ReactCSSTransitionGroup>
 			</div>
 		)
 
 	}
 }
 
-{/*<Hamburger
-				store={props.store}
-				styles={{
-					position: "absolute",
-					top: "5px",
-					left: "5px",
-					filter: "drop-shadow(5px 5px 5px #333)"
-				}}
-			/>*/}
+
+
+
+
+                

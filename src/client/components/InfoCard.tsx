@@ -39,7 +39,7 @@ export const InfoCard = (props: InfoCardProps) => {
             boxShadow: "5px 5px 10px #333",
             bottom: "-16px",
             right: "-16px",
-            padding: "8px 12px 8px 12px",
+            padding: "8px",
             color: "white",
             borderRadius: "50%",
             background: pickRatingColor()
@@ -56,7 +56,7 @@ export const InfoCard = (props: InfoCardProps) => {
                 <div 
                     style={ratingStyles}
                 >
-                    {venue.rating}
+                    {venue.rating.toFixed(1)}
                 </div>
             </div>
         )

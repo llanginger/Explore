@@ -1,10 +1,13 @@
+export interface settingsMenu {
+    open: boolean;
+}
 
-export const settingsMenu = (state: string = "CLOSE_MENU", action) => {
+export const settingsMenu = (state = { open: false}, action) => {
 	switch (action.type) {
 		case "OPEN_MENU":
-			return action.type;
+			return { open: true };
 		case "CLOSE_MENU":
-			return action.type;
+			return { open: false };
 		default:
 			return state
 	}

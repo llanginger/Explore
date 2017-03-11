@@ -1,58 +1,43 @@
 import * as React from "react"
 import * as classNames from "classNames"
+import { BaseReduxProps } from "../Interfaces"
 
+export interface HamburgerProps extends BaseReduxProps {
+    styles: {};
+}
 
-export class Hamburger extends React.Component<any, any> {
+export const Hamburger = (props: HamburgerProps) => {
+    const { store } = props
 
-	private unsubscribe: Function;
-	constructor(props) {
-		super(props)
-		this.state = {
-			isActive: false
-		}
-		this._isActive = this._isActive.bind(this);
-	}
+    const hideHamburger = store.getState().homeInputState.active
+    const hameMenuState = store.getState().settingsMenu
+    console.log(hameMenuState)
 
-	componentDidMount() {
-		// Set up redux subscription
-    const { store } = this.props;
-		console.log("logging store from hamburger: ", store)
-    this.unsubscribe = store.subscribe(() => {
-      this.forceUpdate()
-    })
-  }
-
-	componentWillUnmount() {
-		// Set up redux unsubscription
-    this.unsubscribe();
-  }
-
-	_isActive() {
-		return "c-hamburger c-hamburger--htx" + (this.props.store.getState().settingsMenu === "OPEN_MENU" ? " is-active" : "")
-
-	}
-
-	render() {
-		return(
-			<button
-				style={ this.props.styles }
-				onClick={() => {
-					if ( this.props.store.getState().settingsMenu === "CLOSE_MENU" ) {
-						this.props.store.dispatch({
-							type: "OPEN_MENU"
-						})
-					} else {
-						this.props.store.dispatch({
-							type: "CLOSE_MENU"
-						})
-					}
-					console.log(this.props.store.getState())
-				}}
-				className={this._isActive()}
-			>
-			  <span>toggle menu</span>
-			</button>
-		)
-	}
+    const hamburgerClasses = () => {
+        return "c-hamburger c-hamburger--htx" + (hameMenuState.open ? " is-active" : "")
+    }
+    if ( hideHamburger === false) {
+        return(
+            <button
+                style={ props.styles }
+                onClick={() => {
+                    if ( hameMenuState.open === false ) {
+                        store.dispatch({
+                            type: "OPEN_MENU"
+                        })
+                    } else {
+                        store.dispatch({
+                            type: "CLOSE_MENU"
+                        })
+                    }
+                }}
+                className={hamburgerClasses()}
+            >
+                <span>toggle menu</span>
+            </button>
+        )
+    } else {
+        return <div/>
+    }
 
 }

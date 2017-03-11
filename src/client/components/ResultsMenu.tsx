@@ -37,7 +37,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
             overflowY: "scroll",
             margin: "0",
             borderRadius: "3px",
-            background: "#ffffff",
+            background: "#FFFFFF",
             minWidth: "180px",
             padding: "5px 0px 5px 0px",
             listStyle: "none",
@@ -50,20 +50,18 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                 <div>
                     <div style={menuStyles} className="resultsMenu">
                     {this.showInputToolTip()}
-                    {/*<ReactCSSTransitionGroup
+                    <ReactCSSTransitionGroup
                         style={{
                             display: "flex",
                             flexWrap: "wrap"
                         }}
                         className="Hi"
                         transitionName="fade"
-                        transitionEnterTimeout={1000}
-                        transitionLeaveTimeout={1000}
-                        transitionAppear={true}
-                        transitionAppearTimeout={1000}
-                    >*/}
+                        transitionEnterTimeout={200}
+                        transitionLeaveTimeout={200}
+                    >
                         {this.mapVenuesToMenuItems(venues)}
-                    {/*</ReactCSSTransitionGroup>*/}
+                    </ReactCSSTransitionGroup>
                     </div>
                     {this.letsGoButton()}
                 </div>
@@ -109,7 +107,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                 </div>
             )
         } else {
-            return
+            return <div/>
         }
     }
 

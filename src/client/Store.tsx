@@ -13,7 +13,7 @@ import {
 
 export interface Reducers {
 	initState: initState;
-	settingsMenu: string;
+	settingsMenu: settingsMenu;
 	fourSquareResults: fourSquareResults;
 	currentResults: currentResults;
 	homeInputState: homeInputState;

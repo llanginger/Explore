@@ -28,7 +28,8 @@ gulp.task("copy-resources", function() {
 })
 
 gulp.task('sass', function () {
-  return gulp.src('./src/styles/*.scss')
+  return gulp.src('./src/styles/styles.scss')
+    .pipe(sass())
     .pipe(sass.sync().on('error', sass.logError))
     .pipe(gulp.dest('./build'));
 });
@@ -39,7 +40,7 @@ gulp.task("copy-css", function() {
 })
 
 gulp.task('sass:watch', function () {
-  gulp.watch('./src/styles/*.scss', ['sass']);
+  gulp.watch('./src/styles/**/*.scss', ['sass']);
 });
 
 function bundle() {

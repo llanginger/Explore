@@ -1,0 +1,52 @@
+@import "../variables.scss";
+
+.bottomArea {
+    background: $goodRatingColor;
+    position: absolute;
+    // transition: all .5s;
+}
+
+.bottomArea.small {
+    height: 20%;
+    width: 90%;
+    left: 5%;
+    bottom: -80px;
+    border-radius: 10px 10px 0px 0px;
+    box-shadow: 5px 5px 12px #888;
+}
+
+.bottomArea.big {
+    height: 100%;
+    width: 100%;
+    left: 0;
+    bottom: 0px;
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+.hide {
+    transform: translateY(80px);
+}
+
+.show {
+    transform: translateY(0px);
+}
+
+.bottomAreaRise-enter {
+    transform: translateY(80px);
+}
+
+.bottomAreaRise-enter.bottomAreaRise-enter-active {
+    transform: translateY(0px);
+    transition: all .3s linear;
+}
+
+.bottomAreaRise-leave {
+    transform: translateY(0px);
+}
+
+.bottomAreaRise-leave-active {
+    transform: translateY(80px);
+    transition: transform .3s linear;
+}
+

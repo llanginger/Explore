@@ -6,6 +6,7 @@ import { InfoCard } from "./InfoCard"
 import { ResultItem } from "./ResultItem"
 import { ResultsMenu } from "./ResultsMenu"
 import { BottomButtons } from "./BottomButtons"
+import { Overlay } from "./Overlay"
 
 export {
     BottomArea,
@@ -15,5 +16,6 @@ export {
     HomeInput,
     InfoCard,
     ResultItem,
-    ResultsMenu
+    ResultsMenu,
+    Overlay
 }

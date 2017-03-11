@@ -1,7 +1,7 @@
 import { expect } from "chai"
 import * as r from "../reducers"
 
-describe("Spinner Reducer", () => {
+describe("Spinner", () => {
     const initState = false
     it("should return false", () => {
         const result = r.spinner(initState, {});
@@ -15,7 +15,7 @@ describe("Spinner Reducer", () => {
     })
 })
 
-describe("Current Results Reducer", () => {
+describe("Current Results", () => {
     const initState = { 
         queryInfo: {}, 
         results: [] 
@@ -76,5 +76,57 @@ describe("Current Results Reducer", () => {
         const result = r.currentResults(initState, action)
 
         expect(result).to.deep.eq(stateAfter)
+    })
+})
+
+describe("Settings Menur", () => {
+    const initState = { open: false }
+    const openState = { open: true }
+
+    it("Should return default (false)", () => {
+        const result = r.settingsMenu(initState, {})
+        expect(result).to.deep.eq(initState)
+    })
+
+    it("Should return true", () => {
+        const result = r.settingsMenu(initState, { type: "OPEN_MENU"})
+        expect(result).to.deep.eq(openState)
+    })
+
+    it("Should return false", () => {
+        const result = r.settingsMenu(openState, { type: "CLOSE_MENU"})
+        expect(result).to.deep.eq(initState)
+    })
+})
+
+describe("Init State", () => {
+
+    const s = {
+        initState: { 
+            showMainInputHelp: true,
+            showOverlay: true
+        },
+        mainInputFalse: { 
+            showMainInputHelp: false,
+            showOverlay: true
+        },
+        overlayFalse: { 
+            showMainInputHelp: true,
+            showOverlay: false
+        }
+    }
+    it("Should return all true (default)", () => {
+        const result = r.initState(s.initState, {})
+        expect(result).to.deep.eq(s.initState)
+    })
+
+    it("Should return Main Input false", () => {
+        const result = r.initState(s.initState, { type: "DISMISS_MAIN_INPUT_HELP"})
+        expect(result).to.deep.eq(s.mainInputFalse)
+    })
+
+    it("Should return Main Input false", () => {
+        const result = r.initState(s.initState, { type: "FETCHED_VENUES"})
+        expect(result).to.deep.eq(s.overlayFalse)
     })
 })

@@ -4185,6 +4185,12 @@ react-google-maps@beta:
     scriptjs "^2.5.8"
     warning "^3.0.0"
 
+react-inline-transition-group:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/react-inline-transition-group/-/react-inline-transition-group-2.1.5.tgz#cb5a5a59a0484bd590e82fea955854e75d44e2d3"
+  dependencies:
+    react-transition-hooks "^1.0.10"
+
 react-prop-types-element-of-type@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-prop-types-element-of-type/-/react-prop-types-element-of-type-2.2.0.tgz#bcc332d3903c2259cf68c28a81c4a663faba59ac"
@@ -4198,6 +4204,10 @@ react-redux:
     lodash "^4.2.0"
     lodash-es "^4.2.0"
     loose-envify "^1.1.0"
+
+react-transition-hooks@^1.0.10:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-transition-hooks/-/react-transition-hooks-1.1.0.tgz#805138917cd88b6ace21ed620184205222e5ed7b"
 
 read-only-stream@^2.0.0:
   version "2.0.0"
