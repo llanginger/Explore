@@ -1,10 +1,11 @@
 import * as React from "react"
+import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import { BaseReduxProps } from "../Interfaces"
 import { Hamburger } from "./Components"
 import * as classNames from "classnames"
 
 export const SettingsMenu = (props: BaseReduxProps) => {
-
+    const tempProfileUrl = "https://pbs.twimg.com/profile_images/2192831080/cartoon-headshot.png"
     const { store } = props
     const menuState = store.getState().settingsMenu
     const menuContainerClasses = classNames({
@@ -17,12 +18,24 @@ export const SettingsMenu = (props: BaseReduxProps) => {
         if (menuState.open === true) {
             return (
                 <ul className="settingsMenuUl">
-                    <li>Hello</li>
-                    <li>There</li>
-                    <li>I'm</li>
-                    <li>A</li>
-                    <li>List</li>
+                    <li>Account</li>
+                    <li>Preferences</li>
+                    <li>Places you've been</li>
+                    <li>(Social)</li>
                 </ul>
+            )
+        } else {
+            return
+        }
+    }
+
+    const renderImage = () => {
+        if (menuState.open === true) {
+            return (
+                <img 
+                    className="profileImage"
+                    src="https://pbs.twimg.com/profile_images/2192831080/cartoon-headshot.png"
+                />
             )
         } else {
             return
@@ -39,6 +52,17 @@ export const SettingsMenu = (props: BaseReduxProps) => {
                 }}
                 className="settingsMenu"
             > 
+                <div className="profilePanel">
+                    <ReactCSSTransitionGroup
+                        transitionName={"profileImageAnim"}
+                        transitionAppear={true}
+                        transitionAppearTimeout={300}
+                        transitionLeaveTimeout={300}
+                        transitionEnterTimeout={300}
+                    >
+                        {renderImage()}
+                    </ReactCSSTransitionGroup>
+                </div>
                 {renderList()}
             </div>
             <div
