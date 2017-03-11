@@ -1,0 +1,39 @@
+.settingsMenuContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    transition: all .3s ease-in-out;
+}
+
+.settingsMenuContainer.open {
+    width: 100%;
+}
+
+.settingsMenuContainer.closed {
+    width: 0%;
+}
+
+.settingsMenu {
+    position: relative;
+    z-index: 30;
+    width: 70%;
+    height: 100%;
+    background: #333;
+}
+
+.settingsMenuBuffer {
+    width: 30%;
+    height: 100%;
+}
+
+.settingsMenuUl {
+    transition: all .3s ease-in-out;
+    list-style-type: none;
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 19%;
+    left: 10%;
+}

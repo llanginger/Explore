@@ -53,9 +53,10 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                     <ReactCSSTransitionGroup
                         style={{
                             display: "flex",
-                            flexWrap: "wrap"
+                            flexWrap: "wrap",
+                            width: "100%"
                         }}
-                        className="Hi"
+                        className="resultsMenuTransitionGroup"
                         transitionName="fade"
                         transitionEnterTimeout={200}
                         transitionLeaveTimeout={200}

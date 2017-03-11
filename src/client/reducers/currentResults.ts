@@ -5,8 +5,9 @@ export interface currentResults {
 	results: Venue[]
 }
 
-export const currentResults = (state: currentResults = { 
-	queryInfo: {}, results: [] 
+export const currentResults = (state: currentResults = {
+    queryInfo: {},
+    results: []   
 }, action) => 
 {
 	switch (action.type) {

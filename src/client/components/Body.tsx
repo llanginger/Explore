@@ -4,7 +4,7 @@ import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import * as Transition from 'react-inline-transition-group';
 
 import { BaseReduxProps } from "../Interfaces"
-import { BottomArea, BottomButtons, HomeInput, Hamburger, ExploreMap, InfoCard, Overlay } from "./Components"
+import { BottomArea, BottomButtons, HomeInput, Hamburger, ExploreMap, InfoCard, Overlay, SettingsMenu } from "./Components"
 
 
 let init_lng = -98.5795
@@ -102,6 +102,7 @@ export class Body extends React.Component<BodyProps, any> {
 					store={ store }
 				/>
 				<InfoCard store={ store }/>
+                <SettingsMenu store={ store }/>
 				<BottomButtons store={ store } />
                 <ReactCSSTransitionGroup
                     transitionName="bottomAreaRise"
