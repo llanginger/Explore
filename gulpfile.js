@@ -5,6 +5,7 @@ var watchify = require("watchify");
 var tsify = require("tsify");
 var gutil = require("gulp-util");
 var sass = require("gulp-sass")
+var plumber = require("gulp-plumber");
 var paths = {
 	pages: ["src/server/*.html"]
 }
@@ -29,6 +30,12 @@ gulp.task("copy-resources", function() {
 
 gulp.task('sass', function () {
   return gulp.src('./src/styles/styles.scss')
+    .pipe(plumber({
+        errorHandler: function(error) {
+            console.log(error.message);
+            this.emit('end');
+        }
+    }))
     .pipe(sass())
     .pipe(sass.sync().on('error', sass.logError))
     .pipe(gulp.dest('./build'));
