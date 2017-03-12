@@ -46,8 +46,18 @@
     color: white;
     font-size: 20px;
     position: absolute;
+    padding-left: 0px;
     top: 19%;
     left: 10%;
+}
+
+.settingsMenuUl li {
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.settingsMenuIcon {
+    margin-right: 20px;
 }
 
 .profileImageAnim-enter {

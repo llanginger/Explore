@@ -6,6 +6,7 @@ import { settingsMenu }         from "./settingsMenu"
 import { visitedVenues }        from "./visitedVenues"
 import { spinner }              from "./spinner"
 import { bottomArea }           from "./bottomArea"
+import { settingsPages }        from "./settingsPages"
 
 export {
     bottomArea,
@@ -15,5 +16,6 @@ export {
     initState,
     settingsMenu,
     visitedVenues,
-    spinner
+    spinner,
+    settingsPages
 }

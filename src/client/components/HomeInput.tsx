@@ -175,7 +175,7 @@ export class HomeInput extends React.Component <InputProps, HomeInputState> {
 					className="pt-large testInput"
 					onClick={handleInputClick}
 					intent={Intent.PRIMARY}
-					leftIconName="pt-icon-shop"
+					leftIconName="pt-icon-search"
 					rightElement={clearButton(store)}
 					inputRef={ (input) => this.homeInput = input }
 					placeholder={props.placeholder}

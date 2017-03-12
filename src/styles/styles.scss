@@ -5,6 +5,7 @@
 @import "variables.scss";
 @import "./components/settingsMenu.scss";
 @import "./components/profileImage.scss";
+@import "./components/infoWindow.scss";
 
 // Consider Radium or some other react style package
 
@@ -98,40 +99,6 @@
   background: $mediumRatingColor;
 }
 
-#iw-container {
-
-}
-
-.iwTitle {
-  text-align: center;
-  font-size: 22px;
-  font-weight: 400;
-  padding: 10px;
-  background-color: #0732a2;
-  color: white;
-  border-radius: 5px 5px 0 0;
-}
-
-.iwContent {
-  font-size: 16px;
-  background: #669EFF;
-  padding: 5px 5px 10px 5px;
-  text-align: center;
-  color: white;
-  font-weight: 400;
-  border-radius: 0px 0px 5px 5px;
-}
-
-.gm-style-iw {
-   top: 15px !important; // move the infowindow 15px down
-   left: 0 !important;
-}
-
-.infoWindow {
-  height: 200px;
-  width: 200px;
-  background: orangered;
-}
 
 .div2 {
   height: 100px;

@@ -1,0 +1,33 @@
+@import "../variables";
+#iw-container {
+
+}
+
+.iwTitle {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 400;
+  padding: 10px;
+  background-color: black;
+  color: white;
+}
+
+.iwContent {
+  font-size: 16px;
+  background: white;
+  padding: 5px 5px 10px 5px;
+  text-align: center;
+  color: black;
+  font-weight: 400;
+}
+
+.gm-style-iw {
+   top: 15px !important; // move the infowindow 15px down
+   left: 0 !important;
+}
+
+.infoWindow {
+  height: 200px;
+  width: 200px;
+  background: orangered;
+}

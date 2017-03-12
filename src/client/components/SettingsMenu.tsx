@@ -18,10 +18,17 @@ export const SettingsMenu = (props: BaseReduxProps) => {
         if (menuState.open === true) {
             return (
                 <ul className="settingsMenuUl">
-                    <li>Account</li>
-                    <li>Preferences</li>
-                    <li>Places you've been</li>
-                    <li>(Social)</li>
+                    <li><span className="pt-icon-standard pt-icon-manual settingsMenuIcon" />Account</li>
+                    <li
+                        onClick={() => {
+                            store.dispatch({
+                                type: "SHOW_SETTINGS_PAGE",
+                                page: "preferences"
+                            })
+                        }}
+                    ><span className="pt-icon-standard pt-icon-cog settingsMenuIcon" />Preferences</li>
+                    <li><span className="pt-icon-standard pt-icon-path-search settingsMenuIcon" />Places you've been</li>
+                    <li><span className="pt-icon-standard pt-icon-social-media settingsMenuIcon" />(Social)</li>
                 </ul>
             )
         } else {
@@ -61,6 +68,7 @@ export const SettingsMenu = (props: BaseReduxProps) => {
                         transitionEnterTimeout={300}
                     >
                         {renderImage()}
+                        <p>Account text</p>
                     </ReactCSSTransitionGroup>
                 </div>
                 {renderList()}

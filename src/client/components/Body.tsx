@@ -4,7 +4,17 @@ import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import * as Transition from 'react-inline-transition-group';
 
 import { BaseReduxProps } from "../Interfaces"
-import { BottomArea, BottomButtons, HomeInput, Hamburger, ExploreMap, InfoCard, Overlay, SettingsMenu } from "./Components"
+import { 
+    BottomArea, 
+    BottomButtons, 
+    HomeInput, 
+    Hamburger, 
+    ExploreMap, 
+    InfoCard, 
+    Overlay, 
+    SettingsMenu,
+    PreferencesPage
+} from "./Components"
 
 
 let init_lng = -98.5795
@@ -40,6 +50,7 @@ export class Body extends React.Component<BodyProps, any> {
         const showOverlay = store.getState().initState.showOverlay
         const venues = store.getState().currentResults.results
         const showBottomArea = store.getState().bottomArea.show
+        const showPreferecesPage = store.getState().settingsPages.preferences
 
         // --- Set up render conditionals --- //
         const renderOverlay = () => {
@@ -52,6 +63,14 @@ export class Body extends React.Component<BodyProps, any> {
         const renderBottomArea = () => {
             if (showBottomArea === true && venues.length > 0) {
                 return <BottomArea store={ store }/>
+            } else {
+                return
+            }
+        }
+
+        const renderSettingsPage = () => {
+            if (showPreferecesPage.open === true) {
+                return <PreferencesPage store={ store } />
             } else {
                 return
             }
@@ -111,6 +130,7 @@ export class Body extends React.Component<BodyProps, any> {
                 >
 			        {renderBottomArea()}
                 </ReactCSSTransitionGroup>
+                {renderSettingsPage()}
 			</div>
 		)
 

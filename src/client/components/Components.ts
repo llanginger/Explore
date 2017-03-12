@@ -8,6 +8,7 @@ import { ResultsMenu } from "./ResultsMenu"
 import { BottomButtons } from "./BottomButtons"
 import { Overlay } from "./Overlay"
 import { SettingsMenu } from "./SettingsMenu"
+import { PreferencesPage } from "./PreferencesPage"
 
 export {
     BottomArea,
@@ -19,5 +20,6 @@ export {
     ResultItem,
     ResultsMenu,
     Overlay,
-    SettingsMenu
+    SettingsMenu,
+    PreferencesPage
 }

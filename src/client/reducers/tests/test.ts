@@ -99,6 +99,40 @@ describe("Settings Menur", () => {
     })
 })
 
+describe("Settings Pages", () => {
+    const initState = {
+        preferences: { open: false },
+        account: { open: false },
+        previousVenues: { open: false } 
+    }
+
+    const prefsOpen = {
+        ...initState,
+        preferences: { open: true }
+    }
+
+    it("Should return all closed (default)", () => {
+        const result = r.settingsPages(initState, {})
+        expect(result).to.deep.eq(initState)
+    })
+
+    it("Should return prefs open", () => {
+        const result = r.settingsPages(initState, {
+            type: "SHOW_SETTINGS_PAGE",
+            page: "preferences"
+        })
+        expect(result).to.deep.eq(prefsOpen)
+    })
+
+    it("Should return default if wrong name", () => {
+        const result = r.settingsPages(initState, {
+            type: "SHOW_SETTINGS_PAGE",
+            page: "gobbledegook"
+        })
+        expect(result).to.deep.eq(initState)
+    })
+})
+
 describe("Init State", () => {
 
     const s = {

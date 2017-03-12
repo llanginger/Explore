@@ -7,7 +7,8 @@ import {
 	settingsMenu,
 	visitedVenues,
 	spinner,
-	bottomArea
+	bottomArea,
+    settingsPages
 } from "./reducers/reducers"
 
 
@@ -20,6 +21,7 @@ export interface Reducers {
 	visitedVenues: visitedVenues;
 	spinner: boolean;
 	bottomArea: bottomArea
+    settingsPages: settingsPages
 }
 
 
@@ -31,5 +33,6 @@ export const Reducers = combineReducers<Reducers>({
 	currentResults,
 	homeInputState,
 	visitedVenues,
-	spinner
+	spinner,
+    settingsPages
 })
