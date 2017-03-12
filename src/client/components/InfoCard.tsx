@@ -46,7 +46,14 @@ export const InfoCard = (props: InfoCardProps) => {
         }
 
         return (
-            <div style={infoCardStyles}>
+            <div
+                onClick={() => {
+                    store.dispatch({
+                        type: "TOGGLE_BOTTOM_AREA"
+                    })
+                }}
+                style={infoCardStyles}
+            >
                 <div className="iwTitle">
                     {venue.name}
                 </div>

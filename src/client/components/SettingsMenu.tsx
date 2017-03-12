@@ -36,13 +36,18 @@ export const SettingsMenu = (props: BaseReduxProps) => {
         }
     }
 
-    const renderImage = () => {
+    const renderProfile = () => {
         if (menuState.open === true) {
             return (
-                <img 
-                    className="profileImage"
-                    src="https://pbs.twimg.com/profile_images/2192831080/cartoon-headshot.png"
-                />
+                <div className="profilePanel">
+                    <img 
+                        className="profileImage"
+                        src="https://pbs.twimg.com/profile_images/2192831080/cartoon-headshot.png"
+                    />
+                    <div className="profileTextContainer">
+                        <span className="profileText">TEXT INFO HERE</span>
+                    </div>
+                </div>
             )
         } else {
             return
@@ -59,7 +64,7 @@ export const SettingsMenu = (props: BaseReduxProps) => {
                 }}
                 className="settingsMenu"
             > 
-                <div className="profilePanel">
+                <div className="profileContainer">
                     <ReactCSSTransitionGroup
                         transitionName={"profileImageAnim"}
                         transitionAppear={true}
@@ -67,8 +72,7 @@ export const SettingsMenu = (props: BaseReduxProps) => {
                         transitionLeaveTimeout={300}
                         transitionEnterTimeout={300}
                     >
-                        {renderImage()}
-                        <p>Account text</p>
+                        {renderProfile()}
                     </ReactCSSTransitionGroup>
                 </div>
                 {renderList()}

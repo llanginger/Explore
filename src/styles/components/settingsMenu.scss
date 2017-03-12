@@ -22,7 +22,7 @@
     z-index: 30;
     width: 70%;
     height: 100%;
-    background: #333;
+    background: white;
 }
 
 .settingsMenuBuffer {
@@ -30,20 +30,12 @@
     height: 100%;
 }
 
-.profilePanel {
-    position: relative;
-    transition: all .3s ease-in-out;
-    height: 10%;
-    width: 100%;
-    background: $lightHighlight;
-}
-
 
 
 .settingsMenuUl {
     transition: all .3s ease-in-out;
     list-style-type: none;
-    color: white;
+    color: black;
     font-size: 20px;
     position: absolute;
     padding-left: 0px;
