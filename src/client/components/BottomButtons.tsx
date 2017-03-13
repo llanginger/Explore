@@ -10,27 +10,23 @@ export const BottomButtons = (props: BaseReduxProps) => {
         bottom: "15%",
         width: "50%",
         left: "25%",
-        boxShadow: "5px 5px 5px #333"
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
     }
 
-    const baseButtonStyles = {
-        border: "none",
-        color: "white",
-        width: "50%",
+    const buttonStyles = {
+        cursor: "pointer",
+        width: "60px",
         height: "60px",
-        fontSize: "16px"
-    }
-
-    const backButtonStyles = {
-        ...baseButtonStyles,
-        background: "#0732a2",
-        borderRadius: "5px 0px 0px 5px"
-    }
-
-    const forwardButtonStyles = {
-        ...baseButtonStyles,
-        background: "#669EFF",
-        borderRadius: "0px 5px 5px 0px"
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        color: "white",
+        borderRadius: "50%",
+        border: "5px solid white",
+        background: "rgba(0,0,0,0.3)",
+        filter: "drop-shadow(5px 5px 7px)"
     }
 
     const inputState = store.getState().homeInputState
@@ -41,8 +37,9 @@ export const BottomButtons = (props: BaseReduxProps) => {
             <div
                 style={containerStyles}
             >
-                <button 
-                    style={backButtonStyles}
+                <button
+                    className="bottomButton"
+                    style={buttonStyles}
                     onClick={() => {
                         store.dispatch({
                             type: "NEXT_VENUE"
@@ -52,7 +49,8 @@ export const BottomButtons = (props: BaseReduxProps) => {
                 Back
                 </button>
                 <button 
-                    style={forwardButtonStyles}
+                    className="bottomButton"
+                    style={buttonStyles}
                     onClick={() => {
                         store.dispatch({
                             type: "PREV_VENUE"

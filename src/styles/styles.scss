@@ -22,7 +22,13 @@
 
 //  End of mobile testing styles
 
+.pt-input {
+    border-radius: 0px;
+}
 
+.bottomButton:focus {
+    outline: none;
+}
 .fade-enter {
     opacity: 0;
 }

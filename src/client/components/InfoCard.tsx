@@ -28,17 +28,17 @@ export const InfoCard = (props: InfoCardProps) => {
         const infoCardStyles = {
             color: "white",
             boxShadow: "5px 5px 5px #333",
-            width: "70%",
+            width: "90%",
             position: "absolute",
-            top: "25%",
-            left: "15%",
+            top: "19%",
+            left: "5%",
         }
 
         const ratingStyles = {
             position: "absolute",
             boxShadow: "5px 5px 10px #333",
-            bottom: "-16px",
-            right: "-16px",
+            bottom: "-10px",
+            right: "-10px",
             padding: "8px",
             color: "white",
             borderRadius: "50%",
