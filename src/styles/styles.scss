@@ -26,9 +26,20 @@
     border-radius: 0px;
 }
 
+.bottomButton {
+    filter: drop-shadow(5px 5px 7px);
+    transition: all .02s ease-in-out;
+}
+
 .bottomButton:focus {
     outline: none;
 }
+
+.bottomButton:active {
+    transform: translateY(3px);
+    filter: drop-shadow(2px 2px 7px);
+}
+
 .fade-enter {
     opacity: 0;
 }

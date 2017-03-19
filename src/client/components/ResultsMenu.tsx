@@ -1,10 +1,10 @@
 import * as React from "react"
-import { 
-    Menu, 
-    MenuItem, 
-    MenuDivider, 
-    Checkbox, 
-    Button, 
+import {
+    Menu,
+    MenuItem,
+    MenuDivider,
+    Checkbox,
+    Button,
     Intent,
     Spinner
 } from "@blueprintjs/core";
@@ -25,10 +25,11 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                 {this.makeMenu()}
             </div>
         );
-    }    
+    }
 
     public makeMenu() {
-        const venues = this.props.store.getState().currentResults
+        const fsResults = this.props.store.getState().fourSquareResults
+        const venues = fsResults[fsResults.length - 1]
         const inputState = this.props.store.getState().homeInputState
         const menuStyles = {
             display: "flex",
@@ -49,20 +50,20 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
             return (
                 <div>
                     <div style={menuStyles} className="resultsMenu">
-                    {this.showInputToolTip()}
-                    <ReactCSSTransitionGroup
-                        style={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            width: "100%"
-                        }}
-                        className="resultsMenuTransitionGroup"
-                        transitionName="fade"
-                        transitionEnterTimeout={200}
-                        transitionLeaveTimeout={200}
-                    >
-                        {this.mapVenuesToMenuItems(venues)}
-                    </ReactCSSTransitionGroup>
+                        {this.showInputToolTip()}
+                        <ReactCSSTransitionGroup
+                            style={{
+                                display: "flex",
+                                flexWrap: "wrap",
+                                width: "100%"
+                            }}
+                            className="resultsMenuTransitionGroup"
+                            transitionName="fade"
+                            transitionEnterTimeout={200}
+                            transitionLeaveTimeout={200}
+                        >
+                            {this.mapVenuesToMenuItems(venues)}
+                        </ReactCSSTransitionGroup>
                     </div>
                     {this.letsGoButton()}
                 </div>
@@ -74,7 +75,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
 
     public letsGoButton() {
         return (
-            <Button 
+            <Button
                 text="Let's go!"
                 className="pt-fill"
                 intent={Intent.SUCCESS}
@@ -108,7 +109,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                 </div>
             )
         } else {
-            return <div/>
+            return <div />
         }
     }
 
@@ -120,7 +121,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                 return
             } else {
                 return (
-                    <ResultItem venue={venue} store={store} key={i}/> 
+                    <ResultItem venue={venue} store={store} key={i} />
                 )
             }
         })

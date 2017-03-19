@@ -1,35 +1,29 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
-import { createStore, applyMiddleware, Store} from "redux"
-import * as thunk from "redux-thunk"
+import { createStore, applyMiddleware, Store, compose } from "redux"
+import { default as thunk } from "redux-thunk";
 import * as logger from "redux-logger"
 
-import { Reducers} from "./Store"
+import { Reducers } from "./Store"
 import { Body } from "./components/Body"
-
-import { PresentGoogleMap } from "./components/CreateMap"
-
-const middleware = applyMiddleware(thunk, logger())
+import { DevTools } from "./components/Devtools"
 
 
+const enhancer = compose(
+    applyMiddleware(thunk, logger()),
+    DevTools.instrument()
+)
 
-const fakeArray = [
-	"Thing 1",
-	"Thing 2",
-	"Thing 3",
-	"Thing 4"
-]
 
-let store: Store<Reducers> = createStore(Reducers, applyMiddleware(logger()))
+let store: Store<Reducers> = createStore(Reducers, enhancer)
 console.log("Logging store: ", store)
 
 
 ReactDOM.render(
-	<Body store={ store }/>,
-	document.getElementById("app")
+    <div>
+        <Body store={store} />
+        <DevTools store={store} />
+    </div>,
+    document.getElementById("app")
 )
 
-// ReactDOM.render(
-// 	<PresentGoogleMap />,
-// 	document.getElementById("app")
-// )

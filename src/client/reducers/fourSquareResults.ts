@@ -1,22 +1,26 @@
 import { Venue } from "../Interfaces"
 
-export interface fourSquareResults {
-	queryInfo: any;
-	results: Venue[];
+interface result {
+    queryInfo: {};
+    results: Venue[];
 }
 
-export const fourSquareResults = (state: fourSquareResults[] = [
-	{ 
-		queryInfo: {}, 
-		results: [] 
-	}
+export interface fourSquareResults extends Array<result> {
+
+}
+
+export const fourSquareResults = (state: fourSquareResults = [
+    {
+        queryInfo: {},
+        results: []
+    }
 ], action) => {
-	switch (action.type) {
-		case "FETCHING_VENUES":
-			return state
-		case "FETCHED_VENUES":
-			return [...state, action.payload]
-		default:
-			return state
-	}
+    switch (action.type) {
+        case "FETCHING_VENUES":
+            return state
+        case "FETCHED_VENUES":
+            return [...state, action.payload]
+        default:
+            return state
+    }
 }

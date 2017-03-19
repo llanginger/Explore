@@ -26,7 +26,6 @@ export const BottomButtons = (props: BaseReduxProps) => {
         borderRadius: "50%",
         border: "5px solid white",
         background: "rgba(0,0,0,0.3)",
-        filter: "drop-shadow(5px 5px 7px)"
     }
 
     const inputState = store.getState().homeInputState

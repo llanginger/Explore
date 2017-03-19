@@ -1,6 +1,4 @@
-export interface openClose {
-    open: boolean
-}
+import { openClose } from "../Interfaces"
 
 export interface settingsPages {
     preferences: openClose;
@@ -11,10 +9,10 @@ export interface settingsPages {
 export const settingsPages = (state: settingsPages = {
     preferences: { open: false },
     account: { open: false },
-    previousVenues: { open: false } 
+    previousVenues: { open: false }
 }, action) => {
     const togglePage = (pageName: string) => {
-        let newState: settingsPages = {...state}
+        let newState: settingsPages = { ...state }
         for (const page in newState) {
             if (page === pageName.toLowerCase()) {
                 newState[page].open = true

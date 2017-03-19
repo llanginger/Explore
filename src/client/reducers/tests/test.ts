@@ -1,5 +1,32 @@
 import { expect } from "chai"
+import { Venue } from "../../Interfaces"
 import * as r from "../reducers"
+
+const dummyVenueOne: Venue = {
+    location: {},
+    contact: {},
+    name: "House of Pancakes",
+    id: "123",
+    photoSrc: [],
+    reviews: [],
+    rating: null,
+    categories: [],
+    seen: true,
+    visited: true
+}
+
+const dummyVenueTwo: Venue = {
+    location: {},
+    contact: {},
+    name: "Starbucks",
+    id: "234",
+    photoSrc: [],
+    reviews: [],
+    rating: null,
+    categories: [],
+    seen: false,
+    visited: true
+}
 
 describe("Spinner", () => {
     const initState = false
@@ -15,71 +42,45 @@ describe("Spinner", () => {
     })
 })
 
-describe("Current Results", () => {
-    const initState = { 
-        queryInfo: {}, 
-        results: [] 
+describe("Current Venue", () => {
+    const initState: Venue = {
+        location: {},
+        contact: {},
+        name: "",
+        id: "",
+        photoSrc: [],
+        reviews: [],
+        rating: null,
+        categories: []
     }
-
-    const dummyState = { 
-        queryInfo: {}, results: [
-            {
-                id: "439169aaf964a5205a2b1fe3",
-                lat: 47.61468356299946,
-                lng: -122.3197603225708,
-                name: "Elliott Bay Book Company",
-                photoSrc: ["https://igx.4sqi.net/img/general/300x200/632744_bLPOkj3Hivc915Rvum06rtNAh0GGpj4ZdtZuQfOe0Bo.jpg"],
-                reviews: ["Used to be located in Pioneer Square, the Elliott Bay Book Company is the local bookstore for those who live on Capitol Hill. You'll find odd titles and local authors here. Don't forget about the café"],
-                rating: 8
-            }
-        ] 
+    const newState: Venue = {
+        ...initState,
+        name: "New Venue 1",
+        id: "12345"
     }
 
     it("Should return empty", () => {
-        const result = r.currentResults(initState, {})
+        const result = r.currentVenue(initState, {})
+        expect(result).to.deep.eq(initState)
+    })
+    it("Should return new state", () => {
+
+        const result = r.currentVenue(initState, {
+            type: "NEXT_VENUE",
+            payload: newState
+        })
+        expect(result).to.deep.eq(newState)
+    })
+    it("Should return empty on Clear venues call", () => {
+        const result = r.currentVenue(newState, {
+            type: "CLEAR_VENUES"
+        })
         expect(result).to.deep.eq(initState)
     })
 
-    it("should return empty after fetching values called", () => {
-        const result = r.currentResults(dummyState, { type: "FETCHING_VENUES"})
-        expect(result).to.deep.eq(initState)
-    })
-    
-    it("Should return venues", () => {
-        const action = {
-            type: "FETCHED_VENUES",
-            payload: {
-                queryInfo: {}, 
-                results: [
-                    {
-                        name: "venueName",
-                        id: "12345689",
-                        lat: 123,
-                        lng: 456,
-                        visited: false
-                    }
-                ] 
-            }
-        }
-        const stateAfter = { 
-            queryInfo: {}, 
-            results: [
-                {
-                    name: "venueName",
-                    id: "12345689",
-                    lat: 123,
-                    lng: 456,
-                    visited: false
-                }
-            ] 
-        }
-        const result = r.currentResults(initState, action)
-
-        expect(result).to.deep.eq(stateAfter)
-    })
 })
 
-describe("Settings Menur", () => {
+describe("Settings Menu", () => {
     const initState = { open: false }
     const openState = { open: true }
 
@@ -89,12 +90,12 @@ describe("Settings Menur", () => {
     })
 
     it("Should return true", () => {
-        const result = r.settingsMenu(initState, { type: "OPEN_MENU"})
+        const result = r.settingsMenu(initState, { type: "OPEN_MENU" })
         expect(result).to.deep.eq(openState)
     })
 
     it("Should return false", () => {
-        const result = r.settingsMenu(openState, { type: "CLOSE_MENU"})
+        const result = r.settingsMenu(openState, { type: "CLOSE_MENU" })
         expect(result).to.deep.eq(initState)
     })
 })
@@ -103,7 +104,7 @@ describe("Settings Pages", () => {
     const initState = {
         preferences: { open: false },
         account: { open: false },
-        previousVenues: { open: false } 
+        previousVenues: { open: false }
     }
 
     const prefsOpen = {
@@ -136,15 +137,15 @@ describe("Settings Pages", () => {
 describe("Init State", () => {
 
     const s = {
-        initState: { 
+        initState: {
             showMainInputHelp: true,
             showOverlay: true
         },
-        mainInputFalse: { 
+        mainInputFalse: {
             showMainInputHelp: false,
             showOverlay: true
         },
-        overlayFalse: { 
+        overlayFalse: {
             showMainInputHelp: true,
             showOverlay: false
         }
@@ -155,12 +156,116 @@ describe("Init State", () => {
     })
 
     it("Should return Main Input false", () => {
-        const result = r.initState(s.initState, { type: "DISMISS_MAIN_INPUT_HELP"})
+        const result = r.initState(s.initState, { type: "DISMISS_MAIN_INPUT_HELP" })
         expect(result).to.deep.eq(s.mainInputFalse)
     })
 
     it("Should return Main Input false", () => {
-        const result = r.initState(s.initState, { type: "FETCHED_VENUES"})
+        const result = r.initState(s.initState, { type: "FETCHED_VENUES" })
         expect(result).to.deep.eq(s.overlayFalse)
     })
 })
+
+describe("FourSquare Results", () => {
+    const initState: r.fourSquareResults = [{ queryInfo: {}, results: [] }]
+    const fetchingValuesState: r.fourSquareResults = [...initState]
+
+    it("Should return initState on default", () => {
+        const result = r.fourSquareResults(initState, {})
+        expect(result).to.deep.eq(initState)
+    })
+
+    it("Should return initState on fetching venues", () => {
+        const result = r.fourSquareResults(initState, { type: "FETCHING_VENUES" })
+        expect(result).to.deep.eq(fetchingValuesState)
+    })
+
+    it("Should return new venue", () => {
+        const result = r.fourSquareResults(initState, {
+            type: "FETCHED_VENUES",
+            payload: dummyVenueOne
+        })
+        expect(result).to.deep.eq([...initState, dummy])
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// describe("Current Results", () => {
+//     const initState = { 
+//         queryInfo: {}, 
+//         results: [] 
+//     }
+
+//     const dummyState = { 
+//         queryInfo: {}, results: [
+//             {
+//                 id: "439169aaf964a5205a2b1fe3",
+//                 lat: 47.61468356299946,
+//                 lng: -122.3197603225708,
+//                 name: "Elliott Bay Book Company",
+//                 photoSrc: ["https://igx.4sqi.net/img/general/300x200/632744_bLPOkj3Hivc915Rvum06rtNAh0GGpj4ZdtZuQfOe0Bo.jpg"],
+//                 reviews: ["Used to be located in Pioneer Square, the Elliott Bay Book Company is the local bookstore for those who live on Capitol Hill. You'll find odd titles and local authors here. Don't forget about the café"],
+//                 rating: 8
+//             }
+//         ] 
+//     }
+
+//     it("Should return empty", () => {
+//         const result = r.currentResults(initState, {})
+//         expect(result).to.deep.eq(initState)
+//     })
+
+//     it("should return empty after fetching values called", () => {
+//         const result = r.currentResults(dummyState, { type: "FETCHING_VENUES"})
+//         expect(result).to.deep.eq(initState)
+//     })
+
+//     it("Should return venues", () => {
+//         const action = {
+//             type: "FETCHED_VENUES",
+//             payload: {
+//                 queryInfo: {}, 
+//                 results: [
+//                     {
+//                         name: "venueName",
+//                         id: "12345689",
+//                         lat: 123,
+//                         lng: 456,
+//                         visited: false
+//                     }
+//                 ] 
+//             }
+//         }
+//         const stateAfter = { 
+//             queryInfo: {}, 
+//             results: [
+//                 {
+//                     name: "venueName",
+//                     id: "12345689",
+//                     lat: 123,
+//                     lng: 456,
+//                     visited: false
+//                 }
+//             ] 
+//         }
+//         const result = r.currentResults(initState, action)
+
+//         expect(result).to.deep.eq(stateAfter)
+//     })
+// })
