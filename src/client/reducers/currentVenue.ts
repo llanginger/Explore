@@ -17,6 +17,7 @@ interface cvAction {
 
 export const currentVenue = (state: Venue = initState, action: cvAction) => {
     switch (action.type) {
+        case "PREV_VENUE":
         case "NEXT_VENUE":
             return action.payload
         case "CLEAR_VENUES":

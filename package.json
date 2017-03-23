@@ -6,9 +6,9 @@
     "license": "MIT",
     "scripts": {
         "clean-build": "make clean-build",
-        "test": "mocha -r ts-node/register src/client/**/test.ts",
-        "test-reducers": "mocha -r ts-node/register src/client/reducers/**/test.ts",
-        "test-reducers-1": "mocha -r ts-node/register src/client/reducers/**/testing.ts"
+        "test-reducers": "mocha -r ts-node/register src/client/reducers/tests/test.ts",
+        "test-actions": "mocha -r ts-node/register src/client/actions/tests/test.ts",
+        "test": "yarn run test-reducers && yarn run test-actions"
     },
     "dependencies": {
         "@blueprintjs/core": "^1.9.0",

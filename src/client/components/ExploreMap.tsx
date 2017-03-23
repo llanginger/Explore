@@ -3,6 +3,7 @@ import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import * as React from "react"
 import * as axios from "axios"
 import { BaseReduxProps, Venue } from "../Interfaces"
+import { } from "../actions/actions"
 
 interface ExploreMapProps extends BaseReduxProps {
     className: string;
@@ -73,7 +74,7 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
         const { store } = props
         let self = this
 
-        const venues = store.getState().currentResults.results
+        const venues = store.getState().currentResults.venues
         this._loadMarkers(venues, this.map)
 
 

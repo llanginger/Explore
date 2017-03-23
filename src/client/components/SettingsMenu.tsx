@@ -3,6 +3,7 @@ import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import { BaseReduxProps } from "../Interfaces"
 import { Hamburger } from "./Components"
 import * as classNames from "classnames"
+import { CLOSE_MENU, SHOW_SETTINGS_PAGE } from "../actions/actions"
 
 export const SettingsMenu = (props: BaseReduxProps) => {
     const tempProfileUrl = "https://pbs.twimg.com/profile_images/2192831080/cartoon-headshot.png"
@@ -21,10 +22,7 @@ export const SettingsMenu = (props: BaseReduxProps) => {
                     <li><span className="pt-icon-standard pt-icon-manual settingsMenuIcon" />Account</li>
                     <li
                         onClick={() => {
-                            store.dispatch({
-                                type: "SHOW_SETTINGS_PAGE",
-                                page: "preferences"
-                            })
+                            store.dispatch(SHOW_SETTINGS_PAGE("preferences"))
                         }}
                     ><span className="pt-icon-standard pt-icon-cog settingsMenuIcon" />Preferences</li>
                     <li><span className="pt-icon-standard pt-icon-path-search settingsMenuIcon" />Places you've been</li>
@@ -40,7 +38,7 @@ export const SettingsMenu = (props: BaseReduxProps) => {
         if (menuState.open === true) {
             return (
                 <div className="profilePanel">
-                    <img 
+                    <img
                         className="profileImage"
                         src="https://pbs.twimg.com/profile_images/2192831080/cartoon-headshot.png"
                     />
@@ -63,7 +61,7 @@ export const SettingsMenu = (props: BaseReduxProps) => {
                     console.log("Clicked inside menu");
                 }}
                 className="settingsMenu"
-            > 
+            >
                 <div className="profileContainer">
                     <ReactCSSTransitionGroup
                         transitionName={"profileImageAnim"}
@@ -79,11 +77,9 @@ export const SettingsMenu = (props: BaseReduxProps) => {
             </div>
             <div
                 onClick={() => {
-                    store.dispatch({
-                        type: "CLOSE_MENU"
-                    })
+                    store.dispatch(CLOSE_MENU())
                 }}
-                className="settingsMenuBuffer" 
+                className="settingsMenuBuffer"
             />
         </div>
     )

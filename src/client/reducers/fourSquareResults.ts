@@ -1,18 +1,15 @@
-import { Venue } from "../Interfaces"
+import { Venue, FourSquareResult } from "../Interfaces"
 
-interface result {
-    queryInfo: {};
-    results: Venue[];
-}
 
-export interface fourSquareResults extends Array<result> {
+
+export interface fourSquareResults extends Array<FourSquareResult> {
 
 }
 
 export const fourSquareResults = (state: fourSquareResults = [
     {
         queryInfo: {},
-        results: []
+        venues: []
     }
 ], action) => {
     switch (action.type) {
@@ -24,3 +21,6 @@ export const fourSquareResults = (state: fourSquareResults = [
             return state
     }
 }
+
+
+// results: Venue[];

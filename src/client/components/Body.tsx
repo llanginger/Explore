@@ -48,7 +48,7 @@ export class Body extends React.Component<BodyProps, any> {
 
         // --- Set up reducer shortcuts --- //
         const showOverlay = store.getState().initState.showOverlay
-        const venues = store.getState().currentResults.results
+        const venues = store.getState().currentResults.venues
         const showBottomArea = store.getState().bottomArea.show
         const showPreferecesPage = store.getState().settingsPages.preferences
 

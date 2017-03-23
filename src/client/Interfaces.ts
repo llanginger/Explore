@@ -41,15 +41,23 @@ export interface openClose {
     open: boolean
 }
 
+export interface VenueResponse {
+    queryInfo: {};
+    venues: Venue[]
+}
+
+export interface FourSquareResult extends VenueResponse {
+}
+
 export interface Venue {
-    location: Location;
-    contact: Contact;
-    name: string;
-    id: string;
+    location?: Location;
+    contact?: Contact;
+    name?: string;
+    id?: string;
     photoSrc?: string[];
     reviews?: string[];
-    rating: number;
-    categories: Category[];
+    rating?: number;
+    categories?: Category[];
     visited?: boolean;
     seen?: boolean;
 }

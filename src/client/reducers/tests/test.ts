@@ -1,6 +1,7 @@
 import { expect } from "chai"
-import { Venue } from "../../Interfaces"
+import { Venue, FourSquareResult, VenueResponse } from "../../Interfaces"
 import * as r from "../reducers"
+import * as a from "../../actions/actions"
 
 const dummyVenueOne: Venue = {
     location: {},
@@ -34,10 +35,9 @@ describe("Spinner", () => {
         const result = r.spinner(initState, {});
         expect(result).to.deep.equal(false)
     })
+
     it("should return true", () => {
-        const result = r.spinner(initState, {
-            type: "FETCHING_VENUES"
-        });
+        const result = r.spinner(initState, a.FETCHING_VENUES());
         expect(result).to.deep.equal(true)
     })
 })
@@ -63,7 +63,8 @@ describe("Current Venue", () => {
         const result = r.currentVenue(initState, {})
         expect(result).to.deep.eq(initState)
     })
-    it("Should return new state", () => {
+
+    it("Should return new state on NEXT_VENUE", () => {
 
         const result = r.currentVenue(initState, {
             type: "NEXT_VENUE",
@@ -71,6 +72,16 @@ describe("Current Venue", () => {
         })
         expect(result).to.deep.eq(newState)
     })
+
+    it("Should return new state on PREV_VENUE", () => {
+
+        const result = r.currentVenue(initState, {
+            type: "PREV_VENUE",
+            payload: newState
+        })
+        expect(result).to.deep.eq(newState)
+    })
+
     it("Should return empty on Clear venues call", () => {
         const result = r.currentVenue(newState, {
             type: "CLEAR_VENUES"
@@ -167,7 +178,8 @@ describe("Init State", () => {
 })
 
 describe("FourSquare Results", () => {
-    const initState: r.fourSquareResults = [{ queryInfo: {}, results: [] }]
+    const initState: r.fourSquareResults = [{ queryInfo: {}, venues: [] }]
+    const dummyState: r.fourSquareResults = [{ queryInfo: {}, venues: [dummyVenueOne] }]
     const fetchingValuesState: r.fourSquareResults = [...initState]
 
     it("Should return initState on default", () => {
@@ -181,91 +193,65 @@ describe("FourSquare Results", () => {
     })
 
     it("Should return new venue", () => {
+        const dummyPayloadOne: FourSquareResult = {
+            queryInfo: {},
+            venues: [dummyVenueOne]
+        }
         const result = r.fourSquareResults(initState, {
             type: "FETCHED_VENUES",
-            payload: dummyVenueOne
+            payload: dummyPayloadOne
         })
-        expect(result).to.deep.eq([...initState, dummy])
+        expect(result).to.deep.eq([...initState, dummyPayloadOne])
     })
 })
 
+describe("Current Results", () => {
 
+    interface CRAction {
+        type?: string;
+        payload?: VenueResponse
+    }
 
+    const initState: VenueResponse = {
+        queryInfo: {},
+        venues: []
+    }
 
+    const dummyState = {
+        queryInfo: {},
+        venues: [
+            dummyVenueOne
+        ]
+    }
 
+    it("Should return empty", () => {
+        const result = r.currentResults(initState, {})
+        expect(result).to.deep.eq(initState)
+    })
 
+    it("should return empty after fetching values called", () => {
+        const result = r.currentResults(dummyState, { type: "FETCHING_VENUES" })
+        expect(result).to.deep.eq(initState)
+    })
 
+    it("Should return venues", () => {
+        const action: CRAction = {
+            type: "FETCHED_VENUES",
+            payload: {
+                queryInfo: {},
+                venues: [
+                    dummyVenueOne
+                ]
+            }
+        }
+        const stateAfter: VenueResponse = {
+            queryInfo: {},
+            venues: [
+                dummyVenueOne
+            ]
+        }
+        const result = r.currentResults(initState, action)
 
-
-
-
-
-
-
-
-
-
-
-// describe("Current Results", () => {
-//     const initState = { 
-//         queryInfo: {}, 
-//         results: [] 
-//     }
-
-//     const dummyState = { 
-//         queryInfo: {}, results: [
-//             {
-//                 id: "439169aaf964a5205a2b1fe3",
-//                 lat: 47.61468356299946,
-//                 lng: -122.3197603225708,
-//                 name: "Elliott Bay Book Company",
-//                 photoSrc: ["https://igx.4sqi.net/img/general/300x200/632744_bLPOkj3Hivc915Rvum06rtNAh0GGpj4ZdtZuQfOe0Bo.jpg"],
-//                 reviews: ["Used to be located in Pioneer Square, the Elliott Bay Book Company is the local bookstore for those who live on Capitol Hill. You'll find odd titles and local authors here. Don't forget about the café"],
-//                 rating: 8
-//             }
-//         ] 
-//     }
-
-//     it("Should return empty", () => {
-//         const result = r.currentResults(initState, {})
-//         expect(result).to.deep.eq(initState)
-//     })
-
-//     it("should return empty after fetching values called", () => {
-//         const result = r.currentResults(dummyState, { type: "FETCHING_VENUES"})
-//         expect(result).to.deep.eq(initState)
-//     })
-
-//     it("Should return venues", () => {
-//         const action = {
-//             type: "FETCHED_VENUES",
-//             payload: {
-//                 queryInfo: {}, 
-//                 results: [
-//                     {
-//                         name: "venueName",
-//                         id: "12345689",
-//                         lat: 123,
-//                         lng: 456,
-//                         visited: false
-//                     }
-//                 ] 
-//             }
-//         }
-//         const stateAfter = { 
-//             queryInfo: {}, 
-//             results: [
-//                 {
-//                     name: "venueName",
-//                     id: "12345689",
-//                     lat: 123,
-//                     lng: 456,
-//                     visited: false
-//                 }
-//             ] 
-//         }
-//         const result = r.currentResults(initState, action)
-
-//         expect(result).to.deep.eq(stateAfter)
-//     })
-// })
+        expect(result).to.deep.eq(stateAfter)
+    })
+})

@@ -2,12 +2,13 @@ import * as React from "react"
 import { BaseReduxProps } from "../Interfaces"
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import * as classNames from "classnames"
+import { TOGGLE_BOTTOM_AREA } from "../actions/actions"
 
 export const BottomArea = (props) => {
-    
+
 
     const { store } = props
-    const venues = store.getState().currentResults.results
+    const venues = store.getState().currentResults.venues
     const big = store.getState().bottomArea.big
     const show = store.getState().bottomArea.show
     const venue = venues[0]
@@ -72,18 +73,15 @@ export const BottomArea = (props) => {
             className={baClasses}
             key={Date.now()}
         >
-            <img 
+            <img
                 style={imageStyles}
                 src={venue.photoSrc[0]}
                 onClick={() => {
-                    store.dispatch({
-                        type: "TOGGLE_BOTTOM_AREA"
-                    })
+                    store.dispatch(TOGGLE_BOTTOM_AREA())
                 }}
             />
             {renderList()}
         </div>
-        
+
     )
-} 
-    
+}

@@ -21,174 +21,168 @@ import {
     Tag,
     Tooltip,
 } from "@blueprintjs/core";
+import { FETCHED_VENUES, FETCHING_VENUES, FOCUS_INPUT, CLEAR_VENUES } from "../actions/actions"
 
 import { ResultsMenu } from "./ResultsMenu"
 
 export interface InputGroupState {
-	disabled?: boolean;
-	filterValue?: string;
-	large?: boolean;
-	showPassword?: boolean;
-	tagValue?: string;
+    disabled?: boolean;
+    filterValue?: string;
+    large?: boolean;
+    showPassword?: boolean;
+    tagValue?: string;
 }
 
 interface InputProps extends BaseReduxProps {
-	placeholder: string;
-	style: {}
+    placeholder: string;
+    style: {}
 }
 
 interface HomeInputState {
-	category: string;
-	near: string;
-	limit: number;
-	inputActive: boolean;
+    category: string;
+    near: string;
+    limit: number;
+    inputActive: boolean;
 }
 
-export class HomeInput extends React.Component <InputProps, HomeInputState> {
-	private unsubscribe: Function;
-	private homeInput: HTMLElement
+export class HomeInput extends React.Component<InputProps, HomeInputState> {
+    private unsubscribe: Function;
+    private homeInput: HTMLElement
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			category: "",
-			near: "Seattle",
-			limit: 40,
-			inputActive: false
-		}
+    constructor(props) {
+        super(props);
+        this.state = {
+            category: "",
+            near: "Seattle",
+            limit: 40,
+            inputActive: false
+        }
 
-		this._queryFourSquare = this._queryFourSquare.bind(this)
-	}
+        this._queryFourSquare = this._queryFourSquare.bind(this)
+    }
 
-	_queryFourSquare() {
-		const params = { params: {
-			category: this.state.category,
-			near: this.state.near,
-			limit: this.state.limit
-		}}
-		this.props.store.dispatch({
-		type: "FETCHING_VENUES",
-		payload: "Spinner?"
-		})
-		axios.get("queryFourSquare", params)
-			.then((response) => {
-				this.props.store.dispatch({
-					type: "FETCHED_VENUES",
-					payload: {
-						queryInfo: this.state,
-						results: response.data
-					}
-				})
-			})
-	}
+    _queryFourSquare() {
+        const params = {
+            params: {
+                category: this.state.category,
+                near: this.state.near,
+                limit: this.state.limit
+            }
+        }
+        this.props.store.dispatch(FETCHING_VENUES())
+        axios.get("queryFourSquare", params)
+            .then((response) => {
+                console.log("Home Input response: ", response)
+                this.props.store.dispatch(FETCHED_VENUES({
+                    queryInfo: this.state,
+                    venues: response.data
+                }))
+            })
+    }
 
-	componentDidMount() {
-		const { store } = this.props;
-		this.unsubscribe = store.subscribe(() => {
-			this.forceUpdate()
-		})
-	}
+    componentDidMount() {
+        const { store } = this.props;
+        this.unsubscribe = store.subscribe(() => {
+            this.forceUpdate()
+        })
+    }
 
-	componentWillUnmount() {
-		this.unsubscribe();
-	}
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
 
 
-	render() {
-		const props = this.props
-		const state = this.state
-		const { store } = props
-		const { category } = state
-		const inputState = store.getState().homeInputState.active
-		const spinnerState = store.getState().spinner
+    render() {
+        const props = this.props
+        const state = this.state
+        const { store } = props
+        const { category } = state
+        const inputState = store.getState().homeInputState.active
+        const spinnerState = store.getState().spinner
 
-		const handleInputChange = (event) => {
-			this.setState({ category: event.target.value})
-			// console.log(state)
-			// console.log({thing1: "thing1", thing2: "thing2"})
-		}
-		const formatString = (string) => {
-			return string.charAt(0).toUpperCase() + string.slice(1)
-		}
-		const handleKeyDown = (event) => {
-			if (event.keyCode === 13) {
-				this.setState({ category: formatString(this.state.category)})
-				this._queryFourSquare()
-			}
-		}
+        const handleInputChange = (event) => {
+            this.setState({ category: event.target.value })
+            // console.log(state)
+            // console.log({thing1: "thing1", thing2: "thing2"})
+        }
+        const formatString = (string) => {
+            return string.charAt(0).toUpperCase() + string.slice(1)
+        }
+        const handleKeyDown = (event) => {
+            if (event.keyCode === 13) {
+                this.setState({ category: formatString(this.state.category) })
+                this._queryFourSquare()
+            }
+        }
 
-		const handleInputClick = () => {
-			if (this.state.inputActive === false) {
-				store.dispatch({
-					type: "FOCUS_INPUT"
-				})
-			} else {
-				return
-			}
-		}
+        const handleInputClick = () => {
+            if (this.state.inputActive === false) {
+                store.dispatch(FOCUS_INPUT())
+            } else {
+                return
+            }
+        }
 
-		const clearButton = (store) => {
-			if (this.state.category.length > 0) {
-				return (
-					<Button 
-						iconName="pt-icon-delete"
-						onClick={() => {
-							this.setState({ category: ""})
-							store.dispatch({
-								type: "CLEAR_VENUES"
-							})
-							this.homeInput.focus()
-						}}
-					/>
-				)
-			}
-		}
+        const clearButton = (store) => {
+            if (this.state.category.length > 0) {
+                return (
+                    <Button
+                        iconName="pt-icon-delete"
+                        onClick={() => {
+                            this.setState({ category: "" })
+                            store.dispatch(CLEAR_VENUES())
+                            this.homeInput.focus()
+                        }}
+                    />
+                )
+            }
+        }
 
-		const HomeInputContainerStyles = {
-			position: "absolute",
-			top: inputState ? "0px" : "11%",
-			width: inputState ? "100%" : "90%",
-			left: inputState ? "0px" : "5%",
-			boxShadow: inputState ? "" : "5px 5px 5px #333",
-			transition: "all, .3s"
-		}
+        const HomeInputContainerStyles = {
+            position: "absolute",
+            top: inputState ? "0px" : "11%",
+            width: inputState ? "100%" : "90%",
+            left: inputState ? "0px" : "5%",
+            boxShadow: inputState ? "" : "5px 5px 5px #333",
+            transition: "all, .3s"
+        }
 
-		const displaySpinner = () => {
-			if (spinnerState === true) {
-				return (
-					<Spinner
-						intent={Intent.PRIMARY}
-						className={"centerAbsolute marginTop50P pt-large"}
-					/>
-				)
-			} else {
-				return
-			}
-		}
+        const displaySpinner = () => {
+            if (spinnerState === true) {
+                return (
+                    <Spinner
+                        intent={Intent.PRIMARY}
+                        className={"centerAbsolute marginTop50P pt-large"}
+                    />
+                )
+            } else {
+                return
+            }
+        }
 
-		return (
-			<div 
-				className="inputGroup"
-				style={HomeInputContainerStyles}
-			>
-				<InputGroup
-					className="pt-large testInput"
-					onClick={handleInputClick}
-					intent={Intent.PRIMARY}
-					leftIconName="pt-icon-search"
-					rightElement={clearButton(store)}
-					inputRef={ (input) => this.homeInput = input }
-					placeholder={props.placeholder}
-					value={state.category}
-					disabled={false}
-					onChange={handleInputChange}
-					onKeyDown={handleKeyDown}
-				/>
-				<ResultsMenu store={store}/>
-				{displaySpinner()}
-			</div>
-		)
-	}
+        return (
+            <div
+                className="inputGroup"
+                style={HomeInputContainerStyles}
+            >
+                <InputGroup
+                    className="pt-large testInput"
+                    onClick={handleInputClick}
+                    intent={Intent.PRIMARY}
+                    leftIconName="pt-icon-search"
+                    rightElement={clearButton(store)}
+                    inputRef={(input) => this.homeInput = input}
+                    placeholder={props.placeholder}
+                    value={state.category}
+                    disabled={false}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                />
+                <ResultsMenu store={store} />
+                {displaySpinner()}
+            </div>
+        )
+    }
 
 
 }

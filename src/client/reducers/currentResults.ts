@@ -2,42 +2,35 @@ import { Venue } from "../Interfaces"
 
 export interface currentResults {
     queryInfo: {};
-    results: Venue[]
+    venues: Venue[]
 }
 
-export const currentResults = (state: currentResults = {
+const initState = {
     queryInfo: {},
-    results: []
-}, action) => {
-    switch (action.type) {
-        // case "VISITED_VENUE":
-        //     const newState = state.results.map((venue) => {
-        //         if (venue.id === action.id) {
-        //             return { ...venue, visited: true }
-        //         } else {
-        //             return venue
-        //         }
-        //     })
+    venues: []
+}
 
-        //     return { ...state, results: newState }
-        // case "FETCHED_VENUES":
-        //     return {
-        //         ...state,
-        //         queryInfo: action.payload.queryInfo,
-        //         results: action.payload.results
-        //     }
-        // case "FETCHING_VENUES":
-        //     return {
-        //         ...state,
-        //         queryInfo: {},
-        //         results: []
-        //     }
-        // case "CLEAR_VENUES":
-        //     return {
-        //         ...state,
-        //         queryInfo: {},
-        //         results: []
-        //     }
+export const currentResults = (state: currentResults = initState, action) => {
+    switch (action.type) {
+        case "VISITED_VENUE":
+            const newState = state.venues.map((venue) => {
+                if (venue.id === action.id) {
+                    return { ...venue, visited: true }
+                } else {
+                    return venue
+                }
+            })
+
+            return { ...state, venues: newState }
+        case "FETCHED_VENUES":
+            return {
+                ...state,
+                queryInfo: action.payload.queryInfo,
+                venues: action.payload.venues
+            }
+        case "CLEAR_VENUES":
+        case "FETCHING_VENUES":
+            return initState
         default:
             return state
     }

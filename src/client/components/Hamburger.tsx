@@ -1,6 +1,7 @@
 import * as React from "react"
 import * as classNames from "classNames"
 import { BaseReduxProps } from "../Interfaces"
+import { OPEN_MENU, CLOSE_MENU } from "../actions/actions"
 
 export interface HamburgerProps extends BaseReduxProps {
     styles: {};
@@ -16,19 +17,15 @@ export const Hamburger = (props: HamburgerProps) => {
     const hamburgerClasses = () => {
         return "c-hamburger c-hamburger--htx" + (hameMenuState.open ? " is-active" : "")
     }
-    if ( hideHamburger === false) {
-        return(
+    if (hideHamburger === false) {
+        return (
             <button
-                style={ props.styles }
+                style={props.styles}
                 onClick={() => {
-                    if ( hameMenuState.open === false ) {
-                        store.dispatch({
-                            type: "OPEN_MENU"
-                        })
+                    if (hameMenuState.open === false) {
+                        store.dispatch(OPEN_MENU())
                     } else {
-                        store.dispatch({
-                            type: "CLOSE_MENU"
-                        })
+                        store.dispatch(CLOSE_MENU())
                     }
                 }}
                 className={hamburgerClasses()}
@@ -37,7 +34,7 @@ export const Hamburger = (props: HamburgerProps) => {
             </button>
         )
     } else {
-        return <div/>
+        return <div />
     }
 
 }

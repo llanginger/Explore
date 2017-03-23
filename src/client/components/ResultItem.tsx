@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Venue, BaseReduxProps } from "../Interfaces"
+import { VISITED_VENUE } from "../actions/actions"
 
 interface ResultItemProps extends BaseReduxProps {
     venue: Venue
@@ -11,7 +12,7 @@ export const ResultItem = (props: ResultItemProps) => {
             return "#0F9960"
         } else if (rating > 3.5) {
             return "#D9822B"
-        } else  if (rating > -1) {
+        } else if (rating > -1) {
             return "#F55656"
         } else {
             return "#669EFF"
@@ -36,11 +37,8 @@ export const ResultItem = (props: ResultItemProps) => {
                 position: "relative"
             }}
             onClick={() => {
-                props.store.dispatch({
-                    type: "VISITED_VENUE",
-                    venue: props.venue,
-                    id: props.venue.id
-                })
+                props.store.dispatch(VISITED_VENUE(props.venue, props.venue.id))
+
             }}
         >
             <span
@@ -69,7 +67,7 @@ export const ResultItem = (props: ResultItemProps) => {
                 }}
             >
                 {thisRating(props.venue.rating)}
-            </span>                        
+            </span>
         </div>
     )
 }

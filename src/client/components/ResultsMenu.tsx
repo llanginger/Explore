@@ -9,8 +9,9 @@ import {
     Spinner
 } from "@blueprintjs/core";
 import { ResultItem } from "./ResultItem"
-import { BaseReduxProps } from "../Interfaces"
+import { BaseReduxProps, Venue } from "../Interfaces"
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
+import { LETS_GO, DISMISS_MAIN_INPUT_HELP } from "../actions/actions"
 
 
 export class ResultsMenu extends React.Component<BaseReduxProps, any> {
@@ -28,8 +29,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
     }
 
     public makeMenu() {
-        const fsResults = this.props.store.getState().fourSquareResults
-        const venues = fsResults[fsResults.length - 1]
+        const venues: Venue[] = this.props.store.getState().currentResults.venues
         const inputState = this.props.store.getState().homeInputState
         const menuStyles = {
             display: "flex",
@@ -46,7 +46,9 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
             color: "#182026"
         }
 
-        if (venues.results.length > 0 && inputState.active === true) {
+
+
+        if (venues.length > 0 && inputState.active === true) {
             return (
                 <div>
                     <div style={menuStyles} className="resultsMenu">
@@ -80,9 +82,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                 className="pt-fill"
                 intent={Intent.SUCCESS}
                 onClick={() => {
-                    this.props.store.dispatch({
-                        type: "LETS_GO"
-                    })
+                    this.props.store.dispatch(LETS_GO())
                 }}
             />
         )
@@ -100,9 +100,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                         intent={Intent.SUCCESS}
                         iconName="pt-icon-help"
                         onClick={() => {
-                            store.dispatch({
-                                type: "DISMISS_MAIN_INPUT_HELP"
-                            })
+                            store.dispatch(DISMISS_MAIN_INPUT_HELP())
                         }}
                     />
                     <MenuDivider />
@@ -113,10 +111,10 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
         }
     }
 
-    public mapVenuesToMenuItems(venues) {
+    public mapVenuesToMenuItems(venues: Venue[]) {
         const { store } = this.props
         const visitedId = store.getState().visitedVenues.visitedIds
-        return venues.results.map((venue, i) => {
+        return venues.map((venue, i) => {
             if (venue.visited && venue.visited === true || visitedId.indexOf(venue.id) !== -1) {
                 return
             } else {

@@ -1,14 +1,15 @@
 import { BaseReduxProps } from "../Interfaces"
 import * as React from "react"
+import { TOGGLE_BOTTOM_AREA } from "../actions/actions"
 
 export interface InfoCardProps extends BaseReduxProps {
 
 }
 
 export const InfoCard = (props: InfoCardProps) => {
-    
+
     const { store } = props
-    const venues = store.getState().currentResults.results
+    const venues = store.getState().currentResults.venues
     const inputState = store.getState().homeInputState.active
     if (venues.length > 0 && inputState == false) {
         const venue = venues[0]
@@ -48,9 +49,7 @@ export const InfoCard = (props: InfoCardProps) => {
         return (
             <div
                 onClick={() => {
-                    store.dispatch({
-                        type: "TOGGLE_BOTTOM_AREA"
-                    })
+                    store.dispatch(TOGGLE_BOTTOM_AREA())
                 }}
                 style={infoCardStyles}
             >
@@ -60,7 +59,7 @@ export const InfoCard = (props: InfoCardProps) => {
                 <div className="iwContent">
                     {venue.reviews[0].substr(0, 49)}...
                 </div>
-                <div 
+                <div
                     style={ratingStyles}
                 >
                     {venue.rating.toFixed(1)}
@@ -70,5 +69,5 @@ export const InfoCard = (props: InfoCardProps) => {
     } else {
         return <div />
     }
-    
+
 }

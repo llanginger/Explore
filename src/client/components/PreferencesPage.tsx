@@ -1,11 +1,12 @@
 import * as React from "react"
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import { BaseReduxProps } from "../Interfaces"
+import { CLOSE_SETTINGS_PAGE } from "../actions/actions"
 
 export const PreferencesPage = (props: BaseReduxProps) => {
     const { store } = props
     return (
-        <div 
+        <div
             className="preferencesPage"
             style={{
                 height: "100%",
@@ -16,9 +17,7 @@ export const PreferencesPage = (props: BaseReduxProps) => {
                 left: "0px"
             }}
             onClick={() => {
-                store.dispatch({
-                    type: "CLOSE_SETTINGS_PAGE"
-                })
+                store.dispatch(CLOSE_SETTINGS_PAGE())
             }}
         />
     )

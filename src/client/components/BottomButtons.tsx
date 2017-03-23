@@ -1,5 +1,6 @@
 import * as React from "react"
 import { BaseReduxProps } from "../Interfaces"
+import { NEXT_VENUE, PREV_VENUE } from "../actions/actions"
 
 export const BottomButtons = (props: BaseReduxProps) => {
 
@@ -29,7 +30,7 @@ export const BottomButtons = (props: BaseReduxProps) => {
     }
 
     const inputState = store.getState().homeInputState
-    const venues = store.getState().currentResults.results
+    const venues = store.getState().currentResults.venues
     if (venues.length > 0 && inputState.active == false) {
 
         return (
@@ -40,27 +41,23 @@ export const BottomButtons = (props: BaseReduxProps) => {
                     className="bottomButton"
                     style={buttonStyles}
                     onClick={() => {
-                        store.dispatch({
-                            type: "NEXT_VENUE"
-                        })
+                        store.dispatch(NEXT_VENUE())
                     }}
                 >
-                Back
+                    Back
                 </button>
-                <button 
+                <button
                     className="bottomButton"
                     style={buttonStyles}
                     onClick={() => {
-                        store.dispatch({
-                            type: "PREV_VENUE"
-                        })
+                        store.dispatch(PREV_VENUE())
                     }}
                 >
-                Next
+                    Next
                 </button>
             </div>
         )
     } else {
-        return <div/>
+        return <div />
     }
 }
