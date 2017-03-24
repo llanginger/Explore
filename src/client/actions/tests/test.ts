@@ -14,6 +14,7 @@ interface SHOW_SETTINGS_PAGE extends SimpleAction {
     page: string
 }
 
+// TODO This needs refactoring. ID isn't needed and there shouldn't be both "venue" and "payload" for the same kind of action payloads
 interface VISITED_VENUE extends SimpleAction {
     venue: Venue
     id: string;

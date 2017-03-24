@@ -8,7 +8,8 @@
         "clean-build": "make clean-build",
         "test-reducers": "mocha -r ts-node/register src/client/reducers/tests/test.ts",
         "test-actions": "mocha -r ts-node/register src/client/actions/tests/test.ts",
-        "test": "yarn run test-reducers && yarn run test-actions"
+        "test-components": "mocha -r ts-node/register src/client/components/tests/test.ts",
+        "test": "yarn run test-reducers && yarn run test-actions && yarn run test-components"
     },
     "dependencies": {
         "@blueprintjs/core": "^1.9.0",

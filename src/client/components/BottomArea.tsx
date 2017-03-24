@@ -42,6 +42,10 @@ export const BottomArea = (props) => {
         "small": !big,
     })
 
+    const getNextVenue = () => {
+
+    }
+
     const mapReviewsToList = () => {
         // Maybe turn this into a factory? Need some way of rendering only a couple
         return venue.reviews.slice(0, 5).map((rev, i) => {

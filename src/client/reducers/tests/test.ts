@@ -70,7 +70,7 @@ describe("Current Venue", () => {
             type: "NEXT_VENUE",
             payload: newState
         })
-        expect(result).to.deep.eq(newState)
+        expect(result).to.deep.eq({ ...newState, seen: true })
     })
 
     it("Should return new state on PREV_VENUE", () => {
@@ -79,7 +79,7 @@ describe("Current Venue", () => {
             type: "PREV_VENUE",
             payload: newState
         })
-        expect(result).to.deep.eq(newState)
+        expect(result).to.deep.eq({ ...newState, seen: true })
     })
 
     it("Should return empty on Clear venues call", () => {

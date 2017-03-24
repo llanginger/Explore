@@ -15,6 +15,13 @@ export interface Location {
     formattedAddress?: string[];
 }
 
+export interface QueryInfo {
+    category?: string;
+    near?: string;
+    limit?: number;
+    inputActive?: boolean
+}
+
 export interface CategoryIcon {
     prefix: string;
     suffix: string;
