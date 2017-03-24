@@ -1,4 +1,4 @@
-import { Venue, VenueResponse } from "../Interfaces"
+import { Venue, QueryInfo } from "../Interfaces"
 import { Action } from "redux"
 
 export const FETCHING_VENUES = () => {
@@ -7,10 +7,11 @@ export const FETCHING_VENUES = () => {
     }
 }
 
-export const FETCHED_VENUES: (payload: VenueResponse) => Action = (payload: VenueResponse) => {
+export const FETCHED_VENUES: (venues: Venue[], queryInfo: QueryInfo) => Action = (venues: Venue[], queryInfo: QueryInfo) => {
     return {
         type: "FETCHED_VENUES",
-        payload
+        venues,
+        queryInfo,
     }
 }
 
@@ -20,17 +21,17 @@ export const TOGGLE_BOTTOM_AREA: () => Action = () => {
     }
 }
 
-export const NEXT_VENUE: (payload: Venue) => Action = (payload: Venue) => {
+export const NEXT_VENUE: (venue?: Venue) => Action = (venue?: Venue) => {
     return {
         type: "NEXT_VENUE",
-        payload
+        venue
     }
 }
 
-export const PREV_VENUE: (payload: Venue) => Action = (payload: Venue) => {
+export const PREV_VENUE: (venue?: Venue) => Action = (venue?: Venue) => {
     return {
         type: "PREV_VENUE",
-        payload
+        venue
     }
 }
 
@@ -71,7 +72,7 @@ export const SHOW_SETTINGS_PAGE: (page: string) => Action = (page: string) => {
     }
 }
 
-export const VISITED_VENUE: (venue: Venue, id: string) => Action = (venue: Venue, id: string) => {
+export const VISITED_VENUE: (venue?: Venue, id?: string) => Action = (venue?: Venue, id?: string) => {
     return {
         type: "VISITED_VENUE",
         venue,
@@ -79,9 +80,10 @@ export const VISITED_VENUE: (venue: Venue, id: string) => Action = (venue: Venue
     }
 }
 
-export const LETS_GO: () => Action = () => {
+export const LETS_GO: (venue: Venue) => Action = (venue: Venue) => {
     return {
-        type: "LETS_GO"
+        type: "LETS_GO",
+        venue
     }
 }
 

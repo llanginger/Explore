@@ -1,5 +1,5 @@
 import { expect } from "chai"
-import { Venue, FourSquareResult, VenueResponse } from "../../Interfaces"
+import { Venue, VenueResponse, QueryInfo } from "../../Interfaces"
 import * as r from "../reducers"
 import * as a from "../../actions/actions"
 
@@ -68,7 +68,16 @@ describe("Current Venue", () => {
 
         const result = r.currentVenue(initState, {
             type: "NEXT_VENUE",
-            payload: newState
+            venue: newState
+        })
+        expect(result).to.deep.eq({ ...newState, seen: true })
+    })
+
+    it("Should return new state on LETS_GO", () => {
+
+        const result = r.currentVenue(initState, {
+            type: "LETS_GO",
+            venue: newState
         })
         expect(result).to.deep.eq({ ...newState, seen: true })
     })
@@ -77,7 +86,7 @@ describe("Current Venue", () => {
 
         const result = r.currentVenue(initState, {
             type: "PREV_VENUE",
-            payload: newState
+            venue: newState
         })
         expect(result).to.deep.eq({ ...newState, seen: true })
     })
@@ -178,9 +187,9 @@ describe("Init State", () => {
 })
 
 describe("FourSquare Results", () => {
-    const initState: r.fourSquareResults = [{ queryInfo: {}, venues: [] }]
-    const dummyState: r.fourSquareResults = [{ queryInfo: {}, venues: [dummyVenueOne] }]
-    const fetchingValuesState: r.fourSquareResults = [...initState]
+    const initState: VenueResponse[] = [{ queryInfo: {}, venues: [] }]
+    const dummyState: VenueResponse[] = [{ queryInfo: {}, venues: [dummyVenueOne] }]
+    const fetchingValuesState: VenueResponse[] = [...initState]
 
     it("Should return initState on default", () => {
         const result = r.fourSquareResults(initState, {})
@@ -193,13 +202,14 @@ describe("FourSquare Results", () => {
     })
 
     it("Should return new venue", () => {
-        const dummyPayloadOne: FourSquareResult = {
+        const dummyPayloadOne: VenueResponse = {
             queryInfo: {},
             venues: [dummyVenueOne]
         }
         const result = r.fourSquareResults(initState, {
             type: "FETCHED_VENUES",
-            payload: dummyPayloadOne
+            queryInfo: dummyPayloadOne.queryInfo,
+            venues: dummyPayloadOne.venues
         })
         expect(result).to.deep.eq([...initState, dummyPayloadOne])
     })
@@ -209,7 +219,9 @@ describe("Current Results", () => {
 
     interface CRAction {
         type?: string;
-        payload?: VenueResponse
+        queryInfo?: QueryInfo;
+        venues?: Venue[]
+        id?: string;
     }
 
     const initState: VenueResponse = {
@@ -229,7 +241,7 @@ describe("Current Results", () => {
         expect(result).to.deep.eq(initState)
     })
 
-    it("should return empty after fetching values called", () => {
+    it("should return empty after FETCHING_VENUES called", () => {
         const result = r.currentResults(dummyState, { type: "FETCHING_VENUES" })
         expect(result).to.deep.eq(initState)
     })
@@ -237,12 +249,10 @@ describe("Current Results", () => {
     it("Should return venues", () => {
         const action: CRAction = {
             type: "FETCHED_VENUES",
-            payload: {
-                queryInfo: {},
-                venues: [
-                    dummyVenueOne
-                ]
-            }
+            queryInfo: {},
+            venues: [
+                dummyVenueOne
+            ]
         }
         const stateAfter: VenueResponse = {
             queryInfo: {},
@@ -253,5 +263,51 @@ describe("Current Results", () => {
         const result = r.currentResults(initState, action)
 
         expect(result).to.deep.eq(stateAfter)
+    })
+
+    it("Should set visited to true on VISITED_VENUE", () => {
+        const stateBefore: VenueResponse = {
+            queryInfo: {},
+            venues: [{
+                ...dummyVenueOne,
+                seen: false,
+                visited: false
+            }]
+        }
+        const stateAfter: VenueResponse = {
+            queryInfo: {},
+            venues: [{
+                ...dummyVenueOne,
+                seen: false,
+                visited: true
+            }]
+        }
+        const result = r.currentResults(stateBefore, a.VISITED_VENUE(dummyVenueOne, dummyVenueOne.id))
+
+        expect(result).to.deep.eq(stateAfter)
+
+    })
+
+    it("Should set visited to true on LETS_GO && NEXT_VENUE", () => {
+        const stateBefore: VenueResponse = {
+            queryInfo: {},
+            venues: [{
+                ...dummyVenueOne,
+                seen: false,
+                visited: false
+            }]
+        }
+        const stateAfter: VenueResponse = {
+            queryInfo: {},
+            venues: [{
+                ...dummyVenueOne,
+                seen: true,
+                visited: false
+            }]
+        }
+        const result = r.currentResults(stateBefore, a.LETS_GO(dummyVenueOne))
+
+        expect(result).to.deep.eq(stateAfter)
+
     })
 })

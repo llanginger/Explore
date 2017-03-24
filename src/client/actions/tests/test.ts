@@ -1,13 +1,13 @@
 import * as a from "../actions"
 import { expect } from "chai"
-import { Venue, VenueResponse } from "../../Interfaces"
+import { Venue } from "../../Interfaces"
 
 interface SimpleAction {
     type: string
 }
 
 interface VenuePayload extends SimpleAction {
-    payload: Venue;
+    venue: Venue;
 }
 
 interface SHOW_SETTINGS_PAGE extends SimpleAction {
@@ -32,11 +32,11 @@ describe("Fetching Venues", () => {
 })
 
 describe("FETCHED_VENUES", () => {
-    const noData: VenueResponse = { queryInfo: {}, venues: [] }
+    const noData = { queryInfo: {}, venues: [] }
 
     it("Should return FETCHED_VENUES with payload", () => {
-        const result = a.FETCHED_VENUES(noData)
-        expect(result).to.deep.eq({ type: "FETCHED_VENUES", payload: noData })
+        const result = a.FETCHED_VENUES([], {})
+        expect(result).to.deep.eq({ type: "FETCHED_VENUES", venues: noData.venues, queryInfo: noData.queryInfo })
     })
 })
 
@@ -52,7 +52,7 @@ describe("TOGGLE_BOTTOM_AREA", () => {
 describe("NEXT_VENUE", () => {
     it("Should return simple action", () => {
         const result = a.NEXT_VENUE({})
-        const expected: VenuePayload = { type: "NEXT_VENUE", payload: {} }
+        const expected: VenuePayload = { type: "NEXT_VENUE", venue: {} }
 
         expect(result).to.deep.eq(expected)
     })
@@ -61,7 +61,7 @@ describe("NEXT_VENUE", () => {
 describe("PREV_VENUE", () => {
     it("Should return simple action", () => {
         const result = a.PREV_VENUE({})
-        const expected: VenuePayload = { type: "PREV_VENUE", payload: {} }
+        const expected: VenuePayload = { type: "PREV_VENUE", venue: {} }
 
         expect(result).to.deep.eq(expected)
     })
@@ -131,8 +131,8 @@ describe("VISITED_VENUE", () => {
 })
 
 describe("LETS_GO", () => {
-    const result = a.LETS_GO()
-    const expected: SimpleAction = { type: "LETS_GO" }
+    const result = a.LETS_GO({})
+    const expected: VenuePayload = { type: "LETS_GO", venue: {} }
 
     it("Should return simple action", () => {
         expect(result).to.deep.eq(expected)

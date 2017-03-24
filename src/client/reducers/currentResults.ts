@@ -1,8 +1,16 @@
-import { Venue } from "../Interfaces"
+import { Venue, QueryInfo } from "../Interfaces"
 
 export interface currentResults {
     queryInfo: {};
     venues: Venue[]
+}
+
+interface CRAction {
+    type?: string;
+    queryInfo?: QueryInfo;
+    venues?: Venue[];
+    venue?: Venue;
+    id?: string;
 }
 
 const initState = {
@@ -10,10 +18,10 @@ const initState = {
     venues: []
 }
 
-export const currentResults = (state: currentResults = initState, action) => {
+export const currentResults = (state: currentResults = initState, action: CRAction) => {
     switch (action.type) {
         case "VISITED_VENUE":
-            const newState = state.venues.map((venue) => {
+            const newVisitedState = state.venues.map((venue) => {
                 if (venue.id === action.id) {
                     return { ...venue, visited: true }
                 } else {
@@ -21,12 +29,23 @@ export const currentResults = (state: currentResults = initState, action) => {
                 }
             })
 
-            return { ...state, venues: newState }
+            return { ...state, venues: newVisitedState }
+        case "LETS_GO":
+        case "NEXT_VENUE":
+            const newSeenState = state.venues.map((venue) => {
+                if (venue.id === action.venue.id) {
+                    return { ...venue, seen: true }
+                } else {
+                    return venue
+                }
+            })
+
+            return { ...state, venues: newSeenState }
         case "FETCHED_VENUES":
             return {
                 ...state,
-                queryInfo: action.payload.queryInfo,
-                venues: action.payload.venues
+                queryInfo: action.queryInfo,
+                venues: action.venues
             }
         case "CLEAR_VENUES":
         case "FETCHING_VENUES":

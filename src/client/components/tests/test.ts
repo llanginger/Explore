@@ -38,7 +38,7 @@ describe("Test store", () => {
         })
 
         describe("Using dummyData", () => {
-            store.dispatch(a.FETCHED_VENUES({ queryInfo: {}, venues: dummyData }))
+            store.dispatch(a.FETCHED_VENUES(dummyData, {}))
             const result = store.getState().currentResults
 
             it("Should return dummyData", () => {

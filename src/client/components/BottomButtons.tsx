@@ -31,6 +31,18 @@ export const BottomButtons = (props: BaseReduxProps) => {
 
     const inputState = store.getState().homeInputState
     const venues = store.getState().currentResults.venues
+
+    const getNextVenue = () => {
+        for (let venue of venues) {
+            if (venue.seen === false && venue.visited === false) {
+                return venue
+            }
+        }
+    }
+
+    const handleNext = () => {
+        return store.dispatch(NEXT_VENUE(getNextVenue()))
+    }
     if (venues.length > 0 && inputState.active == false) {
 
         return (
@@ -41,17 +53,17 @@ export const BottomButtons = (props: BaseReduxProps) => {
                     className="bottomButton"
                     style={buttonStyles}
                     onClick={() => {
-                        store.dispatch(NEXT_VENUE())
+                        store.dispatch(PREV_VENUE())
                     }}
+
                 >
                     Back
                 </button>
                 <button
                     className="bottomButton"
                     style={buttonStyles}
-                    onClick={() => {
-                        store.dispatch(PREV_VENUE())
-                    }}
+                    onClick={handleNext}
+
                 >
                     Next
                 </button>

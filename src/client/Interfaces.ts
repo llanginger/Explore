@@ -53,8 +53,6 @@ export interface VenueResponse {
     venues: Venue[]
 }
 
-export interface FourSquareResult extends VenueResponse {
-}
 
 export interface Venue {
     location?: Location;

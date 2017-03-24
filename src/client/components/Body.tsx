@@ -19,7 +19,6 @@ import {
 
 let init_lng = -98.5795
 let init_lat = 39.8282
-let nps_url = "https://raw.githubusercontent.com/gizm00/blog_code/master/appendto/react_nps/np.geojson"
 
 interface BodyProps extends BaseReduxProps {
 
@@ -51,6 +50,7 @@ export class Body extends React.Component<BodyProps, any> {
         const venues = store.getState().currentResults.venues
         const showBottomArea = store.getState().bottomArea.show
         const showPreferecesPage = store.getState().settingsPages.preferences
+        const showSettingsMenu = store.getState().settingsMenu
 
         // --- Set up render conditionals --- //
         const renderOverlay = () => {
@@ -68,7 +68,15 @@ export class Body extends React.Component<BodyProps, any> {
             }
         }
 
-        const renderSettingsPage = () => {
+        const renderSettingsMenu = () => {
+            if (showSettingsMenu.open === true) {
+                return <SettingsMenu store={store} />
+            } else {
+                return
+            }
+        }
+
+        const renderPrefsPage = () => {
             if (showPreferecesPage.open === true) {
                 return <PreferencesPage store={store} />
             } else {
@@ -95,7 +103,6 @@ export class Body extends React.Component<BodyProps, any> {
                     store={store}
                     init_lat={init_lat}
                     init_lng={init_lng}
-                    nps_source={nps_url}
                 />
                 <ReactCSSTransitionGroup
                     transitionName="overlayFade"
@@ -121,7 +128,13 @@ export class Body extends React.Component<BodyProps, any> {
                     store={store}
                 />
                 <InfoCard store={store} />
-                <SettingsMenu store={store} />
+                <ReactCSSTransitionGroup
+                    transitionName="settingsMenuLoad"
+                    transitionEnterTimeout={500}
+                    transitionLeaveTimeout={500}
+                >
+                    {renderSettingsMenu()}
+                </ReactCSSTransitionGroup>
                 <BottomButtons store={store} />
                 <ReactCSSTransitionGroup
                     transitionName="bottomAreaRise"
@@ -130,7 +143,7 @@ export class Body extends React.Component<BodyProps, any> {
                 >
                     {renderBottomArea()}
                 </ReactCSSTransitionGroup>
-                {renderSettingsPage()}
+                {renderPrefsPage()}
             </div>
         )
 

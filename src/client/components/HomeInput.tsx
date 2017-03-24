@@ -73,10 +73,10 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
         axios.get("queryFourSquare", params)
             .then((response) => {
                 console.log("Home Input response: ", response)
-                this.props.store.dispatch(FETCHED_VENUES({
-                    queryInfo: this.state,
-                    venues: response.data
-                }))
+                this.props.store.dispatch(FETCHED_VENUES(
+                    response.data,
+                    params.params
+                ))
             })
     }
 

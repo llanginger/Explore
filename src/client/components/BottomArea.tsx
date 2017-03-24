@@ -4,14 +4,13 @@ import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import * as classNames from "classnames"
 import { TOGGLE_BOTTOM_AREA } from "../actions/actions"
 
-export const BottomArea = (props) => {
+export const BottomArea = (props: BaseReduxProps) => {
 
 
     const { store } = props
-    const venues = store.getState().currentResults.venues
+    const venue = store.getState().currentVenue
     const big = store.getState().bottomArea.big
     const show = store.getState().bottomArea.show
-    const venue = venues[0]
 
     const imageStyles = {
         height: big ? "200px" : "200px",
@@ -42,9 +41,6 @@ export const BottomArea = (props) => {
         "small": !big,
     })
 
-    const getNextVenue = () => {
-
-    }
 
     const mapReviewsToList = () => {
         // Maybe turn this into a factory? Need some way of rendering only a couple

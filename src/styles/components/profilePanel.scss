@@ -47,21 +47,21 @@
 
 
 
-.profileImageAnim-enter {
-    transform: translateX(-80px);
-}
+// .profileImageAnim-enter {
+//     transform: translateX(-80px);
+// }
 
-.profileImageAnim-enter.profileImageAnim-enter-active {
-    transform: translateX(0px);
-    transition: all .3s ease-in-out;
-}
+// .profileImageAnim-enter.profileImageAnim-enter-active {
+//     transform: translateX(0px);
+//     transition: all .3s ease-in-out;
+// }
 
 
-.profileImageAnim-leave {
-   transform: translateX(0px);
-}
+// .profileImageAnim-leave {
+//    transform: translateX(0px);
+// }
 
-.profileImageAnim-leave.profileImageAnim-leave-active {
-    transform: translateX(-80px);
-    transition: all .3s ease-in-out;
-}
+// .profileImageAnim-leave.profileImageAnim-leave-active {
+//     transform: translateX(-80px);
+//     transition: all .3s ease-in-out;
+// }

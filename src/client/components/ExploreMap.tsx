@@ -10,7 +10,6 @@ interface ExploreMapProps extends BaseReduxProps {
     styles: {};
     init_lat: number;
     init_lng: number;
-    nps_source: string
 }
 
 interface Marker {
@@ -31,11 +30,7 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
         super(props)
         this._loadFeatures = this._loadFeatures.bind(this)
     }
-    state = {
-        forecast: []
-    };
 
-    markers = [];
 
     componentDidMount() {
         this.map = this._createMap()
@@ -74,32 +69,31 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
         const { store } = props
         let self = this
 
-        const venues = store.getState().currentResults.venues
-        this._loadMarkers(venues, this.map)
+        const currentVenue: Venue = store.getState().currentVenue
+        this._loadMarkers(currentVenue, this.map)
 
 
     }
 
-    _loadMarkers(venues, map) {
-        const venuesToMark = [...venues]
-
+    _loadMarkers(currentVenue, map) {
+        console.log("venueMarkers: ", this.venueMarkers)
         // Ensure only new markers are rendered
-        if (venuesToMark.length !== this.venueMarkers.length) {
+        if (currentVenue.name.length > 0) {
+            console.log("Load markers: ", currentVenue)
             for (var i of this.venueMarkers) {
                 i.setMap(null);
             }
             this.venueMarkers = []
-            for (let val of venuesToMark) {
 
-                let marker: Marker = this._createMarker(val, map)
+            let marker: Marker = this._createMarker(currentVenue, map)
 
-                // Click func to open/close infowindows
-                marker.addListener("click", function () {
-                    console.log(marker.name);
-                });
+            // Click func to open/close infowindows
+            marker.addListener("click", function () {
+                console.log(marker.name);
+            });
 
-                this.venueMarkers.push(marker)
-            }
+            this.venueMarkers.push(marker)
+
         } else {
             return
         }
@@ -117,7 +111,8 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
             rating: val.rating.toFixed(0),
             reviews: val.reviews
         })
-
+        console.log("Create marker: ", marker)
+        map.panTo(marker.getPosition())
         return marker
     }
 

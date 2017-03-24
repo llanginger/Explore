@@ -9,10 +9,9 @@ export interface InfoCardProps extends BaseReduxProps {
 export const InfoCard = (props: InfoCardProps) => {
 
     const { store } = props
-    const venues = store.getState().currentResults.venues
+    const venue = store.getState().currentVenue
     const inputState = store.getState().homeInputState.active
-    if (venues.length > 0 && inputState == false) {
-        const venue = venues[0]
+    if (venue.name.length > 0 && inputState == false) {
         const { rating } = venue
         const pickRatingColor = () => {
             if (rating >= 7) {

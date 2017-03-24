@@ -76,13 +76,14 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
     }
 
     public letsGoButton() {
+        const venues: Venue[] = this.props.store.getState().currentResults.venues
         return (
             <Button
                 text="Let's go!"
                 className="pt-fill"
                 intent={Intent.SUCCESS}
                 onClick={() => {
-                    this.props.store.dispatch(LETS_GO())
+                    this.props.store.dispatch(LETS_GO(venues[0]))
                 }}
             />
         )
