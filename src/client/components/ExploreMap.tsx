@@ -76,10 +76,8 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
     }
 
     _loadMarkers(currentVenue, map) {
-        console.log("venueMarkers: ", this.venueMarkers)
         // Ensure only new markers are rendered
         if (currentVenue.name.length > 0) {
-            console.log("Load markers: ", currentVenue)
             for (var i of this.venueMarkers) {
                 i.setMap(null);
             }

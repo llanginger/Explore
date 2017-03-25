@@ -84,6 +84,15 @@ export class Body extends React.Component<BodyProps, any> {
             }
         }
 
+        // --- STYLES --- //
+
+        const burgerStyles = {
+            position: "absolute",
+            top: "5px",
+            left: "5px",
+            filter: "drop-shadow(5px 5px 5px #333)"
+        }
+
         return (
             <div
                 id="mainApp"
@@ -94,6 +103,18 @@ export class Body extends React.Component<BodyProps, any> {
                     marginLeft: "100px",
                     overflow: "hidden"
                 }}>
+                <div
+                    style={{
+                        position: "absolute",
+                        width: "100%",
+                        height: "100%",
+                        zIndex: 500,
+                        backgroundColor: "#333",
+                        filter: showSettingsMenu.open ? "opacity(0.5)" : "opacity(0)",
+                        transition: "all .5s linear",
+                        pointerEvents: "none"
+                    }}
+                />
                 <ExploreMap
                     styles={{
                         height: "100%",
@@ -115,12 +136,7 @@ export class Body extends React.Component<BodyProps, any> {
                 </ReactCSSTransitionGroup>
                 <Hamburger
                     store={store}
-                    styles={{
-                        position: "absolute",
-                        top: "5px",
-                        left: "5px",
-                        filter: "drop-shadow(5px 5px 5px #333)"
-                    }}
+                    styles={burgerStyles}
                 />
                 <HomeInput
                     style={{ marginTop: "100px" }}

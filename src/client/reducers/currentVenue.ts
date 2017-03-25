@@ -1,9 +1,6 @@
 import { Venue } from "../Interfaces"
 const initState: Venue = {
-    location: {
-        lat: 47.625058,
-        lng: -122.337680
-    },
+    location: {},
     contact: {},
     name: "",
     id: "",
