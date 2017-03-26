@@ -6,17 +6,21 @@ import {
     fourSquareResults,
     homeInputState,
     initState,
+    seenVenues,
     settingsMenu,
     visitedVenues,
     spinner,
     bottomArea,
-    settingsPages
+    settingsPages,
+    loggedIn,
 } from "./reducers/reducers"
 
 
 export interface Reducers {
     currentVenue: Venue;
     initState: initState;
+    loggedIn: loggedIn;
+    seenVenues: string[];
     settingsMenu: settingsMenu;
     fourSquareResults: fourSquareResults;
     currentResults: currentResults;
@@ -32,6 +36,8 @@ export const Reducers = combineReducers<Reducers>({
     currentVenue,
     bottomArea,
     initState,
+    loggedIn,
+    seenVenues,
     settingsMenu,
     fourSquareResults,
     currentResults,

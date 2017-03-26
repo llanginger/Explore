@@ -1,32 +1,24 @@
 import { openClose } from "../Interfaces"
 
 export interface settingsPages {
-    preferences: openClose;
-    account: openClose;
-    previousVenues: openClose;
+    page: string;
 }
 
 export const settingsPages = (state: settingsPages = {
-    preferences: { open: false },
-    account: { open: false },
-    previousVenues: { open: false }
+    page: "closed"
 }, action) => {
-    const togglePage = (pageName: string) => {
-        let newState: settingsPages = { ...state }
-        for (const page in newState) {
-            if (page === pageName.toLowerCase()) {
-                newState[page].open = true
-            } else {
-                newState[page].open = false
-            }
-        }
-        return newState
-    }
     switch (action.type) {
         case "SHOW_SETTINGS_PAGE":
-            return togglePage(action.page)
+            switch (action.page) {
+                case "preferences":
+                case "account":
+                case "places":
+                    return { page: action.page }
+                default:
+                    return state;
+            }
         case "CLOSE_SETTINGS_PAGE":
-            return togglePage("close")
+            return { page: "closed" }
         default:
             return state;
     }

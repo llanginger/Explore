@@ -36,6 +36,11 @@ export interface Category {
     primary?: boolean
 }
 
+export interface User {
+    name?: string;
+    id?: string;
+}
+
 export interface Contact {
     phone?: string;
     formattedPhone?: string;
@@ -53,6 +58,14 @@ export interface VenueResponse {
     venues: Venue[]
 }
 
+export interface MasterAction {
+    type: string;
+    venue?: Venue;
+    venues?: Venue[];
+    queryInfo?: QueryInfo;
+    id?: string;
+    page?: string;
+}
 
 export interface Venue {
     location?: Location;

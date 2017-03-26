@@ -75,15 +75,24 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
         }
     }
 
-    public letsGoButton() {
+    private getNextVenue = (venues) => {
+        for (let venue of venues) {
+            if (venue.seen === false && venue.visited !== true) {
+                return venue
+            }
+        }
+    }
+
+    private letsGoButton() {
         const venues: Venue[] = this.props.store.getState().currentResults.venues
+
         return (
             <Button
                 text="Let's go!"
                 className="pt-fill"
                 intent={Intent.SUCCESS}
                 onClick={() => {
-                    this.props.store.dispatch(LETS_GO(venues[0]))
+                    this.props.store.dispatch(LETS_GO(this.getNextVenue(venues)))
                 }}
             />
         )

@@ -1,3 +1,5 @@
+import { MasterAction } from "../Interfaces"
+
 export interface bottomArea {
     show: boolean;
     big: boolean;
@@ -6,8 +8,8 @@ export interface bottomArea {
 export const bottomArea = (state: bottomArea = {
     big: false,
     show: false
-}, action) => {
-    switch(action.type) {
+}, action: MasterAction) => {
+    switch (action.type) {
         case "TOGGLE_BOTTOM_AREA":
             return { ...state, big: !state.big }
         case "FETCHED_VENUES":

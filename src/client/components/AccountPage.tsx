@@ -3,7 +3,8 @@ import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import { BaseReduxProps } from "../Interfaces"
 import { CLOSE_SETTINGS_PAGE } from "../actions/actions"
 
-export const PreferencesPage = (props) => {
+
+export const AccountPage = (props) => {
 
     const basicStyles = {
         height: "100%",
@@ -13,10 +14,12 @@ export const PreferencesPage = (props) => {
         left: "0px"
     }
     return (
+
         <div
-            className="preferencesPage"
-            style={{ ...basicStyles, background: "honeydew" }}
+            className="accountPage"
+            style={{ ...basicStyles, background: "palevioletred" }}
             onClick={props.onClick}
         />
+
     )
 }

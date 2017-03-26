@@ -6,7 +6,7 @@
 @import "./components/settingsMenu.scss";
 @import "./components/profilePanel.scss";
 @import "./components/infoWindow.scss";
-
+@import "./components/settingsPages.scss";
 // Consider Radium or some other react style package
 
 // Mobile testing:
@@ -123,3 +123,4 @@
   width: 100px;
   background: purple;
 }
+

@@ -13,7 +13,9 @@ import {
     InfoCard,
     Overlay,
     SettingsMenu,
-    PreferencesPage
+    PreferencesPage,
+    PreferencesContainer,
+    LoginPage
 } from "./Components"
 
 
@@ -43,14 +45,17 @@ export class Body extends React.Component<BodyProps, any> {
     }
 
     render() {
+
+
         const { store } = this.props
 
         // --- Set up reducer shortcuts --- //
         const showOverlay = store.getState().initState.showOverlay
         const venues = store.getState().currentResults.venues
         const showBottomArea = store.getState().bottomArea.show
-        const showPreferecesPage = store.getState().settingsPages.preferences
+        const showPreferecesPage = store.getState().settingsPages.page
         const showSettingsMenu = store.getState().settingsMenu
+        const showLoginPage = store.getState().loggedIn
 
         // --- Set up render conditionals --- //
         const renderOverlay = () => {
@@ -76,13 +81,13 @@ export class Body extends React.Component<BodyProps, any> {
             }
         }
 
-        const renderPrefsPage = () => {
-            if (showPreferecesPage.open === true) {
-                return <PreferencesPage store={store} />
-            } else {
-                return <div />
-            }
-        }
+        // const renderPrefsPage = () => {
+        //     if (showPreferecesPage !== "closed") {
+        //         return <PreferencesContainer store={store} page={showPreferecesPage} />
+        //     } else {
+        //         return <div />
+        //     }
+        // }
 
         // --- STYLES --- //
 
@@ -92,6 +97,79 @@ export class Body extends React.Component<BodyProps, any> {
             left: "5px",
             filter: "drop-shadow(5px 5px 5px #333)"
         }
+
+        const whichView = () => {
+            if (showLoginPage.loggedIn === true) {
+                return (
+                    <div style={{
+                        height: "100%",
+                        width: "100%"
+                    }}>
+                        <div
+                            style={{
+                                position: "absolute",
+                                width: "100%",
+                                height: "100%",
+                                zIndex: 500,
+                                backgroundColor: "#333",
+                                filter: showSettingsMenu.open ? "opacity(0.5)" : "opacity(0)",
+                                transition: "all .5s linear",
+                                pointerEvents: "none"
+                            }}
+                        />
+                        <ExploreMap
+                            styles={{
+                                height: "100%",
+                                width: "100%"
+                            }}
+                            className="mapiv"
+                            store={store}
+                            init_lat={init_lat}
+                            init_lng={init_lng}
+                        />
+                        <ReactCSSTransitionGroup
+                            transitionName="overlayFade"
+                            transitionEnterTimeout={300}
+                            transitionLeaveTimeout={300}
+                            transitionAppear={true}
+                            transitionAppearTimeout={1200}
+                        >
+                            {renderOverlay()}
+                        </ReactCSSTransitionGroup>
+                        <Hamburger
+                            store={store}
+                            styles={burgerStyles}
+                        />
+                        <HomeInput
+                            style={{ marginTop: "100px" }}
+                            placeholder="What Would You Like?"
+                            store={store}
+                        />
+                        <InfoCard store={store} />
+                        <ReactCSSTransitionGroup
+                            transitionName="settingsMenuLoad"
+                            transitionEnterTimeout={500}
+                            transitionLeaveTimeout={500}
+                        >
+                            {renderSettingsMenu()}
+                        </ReactCSSTransitionGroup>
+                        <BottomButtons store={store} />
+                        <ReactCSSTransitionGroup
+                            transitionName="bottomAreaRise"
+                            transitionEnterTimeout={300}
+                            transitionLeaveTimeout={300}
+                        >
+                            {renderBottomArea()}
+                        </ReactCSSTransitionGroup>
+
+                        <PreferencesContainer store={store} />
+                    </div>
+                )
+            } else {
+                return <LoginPage store={store} />
+            }
+        }
+
 
         return (
             <div
@@ -103,63 +181,8 @@ export class Body extends React.Component<BodyProps, any> {
                     marginLeft: "100px",
                     overflow: "hidden"
                 }}>
-                <div
-                    style={{
-                        position: "absolute",
-                        width: "100%",
-                        height: "100%",
-                        zIndex: 500,
-                        backgroundColor: "#333",
-                        filter: showSettingsMenu.open ? "opacity(0.5)" : "opacity(0)",
-                        transition: "all .5s linear",
-                        pointerEvents: "none"
-                    }}
-                />
-                <ExploreMap
-                    styles={{
-                        height: "100%",
-                        width: "100%"
-                    }}
-                    className="mapiv"
-                    store={store}
-                    init_lat={init_lat}
-                    init_lng={init_lng}
-                />
-                <ReactCSSTransitionGroup
-                    transitionName="overlayFade"
-                    transitionEnterTimeout={300}
-                    transitionLeaveTimeout={300}
-                    transitionAppear={true}
-                    transitionAppearTimeout={1200}
-                >
-                    {renderOverlay()}
-                </ReactCSSTransitionGroup>
-                <Hamburger
-                    store={store}
-                    styles={burgerStyles}
-                />
-                <HomeInput
-                    style={{ marginTop: "100px" }}
-                    placeholder="What Would You Like?"
-                    store={store}
-                />
-                <InfoCard store={store} />
-                <ReactCSSTransitionGroup
-                    transitionName="settingsMenuLoad"
-                    transitionEnterTimeout={500}
-                    transitionLeaveTimeout={500}
-                >
-                    {renderSettingsMenu()}
-                </ReactCSSTransitionGroup>
-                <BottomButtons store={store} />
-                <ReactCSSTransitionGroup
-                    transitionName="bottomAreaRise"
-                    transitionEnterTimeout={300}
-                    transitionLeaveTimeout={300}
-                >
-                    {renderBottomArea()}
-                </ReactCSSTransitionGroup>
-                {renderPrefsPage()}
+
+                {whichView()}
             </div>
         )
 

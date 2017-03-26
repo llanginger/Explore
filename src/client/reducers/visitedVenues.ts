@@ -5,10 +5,16 @@ export interface visitedVenues {
     visitedVenues: Venue[];
 }
 
+interface VVAction {
+    type: string;
+    id?: string;
+    venue?: Venue;
+}
+
 export const visitedVenues = (state: visitedVenues = {
     visitedIds: [],
     visitedVenues: []
-}, action) => {
+}, action: VVAction) => {
     switch (action.type) {
         case "VISITED_VENUE":
             return {

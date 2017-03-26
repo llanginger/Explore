@@ -33,12 +33,8 @@ export const BottomButtons = (props: BaseReduxProps) => {
     const venues = store.getState().currentResults.venues
 
     const getNextVenue = () => {
-        console.log("Next venue clicked")
-        console.log("Next venues to pick from: ", venues)
         for (let venue of venues) {
-
             if (venue.seen === false && venue.visited !== true) {
-                console.log("Next venue: ", venue)
                 return venue
             }
         }

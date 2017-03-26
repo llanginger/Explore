@@ -21,7 +21,11 @@ export const SettingsMenu = (props: BaseReduxProps) => {
     const renderList = () => {
         return (
             <ul className="settingsMenuUl">
-                <li><span className="pt-icon-standard pt-icon-manual settingsMenuIcon" />Account</li>
+                <li
+                    onClick={() => {
+                        store.dispatch(SHOW_SETTINGS_PAGE("account"))
+                    }}
+                ><span className="pt-icon-standard pt-icon-manual settingsMenuIcon" />Account</li>
                 <li
                     onClick={() => {
                         store.dispatch(SHOW_SETTINGS_PAGE("preferences"))

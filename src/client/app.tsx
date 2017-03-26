@@ -1,3 +1,6 @@
+// process.env.NODE_ENV = "production";
+console.log("Env: ", process.env.NODE_ENV)
+
 import * as React from "react"
 import * as ReactDOM from "react-dom"
 import { createStore, applyMiddleware, Store, compose } from "redux"

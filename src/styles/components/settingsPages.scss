@@ -1,0 +1,17 @@
+.prefPanel-enter {
+    filter: opacity(.5);
+}
+
+.prefPanel-enter.prefPanel-enter-active {
+    filter: opacity(1);
+    transition: all .2s ease-in-out;
+}
+
+.prefPanel-leave {
+    transform: translateY(0px);
+}
+
+.prefPanel-leave.prefPanel-leave-active {
+    transform: translateY(100%);
+    transition: all .2s ease-in-out;
+}

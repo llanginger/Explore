@@ -1,6 +1,6 @@
 import * as a from "../actions"
 import { expect } from "chai"
-import { Venue } from "../../Interfaces"
+import { Venue, User } from "../../Interfaces"
 
 interface SimpleAction {
     type: string
@@ -8,6 +8,10 @@ interface SimpleAction {
 
 interface VenuePayload extends SimpleAction {
     venue: Venue;
+}
+
+interface UserPayload extends SimpleAction {
+    user: User;
 }
 
 interface SHOW_SETTINGS_PAGE extends SimpleAction {
@@ -144,6 +148,25 @@ describe("DISMISS_MAIN_INPUT_HELP", () => {
     const expected: SimpleAction = { type: "DISMISS_MAIN_INPUT_HELP" }
 
     it("Should return simple action", () => {
+        expect(result).to.deep.eq(expected)
+    })
+})
+
+describe("LOG_IN", () => {
+    const newUser: User = { name: "Leo", id: "123" }
+    const result = a.LOG_IN(newUser)
+    const expected: UserPayload = { type: "LOG_IN", user: newUser }
+    it("should return simple action", () => {
+
+        expect(result).to.deep.eq(expected)
+    })
+})
+
+describe("LOG_OUT", () => {
+    const result = a.LOG_OUT()
+    const expected: SimpleAction = { type: "LOG_OUT" }
+    it("should return simple action", () => {
+
         expect(result).to.deep.eq(expected)
     })
 })

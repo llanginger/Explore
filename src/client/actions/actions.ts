@@ -1,5 +1,18 @@
-import { Venue, QueryInfo } from "../Interfaces"
+import { Venue, QueryInfo, User } from "../Interfaces"
 import { Action } from "redux"
+
+export interface SimpleAction {
+    type: string;
+}
+
+export interface AWithVenue extends SimpleAction {
+    venue: Venue;
+}
+
+export interface AWithQueryInfo extends SimpleAction {
+    venues: Venue[];
+    queryInfo: QueryInfo;
+}
 
 export const FETCHING_VENUES = () => {
     return {
@@ -91,4 +104,12 @@ export const DISMISS_MAIN_INPUT_HELP: () => Action = () => {
     return {
         type: "DISMISS_MAIN_INPUT_HELP"
     }
+}
+
+export const LOG_IN: (user: User) => Action = (user: User) => {
+    return { type: "LOG_IN", user: user }
+}
+
+export const LOG_OUT: () => Action = () => {
+    return { type: "LOG_OUT" }
 }
