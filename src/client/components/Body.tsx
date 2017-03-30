@@ -23,14 +23,14 @@ let init_lng = -98.5795
 let init_lat = 39.8282
 
 interface BodyProps extends BaseReduxProps {
-
 }
 
 export class Body extends React.Component<BodyProps, any> {
-
+    private hello: string;
     private unsubscribe: Function;
     constructor(props) {
         super(props)
+        this.hello = "hello"
     }
 
     componentDidMount() {
@@ -45,17 +45,17 @@ export class Body extends React.Component<BodyProps, any> {
     }
 
     render() {
-
-
         const { store } = this.props
 
+        const storeRef = store.getState()
+
         // --- Set up reducer shortcuts --- //
-        const showOverlay = store.getState().initState.showOverlay
-        const venues = store.getState().currentResults.venues
-        const showBottomArea = store.getState().bottomArea.show
-        const showPreferecesPage = store.getState().settingsPages.page
-        const showSettingsMenu = store.getState().settingsMenu
-        const showLoginPage = store.getState().loggedIn
+        const showOverlay = storeRef.initState.showOverlay
+        const venues = storeRef.currentResults.venues
+        const showBottomArea = storeRef.bottomArea.show
+        const showPreferecesPage = storeRef.settingsPages.page
+        const showSettingsMenu = storeRef.settingsMenu
+        const showLoginPage = storeRef.loggedIn
 
         // --- Set up render conditionals --- //
         const renderOverlay = () => {

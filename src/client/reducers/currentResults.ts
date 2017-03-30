@@ -49,6 +49,7 @@ export const currentResults = (state: currentResults = initState, action: CRActi
             }
         case "CLEAR_VENUES":
         case "FETCHING_VENUES":
+        case "LOG_OUT":
             return initState
         default:
             return state

@@ -1,6 +1,6 @@
 export interface loggedIn {
     loggedIn: boolean;
-    user: { name?: string, id?: string }
+    user: { email?: string }
 }
 
 const initState = {
@@ -11,7 +11,7 @@ const initState = {
 export const loggedIn = (state: loggedIn = initState, action) => {
     switch (action.type) {
         case "LOG_IN":
-            return { ...state, loggedIn: true, user: action.user }
+            return { ...state, loggedIn: true, user: { email: action.user.email } }
         case "LOG_OUT":
             return { ...initState }
         default:

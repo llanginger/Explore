@@ -38,8 +38,7 @@ describe("LoggedIn", () => {
     }
 
     const newUser: User = {
-        name: "Leo",
-        id: "123",
+        email: "llanginger@gmail.com"
     }
 
     const newState = { ...initState, loggedIn: true, user: newUser }

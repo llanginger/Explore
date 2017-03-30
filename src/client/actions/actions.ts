@@ -1,5 +1,6 @@
 import { Venue, QueryInfo, User } from "../Interfaces"
 import { Action } from "redux"
+export { fireMiddleware, getInitialFireState } from "./fireMiddleware"
 
 export interface SimpleAction {
     type: string;

@@ -22,6 +22,7 @@ export const currentVenue = (state: Venue = initState, action: cvAction) => {
         case "LETS_GO":
             return { ...action.venue, seen: true }
         case "CLEAR_VENUES":
+        case "LOG_OUT":
             return initState
         default:
             return state;

@@ -12,12 +12,16 @@ import { PreferencesPage } from "./PreferencesPage"
 import { PreferencesContainer } from "./PreferencesContainer"
 import { AccountPage } from "./AccountPage"
 import { LoginPage } from "./LoginPage"
+import { FirebaseForm } from "./FirebaseForm"
+import { FirebaseUserForm } from "./FirebaseUserForm"
 
 export {
     AccountPage,
     BottomArea,
     BottomButtons,
     ExploreMap,
+    FirebaseForm,
+    FirebaseUserForm,
     Hamburger,
     HomeInput,
     LoginPage,

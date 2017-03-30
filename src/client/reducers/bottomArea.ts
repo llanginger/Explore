@@ -5,10 +5,11 @@ export interface bottomArea {
     big: boolean;
 }
 
-export const bottomArea = (state: bottomArea = {
+const initState: bottomArea = {
     big: false,
     show: false
-}, action: MasterAction) => {
+}
+export const bottomArea = (state: bottomArea = initState, action: MasterAction) => {
     switch (action.type) {
         case "TOGGLE_BOTTOM_AREA":
             return { ...state, big: !state.big }
@@ -17,6 +18,8 @@ export const bottomArea = (state: bottomArea = {
             return { ...state, show: false }
         case "LETS_GO":
             return { ...state, show: true }
+        case "LOG_OUT":
+            return { ...initState }
         default:
             return state;
     }

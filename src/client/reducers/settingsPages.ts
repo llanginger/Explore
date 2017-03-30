@@ -18,6 +18,7 @@ export const settingsPages = (state: settingsPages = {
                     return state;
             }
         case "CLOSE_SETTINGS_PAGE":
+        case "LOG_OUT":
             return { page: "closed" }
         default:
             return state;

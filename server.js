@@ -105,6 +105,14 @@ const fillAsyncReviewFunctionArray = objArray => {
     }
 };
 
+const parseJson = body => {
+    try {
+        return JSON.parse(body);
+    } catch (e) {
+        console.log("e:", e);
+    }
+};
+
 // --- Create functions for retrieving venue photo urls --- //
 const createAsyncPhotoFunction = venue => {
     const getPhotoUrl = fSets.baseUrl +
@@ -115,7 +123,18 @@ const createAsyncPhotoFunction = venue => {
         "&v=20130815";
     return callback => {
         request(getPhotoUrl, (err, response, body) => {
-            const photos = JSON.parse(body).response.photos.items;
+            const parsedPhotos = parseJson(body);
+
+            let photos = [];
+            if (
+                parsedPhotos &&
+                parsedPhotos.response &&
+                parsedPhotos.response.photos &&
+                parsedPhotos.response.photos.items.length > 0
+            ) {
+                photos = parsedPhotos.response.photos.items;
+            }
+
             let photoAlbum = [];
 
             for (const photo of photos) {
