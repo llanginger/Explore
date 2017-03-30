@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import { BaseReduxProps } from "../Interfaces"
-import { PreferencesPage, AccountPage } from "./Components"
+import { PreferencesPage, AccountPage, PlacesPage } from "./Components"
 import { CLOSE_SETTINGS_PAGE } from "../actions/actions"
 
 
@@ -40,6 +40,8 @@ export class PreferencesContainer extends React.Component<BaseReduxProps, any> {
             return <PreferencesPage onClick={this.closePage} />
         } else if (page === "account") {
             return <AccountPage onClick={this.closePage} />;
+        } else if (page === "places") {
+            return <PlacesPage onClick={this.closePage} store={this.props.store} />;
         } else {
             return
         }

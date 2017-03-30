@@ -25,7 +25,10 @@ var config = {
 
 firebase.initializeApp(config);
 
+// --- TESTING --- //
 
+
+// --- END TESTING --- //
 
 const enhancer = compose(
     applyMiddleware(thunk, fireMiddleware, getInitialFireState, logger()),

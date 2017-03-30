@@ -58,6 +58,27 @@ app.get("/queryFourSquare", (req, res) => {
         // console.log("venues: ", venues)
         for (const venue of venues) {
             const v = venue.venue;
+            const primaryCategory = () => {
+                if (v.categories) {
+                    if (v.categories.length === 1) {
+                        return { primary: v.categories[0] };
+                    } else {
+                        let primary = {};
+                        let secondary = [];
+                        for (const cat of v.categories) {
+                            if (cat.primary) {
+                                primary = Object.assign({}, cat);
+                            } else {
+                                secondary = [...secondary, cat];
+                            }
+                        }
+                        return {
+                            primary,
+                            secondary
+                        };
+                    }
+                }
+            };
             // --- Push desired values into initial results array --- //
             InitialFourSquareResults.push({
                 name: v.name,
@@ -65,7 +86,7 @@ app.get("/queryFourSquare", (req, res) => {
                 contact: v.contact,
                 rating: v.rating ? v.rating : -1,
                 location: v.location,
-                categories: v.categories,
+                categories: primaryCategory(),
                 url: v.url ? v.url : "no url",
                 hours: v.hours ? v.hours : "no hours listed",
                 price: v.price ? v.price : "no price listed",

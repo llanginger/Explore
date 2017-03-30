@@ -12,6 +12,11 @@ export const fireMiddleware = store => next => action => {
                 visitedVenues: venues
             })
             return next(action)
+        case "CLEAR_VISITED_VENUES":
+            firebase.database().ref("users/" + user.uid).set({
+                visitedVenues: {}
+            })
+            return next(action)
     }
     next(action)
 }
@@ -27,6 +32,21 @@ export const getInitialFireState = store => next => action => {
                     type: "FIREBASE_VENUES",
                     fireVenues
                 })
+            })
+            return next(action)
+    }
+    next(action)
+
+}
+
+export const clearFireDB = store => next => action => {
+    const user = firebase.auth().currentUser
+    switch (action.type) {
+        case "CLEAR_VISITED_VENUES":
+
+            firebase.database().ref("users/" + user.uid).set({
+                visitedIds: [],
+                visitedVenues: []
             })
             return next(action)
     }

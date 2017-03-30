@@ -39,7 +39,11 @@ export const SettingsMenu = (props: BaseReduxProps) => {
                         store.dispatch(SHOW_SETTINGS_PAGE("preferences"))
                     }}
                 ><span className="pt-icon-standard pt-icon-cog settingsMenuIcon" />Preferences</li>
-                <li><span className="pt-icon-standard pt-icon-path-search settingsMenuIcon" />Places you've been</li>
+                <li
+                    onClick={() => {
+                        store.dispatch(SHOW_SETTINGS_PAGE("places"))
+                    }}
+                ><span className="pt-icon-standard pt-icon-path-search settingsMenuIcon" />Places you've been</li>
                 <li
                     onClick={() => {
                         firebase.auth().signOut()

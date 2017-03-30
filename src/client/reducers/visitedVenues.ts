@@ -12,10 +12,12 @@ interface VVAction {
     fireVenues?: visitedVenues;
 }
 
-export const visitedVenues = (state: visitedVenues = {
+const initState = {
     visitedIds: [],
     visitedVenues: []
-}, action: VVAction) => {
+}
+
+export const visitedVenues = (state: visitedVenues = initState, action: VVAction) => {
     switch (action.type) {
         case "VISITED_VENUE":
             return {
@@ -29,6 +31,8 @@ export const visitedVenues = (state: visitedVenues = {
                 visitedIds: action.fireVenues.visitedIds,
                 visitedVenues: action.fireVenues.visitedVenues
             }
+        case "CLEAR_VISITED_VENUES":
+            return { ...initState }
         default:
             return state
     }

@@ -15,9 +15,15 @@ export interface AWithQueryInfo extends SimpleAction {
     queryInfo: QueryInfo;
 }
 
-export const FETCHING_VENUES = () => {
+export const FETCHING_VENUES: () => Action = () => {
     return {
         type: "FETCHING_VENUES"
+    }
+}
+
+export const CLEAR_VISITED_VENUES: () => Action = () => {
+    return {
+        type: "CLEAR_VISITED_VENUES"
     }
 }
 
