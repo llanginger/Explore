@@ -37,6 +37,31 @@ let InitialFourSquareResults = [];
 
 // --- Initial Venue Request --- //
 
+const formatCategories = categories => {
+    // console.log("categories: ", categories);
+    if (categories) {
+        if (categories.length === 1) {
+            return { primary: categories[0] };
+        } else if (categories.length > 1) {
+            let primary = {};
+            let secondary = [];
+            for (const cat of categories) {
+                if (cat.primary) {
+                    primary = Object.assign({}, cat);
+                } else {
+                    secondary = [...secondary, cat];
+                }
+            }
+            return {
+                primary,
+                secondary
+            };
+        } else {
+            return { name: "No category listed" };
+        }
+    }
+};
+
 app.get("/queryFourSquare", (req, res) => {
     // --- Construct get request url based on parameters passed from the client --- //
     let fourSqSearch_URL = fSets.baseUrl +
@@ -58,27 +83,6 @@ app.get("/queryFourSquare", (req, res) => {
         // console.log("venues: ", venues)
         for (const venue of venues) {
             const v = venue.venue;
-            const primaryCategory = () => {
-                if (v.categories) {
-                    if (v.categories.length === 1) {
-                        return { primary: v.categories[0] };
-                    } else {
-                        let primary = {};
-                        let secondary = [];
-                        for (const cat of v.categories) {
-                            if (cat.primary) {
-                                primary = Object.assign({}, cat);
-                            } else {
-                                secondary = [...secondary, cat];
-                            }
-                        }
-                        return {
-                            primary,
-                            secondary
-                        };
-                    }
-                }
-            };
             // --- Push desired values into initial results array --- //
             InitialFourSquareResults.push({
                 name: v.name,
@@ -86,14 +90,14 @@ app.get("/queryFourSquare", (req, res) => {
                 contact: v.contact,
                 rating: v.rating ? v.rating : -1,
                 location: v.location,
-                categories: primaryCategory(),
+                categories: formatCategories(v.categories),
                 url: v.url ? v.url : "no url",
                 hours: v.hours ? v.hours : "no hours listed",
                 price: v.price ? v.price : "no price listed",
                 seen: false
             });
         }
-        console.log(InitialFourSquareResults);
+        // console.log(InitialFourSquareResults);
 
         // --- Populate PhotoFunctionArray --- //
         fillAsyncPhotoFunctionArray(InitialFourSquareResults);
@@ -182,11 +186,19 @@ const createAsyncReviewFunction = venue => {
         "&v=20130815";
     return callback => {
         request(getReviewUrl, (err, response, body) => {
-            const reviews = JSON.parse(body).response.tips.items;
+            const parsedReviews = parseJson(body);
             let reviewList = [];
 
-            for (const review of reviews) {
-                reviewList.push(review.text);
+            if (
+                parsedReviews &&
+                parsedReviews.response &&
+                parsedReviews.response.tips &&
+                parsedReviews.response.tips.items.length > 0
+            ) {
+                const reviews = parsedReviews.response.tips.items;
+                for (const review of reviews) {
+                    reviewList.push(review.text);
+                }
             }
 
             if (reviewList.length > 0) {

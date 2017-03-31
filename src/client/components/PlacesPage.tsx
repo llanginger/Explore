@@ -1,21 +1,30 @@
 import * as React from "react"
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
-import { BaseReduxProps } from "../Interfaces"
+import { BaseReduxProps, Venue } from "../Interfaces"
 import { CLOSE_SETTINGS_PAGE, CLEAR_VISITED_VENUES } from "../actions/actions"
 import * as firebase from "firebase"
 import styled from "styled-components"
 import * as groupArray from "group-array"
+import * as _ from "underscore"
 
 interface PlacesProps extends BaseReduxProps {
     onClick: any;
 }
 
+interface SortedVenues {
+    [key: string]: Venue[] | any;
+}
+
 export const PlacesPage = (props: PlacesProps) => {
 
     const venues = props.store.getState().visitedVenues.visitedVenues
-    console.log("Venues: ", venues);
-    const sortedVenues = groupArray(venues, "categories.primary.name")
+    const sortedVenues: SortedVenues = groupArray(venues, "categories.primary.name")
     console.log("Sorted venues: ", sortedVenues);
+
+    _.each(sortedVenues, (value, key) => {
+        console.log("underscore value: ", value)
+    })
+
 
 
 
@@ -35,20 +44,40 @@ export const PlacesPage = (props: PlacesProps) => {
         justify-content: center;
         bottom: 0px;
         left: 0px;
-        background-color: white;
+        background-color: palevioletred;
         height: 100%;
         width: 100%;
     `
     const List = styled.ul`
         list-style-type: none;
-        height: 100%;
+        width: 100%;
+        height: 70%;
+        margin-bottom: 5px;
+        overflowY: scroll;
+        background-color: white;
     `
 
     const Item = styled.li`
     `
 
-    const mapVisitedVenues = () => {
-        return venues.map((venue, i) => {
+    const makeLists = () => {
+        let renderArray = []
+        _.each(sortedVenues, (value, key) => {
+            renderArray.push(
+                <ul>
+                    <Item style={{ color: "pink" }}>{key}</Item>
+                    {mapVisitedVenues(value)}
+                </ul>
+            )
+        });
+        return renderArray.map((venue) => {
+            return venue
+        })
+
+    }
+
+    const mapVisitedVenues = (venueList: Venue[]) => {
+        return venueList.map((venue, i) => {
             return <Item key={i}>{venue.name}</Item>
         })
     }
@@ -65,7 +94,6 @@ export const PlacesPage = (props: PlacesProps) => {
     const Container = styled.div`
         height: 60%;
         width: 90%;
-        overflow: scroll;
         position: relative;
     `
 
@@ -80,10 +108,10 @@ export const PlacesPage = (props: PlacesProps) => {
                 style={containerStyles}
             >
                 <List>
-                    {mapVisitedVenues()}
+                    {makeLists()}
                 </List>
+                <button style={{ width: "100%", color: "black" }} onClick={clearVenues}>Clear venues</button>
             </Container>
-            <button style={{ width: "100%", color: "black" }} onClick={clearVenues}>Clear venues</button>
         </Page>
 
     )

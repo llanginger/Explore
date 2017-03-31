@@ -19,6 +19,7 @@
         "@types/react-addons-css-transition-group": "^15.0.1",
         "@types/react-dom": "^0.14.23",
         "@types/request": "^0.0.40",
+        "@types/underscore": "^1.8.0",
         "async": "^2.1.5",
         "axios": "^0.15.3",
         "classnames": "^2.2.5",

@@ -3,6 +3,7 @@ import { BaseReduxProps } from "../Interfaces"
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import * as classNames from "classnames"
 import { TOGGLE_BOTTOM_AREA, NEXT_VENUE } from "../actions/actions"
+import styled from "styled-components"
 
 export const BottomArea = (props: BaseReduxProps) => {
 
@@ -28,7 +29,7 @@ export const BottomArea = (props: BaseReduxProps) => {
         background: "white",
         width: "90%",
         marginLeft: "5%",
-        maxHeight: "45%",
+        height: "78%",
         padding: "5px 10px",
         listStyleType: "none",
         overflowY: "scroll"
@@ -47,12 +48,44 @@ export const BottomArea = (props: BaseReduxProps) => {
     })
 
     const buttonStyles = {
-        background: "white",
         position: "absolute",
+        fontSize: "48px",
+        background: "transparent",
         padding: "5px",
         border: "none",
         color: "black"
     }
+
+    const ReviewContainer = styled.div`
+        height: calc(100% - 200px);
+        position: relative;
+        display: block;
+    `
+
+    const ReviewHeader = styled.div`
+        height: 10%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;        
+    `
+
+    const TitleSpan = styled.span`
+        background: white;
+        padding: 3px;
+        margin-top: -50px;
+        font-size: 30px;
+    `
+
+    const RightIconSpan = styled.span`
+        color: white;
+        filter: drop-shadow(6px 1px 2px)
+    `
+
+    const LeftIconSpan = styled.span`
+        color: white;
+        filter: drop-shadow(-6px 1px 2px)
+    `
 
     const venues = store.getState().currentResults.venues
 
@@ -87,9 +120,12 @@ export const BottomArea = (props: BaseReduxProps) => {
     const renderList = () => {
         if (big === true) {
             return (
-                <ul style={ulStyles}>
-                    {mapReviewsToList()}
-                </ul>
+                <ReviewContainer>
+                    <ReviewHeader><TitleSpan>{venue.name}</TitleSpan></ReviewHeader>
+                    <ul style={ulStyles}>
+                        {mapReviewsToList()}
+                    </ul>
+                </ReviewContainer>
             )
         } else {
             return
@@ -99,12 +135,12 @@ export const BottomArea = (props: BaseReduxProps) => {
     const renderButtons = () => {
         if (big === true) {
             return (
-                <div>
-                    <button style={{ ...buttonStyles, left: "10px" }}>PREV VENUE</button>
+                <div style={{ marginTop: "-51px" }}>
+                    <button style={{ ...buttonStyles, left: "10px" }}><LeftIconSpan className="pt-icon pt-icon-chevron-left"></LeftIconSpan></button>
                     <button
                         style={{ ...buttonStyles, right: "10px" }}
                         onClick={handleNext}
-                    >NEXT VENUE</button>
+                    ><RightIconSpan className="pt-icon pt-icon-chevron-right"></RightIconSpan></button>
                 </div>
             )
         }

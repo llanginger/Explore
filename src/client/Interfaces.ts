@@ -36,6 +36,10 @@ export interface Category {
     primary?: boolean
 }
 
+export interface Categories {
+    primary?: Category;
+    secondary?: Category[]
+}
 export interface User {
     email?: string;
     id?: string;
@@ -75,7 +79,7 @@ export interface Venue {
     photoSrc?: string[];
     reviews?: string[];
     rating?: number;
-    categories?: Category[];
+    categories?: Categories;
     visited?: boolean;
     seen?: boolean;
 }
