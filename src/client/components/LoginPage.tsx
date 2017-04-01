@@ -35,7 +35,11 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
     _signUp(e) {
         const email = this.email.value;
         const pass = this.password.value;
-        const promise = firebase.auth().createUserWithEmailAndPassword(email, pass);
+        const promise = firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
+            firebase.database().ref("users/" + firebase.auth().currentUser.uid).set({
+                visitedVenues: {}
+            })
+        });
         promise.catch(e => console.log(e.message))
         e.preventDefault()
     }

@@ -3,6 +3,7 @@ import { currentResults } from "./currentResults"
 import { currentVenue } from "./currentVenue"
 import { fourSquareResults } from "./fourSquareResults"
 import { homeInputState } from "./homeInputState"
+import { gps } from "./gps"
 import { initState } from "./initState"
 import { settingsMenu } from "./settingsMenu"
 import { visitedVenues } from "./visitedVenues"
@@ -17,6 +18,7 @@ export {
     currentVenue,
     fourSquareResults,
     homeInputState,
+    gps,
     initState,
     loggedIn,
     settingsMenu,

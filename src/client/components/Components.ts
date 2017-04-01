@@ -15,6 +15,8 @@ import { AccountPage } from "./AccountPage"
 import { LoginPage } from "./LoginPage"
 import { FirebaseForm } from "./FirebaseForm"
 import { FirebaseUserForm } from "./FirebaseUserForm"
+import { LocationPage } from "./LocationPage"
+import { PlacesAuto } from "./PlacesAuto"
 
 export {
     AccountPage,
@@ -26,12 +28,14 @@ export {
     Hamburger,
     HomeInput,
     LoginPage,
+    LocationPage,
     InfoCard,
     ResultItem,
     ResultsMenu,
     Overlay,
     SettingsMenu,
     PlacesPage,
+    PlacesAuto,
     PreferencesPage,
     PreferencesContainer
 }

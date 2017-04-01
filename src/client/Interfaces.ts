@@ -53,6 +53,15 @@ export interface Contact {
     facebookName?: string;
 }
 
+export interface GooglePlaces {
+    formattedAddress?: string;
+    geometry?: {}; // tease this out
+    name?: string;
+    photos?: any[]; // tease this out
+    types?: string[];
+    vicinity?: string;
+}
+
 export interface openClose {
     open: boolean
 }
@@ -86,4 +95,8 @@ export interface Venue {
 
 export interface BaseReduxProps {
     store: Store<Reducers>
+}
+
+export interface PrefsPage extends BaseReduxProps {
+    onClick: any;
 }

@@ -5,7 +5,7 @@
 import * as classNames from "classnames";
 import * as React from "react"
 import * as axios from "axios"
-import { BaseReduxProps } from "../Interfaces"
+import { BaseReduxProps, GooglePlaces } from "../Interfaces"
 
 import {
     Button,
@@ -21,9 +21,9 @@ import {
     Tag,
     Tooltip,
 } from "@blueprintjs/core";
-import { FETCHED_VENUES, FETCHING_VENUES, FOCUS_INPUT, CLEAR_VENUES } from "../actions/actions"
+import { FETCHED_VENUES, FETCHING_VENUES, FOCUS_INPUT, CLEAR_VENUES, SHOW_SETTINGS_PAGE, INPUT_GPS, SET_GPS_DATA } from "../actions/actions"
 
-import { ResultsMenu } from "./ResultsMenu"
+import { ResultsMenu, PlacesAuto } from "./Components"
 
 export interface InputGroupState {
     disabled?: boolean;
@@ -40,7 +40,6 @@ interface InputProps extends BaseReduxProps {
 
 interface HomeInputState {
     category: string;
-    near: string;
     limit: number;
     inputActive: boolean;
 }
@@ -53,7 +52,6 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
         super(props);
         this.state = {
             category: "",
-            near: "Seattle",
             limit: 40,
             inputActive: false
         }
@@ -61,11 +59,13 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
         this._queryFourSquare = this._queryFourSquare.bind(this)
     }
 
-    _queryFourSquare() {
+    _queryFourSquare(gps) {
+
         const params = {
             params: {
                 category: this.state.category,
-                near: this.state.near,
+                lat: gps.lat,
+                lng: gps.lng,
                 limit: this.state.limit
             }
         }
@@ -99,6 +99,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
         const { category } = state
         const inputState = store.getState().homeInputState.active
         const spinnerState = store.getState().spinner
+        const gps = store.getState().gps.geometry
 
         const handleInputChange = (event) => {
             this.setState({ category: event.target.value })
@@ -111,7 +112,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
         const handleKeyDown = (event) => {
             if (event.keyCode === 13) {
                 this.setState({ category: formatString(this.state.category) })
-                this._queryFourSquare()
+                this._queryFourSquare(gps)
             }
         }
 
@@ -123,7 +124,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
             }
         }
 
-        const clearButton = (store) => {
+        const clearButton = () => {
             if (this.state.category.length > 0) {
                 return (
                     <Button
@@ -135,6 +136,23 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
                         }}
                     />
                 )
+            }
+        }
+
+        const gpsButton = () => {
+            return (
+                <Button
+                    iconName="pt-icon-locate"
+                    onClick={() => { store.dispatch(INPUT_GPS()) }}
+                />
+            )
+        }
+
+        const chooseRightElement = () => {
+            if (inputState === true) {
+                return clearButton()
+            } else {
+                return gpsButton()
             }
         }
 
@@ -160,26 +178,51 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
             }
         }
 
+        const venueOrGps = () => {
+            if (store.getState().homeInputState.isInGPSMode === true) {
+                return (
+                    <div
+                        className=""
+                        style={HomeInputContainerStyles}
+                    >
+                        <PlacesAuto
+                            onPlaceSelected={(place) => {
+                                console.log(place)
+                                store.dispatch(SET_GPS_DATA(place))
+                            }}
+                        />
+                    </div>
+                )
+            } else {
+                return (
+
+                    <div
+                        className=""
+                        style={HomeInputContainerStyles}
+                    >
+                        <InputGroup
+                            className="pt-large testInput"
+                            onClick={handleInputClick}
+                            intent={Intent.PRIMARY}
+                            leftIconName="pt-icon-search"
+                            rightElement={chooseRightElement()}
+                            inputRef={(input) => this.homeInput = input}
+                            placeholder={props.placeholder}
+                            value={state.category}
+                            disabled={false}
+                            onChange={handleInputChange}
+                            onKeyDown={handleKeyDown}
+                        />
+                        <ResultsMenu store={store} />
+                        {displaySpinner()}
+                    </div>
+                )
+            }
+        }
+
         return (
-            <div
-                className="inputGroup"
-                style={HomeInputContainerStyles}
-            >
-                <InputGroup
-                    className="pt-large testInput"
-                    onClick={handleInputClick}
-                    intent={Intent.PRIMARY}
-                    leftIconName="pt-icon-search"
-                    rightElement={clearButton(store)}
-                    inputRef={(input) => this.homeInput = input}
-                    placeholder={props.placeholder}
-                    value={state.category}
-                    disabled={false}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                />
-                <ResultsMenu store={store} />
-                {displaySpinner()}
+            <div>
+                {venueOrGps()}
             </div>
         )
     }

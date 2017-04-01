@@ -288,7 +288,7 @@ describe("FourSquare Results", () => {
     })
 })
 
-// --- Current Results--- //
+// --- Current Results --- //
 
 describe("Current Results", () => {
 
@@ -387,6 +387,8 @@ describe("Current Results", () => {
     })
 })
 
+// --- VISITED VENUES --- //
+
 describe("Visited Venues", () => {
 
     interface VVAction {
@@ -424,4 +426,12 @@ describe("Visited Venues", () => {
 
         expect(result).to.deep.eq(stateAfter)
     })
+})
+
+// --- GPS --- //
+
+describe("GPS", () => {
+    const initState = {
+
+    }
 })

@@ -1,4 +1,4 @@
-import { Venue, QueryInfo, User } from "../Interfaces"
+import { Venue, QueryInfo, User, GooglePlaces } from "../Interfaces"
 import { Action } from "redux"
 export { fireMiddleware, getInitialFireState } from "./fireMiddleware"
 
@@ -119,4 +119,16 @@ export const LOG_IN: (user: User) => Action = (user: User) => {
 
 export const LOG_OUT: () => Action = () => {
     return { type: "LOG_OUT" }
+}
+
+export const BLUR_INPUT: () => Action = () => {
+    return { type: "BLUR_INPUT" }
+}
+
+export const INPUT_GPS: () => Action = () => {
+    return { type: "INPUT_GPS" }
+}
+
+export const SET_GPS_DATA: (gpsData: GooglePlaces) => Action = (gpsData: GooglePlaces) => {
+    return { type: "SET_GPS_DATA", gpsData }
 }

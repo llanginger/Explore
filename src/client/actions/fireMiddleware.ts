@@ -27,11 +27,18 @@ export const getInitialFireState = store => next => action => {
         case "LOG_IN":
             let fireVenues = {};
             firebase.database().ref("users/" + user.uid).once("value").then((dataSnap) => {
-                fireVenues = dataSnap.val().visitedVenues
-                store.dispatch({
-                    type: "FIREBASE_VENUES",
-                    fireVenues
-                })
+                if (dataSnap.val().visitedVenues) {
+
+                    fireVenues = dataSnap.val().visitedVenues
+                    store.dispatch({
+                        type: "FIREBASE_VENUES",
+                        fireVenues
+                    })
+                } else {
+                    firebase.database().ref("users/" + user.uid).set({
+                        visitedVenues: {}
+                    })
+                }
             })
             return next(action)
     }

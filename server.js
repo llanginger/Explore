@@ -66,8 +66,10 @@ app.get("/queryFourSquare", (req, res) => {
     // --- Construct get request url based on parameters passed from the client --- //
     let fourSqSearch_URL = fSets.baseUrl +
         fSets.search +
-        "near=" +
-        req.query.near +
+        "ll=" +
+        req.query.lat +
+        "," +
+        req.query.lng +
         "&" +
         fSets.clientID +
         fSets.clientSecret +
@@ -78,8 +80,8 @@ app.get("/queryFourSquare", (req, res) => {
         req.query.limit;
 
     request(fourSqSearch_URL, (error, response, body) => {
-        const venues = JSON.parse(body).response.groups[0].items;
         console.log("Foursquare venue search url: ", fourSqSearch_URL);
+        const venues = JSON.parse(body).response.groups[0].items;
         // console.log("venues: ", venues)
         for (const venue of venues) {
             const v = venue.venue;

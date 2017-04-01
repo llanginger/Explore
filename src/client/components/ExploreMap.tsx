@@ -15,20 +15,24 @@ interface ExploreMapProps extends BaseReduxProps {
 interface Marker {
     position: any;
     map: any;
-    name: string;
-    reviews: string[]
-    rating: number;
-    addListener: Function;
+    name?: string;
+    reviews?: string[]
+    rating?: number;
+    addListener?: Function;
 }
 
-export class ExploreMap extends React.Component<ExploreMapProps, any> {
+// --- Custom marker colors: http://stackoverflow.com/questions/7095574/google-maps-api-3-custom-marker-color-for-default-dot-marker/18623391#18623391 -- //
 
+
+export class ExploreMap extends React.Component<ExploreMapProps, any> {
+    private mapdiv
     public map: any
     private unsubscribe: Function;
 
     constructor(props) {
         super(props)
         this._loadFeatures = this._loadFeatures.bind(this)
+        this._createUserPositionMarker = this._createUserPositionMarker.bind(this)
     }
 
 
@@ -51,7 +55,7 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
             center: this._mapCenter(),
             disableDefaultUI: true
         }
-        return new google.maps.Map(this.refs.mapdiv, mapOptions)
+        return new google.maps.Map(this.mapdiv, mapOptions)
     }
 
     _mapCenter() {
@@ -77,12 +81,13 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 
     _loadMarkers(currentVenue, map) {
         // Ensure only new markers are rendered
+
         if (currentVenue.name.length > 0) {
             for (var i of this.venueMarkers) {
                 i.setMap(null);
             }
             this.venueMarkers = []
-
+            navigator.geolocation.getCurrentPosition(this._createUserPositionMarker, e => console.log(e))
             let marker: Marker = this._createMarker(currentVenue, map)
 
             // Click func to open/close infowindows
@@ -95,6 +100,23 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
         } else {
             return
         }
+    }
+
+    _createUserPositionMarker(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        let pointval = new google.maps.LatLng(
+            parseFloat(lat.toString()),
+            parseFloat(lng.toString())
+        )
+        console.log("pointval: ", pointval);
+        console.log("User position: ", lat + " " + lng);
+        return new google.maps.Marker({
+            position: pointval,
+            map: this.map,
+            icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+        })
+        // return "something";
     }
 
     _createMarker(val: Venue, map) {
@@ -120,7 +142,7 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
         return <div
             style={this.props.styles}
             className="NpsForecastMap"
-            ref="mapdiv"
+            ref={(mapdiv) => this.mapdiv = mapdiv}
         ></div>
     }
 }

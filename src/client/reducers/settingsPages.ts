@@ -13,6 +13,7 @@ export const settingsPages = (state: settingsPages = {
                 case "preferences":
                 case "account":
                 case "places":
+                case "location":
                     return { page: action.page }
                 default:
                     return state;

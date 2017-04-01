@@ -5,6 +5,7 @@ import { Hamburger, FirebaseForm } from "./Components"
 import * as classNames from "classnames"
 import { CLOSE_MENU, SHOW_SETTINGS_PAGE, LOG_OUT } from "../actions/actions"
 import * as firebase from "firebase"
+import Autocomplete from "react-google-autocomplete"
 
 export const SettingsMenu = (props: BaseReduxProps) => {
 
@@ -44,6 +45,11 @@ export const SettingsMenu = (props: BaseReduxProps) => {
                         store.dispatch(SHOW_SETTINGS_PAGE("places"))
                     }}
                 ><span className="pt-icon-standard pt-icon-path-search settingsMenuIcon" />Places you've been</li>
+                <li
+                    onClick={() => {
+                        store.dispatch(SHOW_SETTINGS_PAGE("location"))
+                    }}
+                ><span className="pt-icon-standard pt-icon-locate settingsMenuIcon" />Location</li>
                 <li
                     onClick={() => {
                         firebase.auth().signOut()
