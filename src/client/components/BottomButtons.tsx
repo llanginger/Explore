@@ -40,6 +40,7 @@ export const BottomButtons = (props: BaseReduxProps) => {
                 return venue
             }
         }
+        return currentVenue
     }
 
     // --- FIGURE THIS OUT --- //
