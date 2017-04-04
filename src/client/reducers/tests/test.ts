@@ -292,10 +292,27 @@ describe("FourSquare Results", () => {
 
 describe("Current Results", () => {
 
+    const unVisitedDummyVenueOne: Venue = {
+        location: {},
+        contact: {},
+        name: "House of Pancakes",
+        id: "123",
+        photoSrc: [],
+        reviews: [],
+        rating: null,
+        categories: [],
+        seen: true,
+        visited: false
+    }
+
+
     interface CRAction {
         type?: string;
         queryInfo?: QueryInfo;
-        venues?: Venue[]
+        venues?: Venue[];
+        venue?: Venue;
+        oldVenue?: Venue;
+        visitedVenues?: string[];
         id?: string;
     }
 
@@ -332,10 +349,10 @@ describe("Current Results", () => {
         const stateAfter: VenueResponse = {
             queryInfo: {},
             venues: [
-                dummyVenueOne
+                unVisitedDummyVenueOne
             ]
         }
-        const result = r.currentResults(initState, action)
+        const result = r.currentResults(initState, a.FETCHED_VENUES([unVisitedDummyVenueOne, dummyVenueTwo], [dummyVenueTwo.id], {}))
 
         expect(result).to.deep.eq(stateAfter)
     })
@@ -430,8 +447,8 @@ describe("Visited Venues", () => {
 
 // --- GPS --- //
 
-describe("GPS", () => {
-    const initState = {
+// describe("GPS", () => {
+//     const initState = {
 
-    }
-})
+//     }
+// })

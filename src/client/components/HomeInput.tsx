@@ -60,7 +60,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
     }
 
     _queryFourSquare(gps) {
-
+        const { store } = this.props
         const params = {
             params: {
                 category: this.state.category,
@@ -69,12 +69,13 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
                 limit: this.state.limit
             }
         }
-        this.props.store.dispatch(FETCHING_VENUES())
+        store.dispatch(FETCHING_VENUES())
         axios.get("queryFourSquare", params)
             .then((response) => {
                 console.log("Home Input response: ", response)
                 this.props.store.dispatch(FETCHED_VENUES(
                     response.data,
+                    store.getState().visitedVenues.visitedIds,
                     params.params
                 ))
             })
@@ -143,7 +144,10 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
             return (
                 <Button
                     iconName="pt-icon-locate"
-                    onClick={() => { store.dispatch(INPUT_GPS()) }}
+                    onClick={() => {
+                        this.setState({ category: "" })
+                        store.dispatch(INPUT_GPS())
+                    }}
                 />
             )
         }

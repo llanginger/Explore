@@ -29,10 +29,12 @@ export const BottomButtons = (props: BaseReduxProps) => {
         background: "rgba(0,0,0,0.3)",
     }
 
+    const currentVenue = store.getState().currentVenue
     const inputState = store.getState().homeInputState
     const venues = store.getState().currentResults.venues
 
     const getNextVenue = () => {
+        console.log("Current venue: ", currentVenue);
         for (let venue of venues) {
             if (venue.seen === false && venue.visited !== true) {
                 return venue
@@ -40,8 +42,19 @@ export const BottomButtons = (props: BaseReduxProps) => {
         }
     }
 
-    const handlePrev = () => {
+    // --- FIGURE THIS OUT --- //
+    const getLastVenue = () => {
+        console.log("Current venue: ", currentVenue);
+        for (let i = 0; i < venues.length; i++) {
+            if (i > 0 && venues[i].id === currentVenue.id) {
+                console.log("Successfully retrived previous venue: ", venues[i - 1]);
+                return { ...venues[i - 1], seen: false }
+            }
+        }
+    }
 
+    const handlePrev = () => {
+        store.dispatch(PREV_VENUE(getLastVenue(), currentVenue))
     }
 
     const handleNext = () => {

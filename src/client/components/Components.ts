@@ -17,6 +17,8 @@ import { FirebaseForm } from "./FirebaseForm"
 import { FirebaseUserForm } from "./FirebaseUserForm"
 import { LocationPage } from "./LocationPage"
 import { PlacesAuto } from "./PlacesAuto"
+import { Map } from "./ExploreMapP"
+import * as Reusable from "./SettingsComponents"
 
 export {
     AccountPage,
@@ -30,10 +32,12 @@ export {
     LoginPage,
     LocationPage,
     InfoCard,
+    Map,
     ResultItem,
     ResultsMenu,
     Overlay,
     SettingsMenu,
+    Reusable,
     PlacesPage,
     PlacesAuto,
     PreferencesPage,

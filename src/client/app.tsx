@@ -3,15 +3,12 @@ console.log("Env: ", process.env.NODE_ENV)
 
 import * as React from "react"
 import * as ReactDOM from "react-dom"
-import { createStore, applyMiddleware, Store, compose } from "redux"
-import { default as thunk } from "redux-thunk";
-import * as logger from "redux-logger"
+
 import * as firebase from "firebase"
 
-import { Reducers } from "./Store"
+import { store } from "./Store"
 import { Body } from "./components/Body"
 import { DevTools } from "./components/Devtools"
-import { fireMiddleware, getInitialFireState } from "./actions/actions"
 
 // --- FIREBASE --- //
 
@@ -30,13 +27,6 @@ firebase.initializeApp(config);
 
 
 // --- END TESTING --- //
-
-const enhancer = compose(
-    applyMiddleware(thunk, fireMiddleware, getInitialFireState, logger()),
-    DevTools.instrument()
-)
-
-let store: Store<Reducers> = createStore(Reducers, enhancer)
 
 
 ReactDOM.render(

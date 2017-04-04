@@ -1,5 +1,9 @@
-import { combineReducers, Reducer } from "redux"
+import { combineReducers, createStore, applyMiddleware, Reducer, Store, compose } from "redux"
 import { Venue } from "./Interfaces"
+import { default as thunk } from "redux-thunk";
+import * as logger from "redux-logger"
+import { DevTools } from "./components/Devtools"
+import { fireMiddleware, getInitialFireState, clearFireDB } from "./actions/actions"
 import {
     currentResults,
     currentVenue,
@@ -13,7 +17,8 @@ import {
     bottomArea,
     settingsPages,
     loggedIn,
-    gps
+    gps,
+    markers
 } from "./reducers/reducers"
 
 
@@ -30,7 +35,8 @@ export interface Reducers {
     spinner: boolean;
     bottomArea: bottomArea
     settingsPages: settingsPages;
-    gps: gps
+    gps: gps;
+    markers: markers;
 }
 
 
@@ -47,5 +53,13 @@ export const Reducers = combineReducers<Reducers>({
     visitedVenues,
     spinner,
     gps,
+    markers,
     settingsPages
 })
+
+const enhancer = compose(
+    applyMiddleware(thunk, fireMiddleware, getInitialFireState, clearFireDB, logger()),
+    DevTools.instrument()
+)
+
+export const store: Store<Reducers> = createStore(Reducers, enhancer)

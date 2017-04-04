@@ -12,7 +12,7 @@ export const Hamburger = (props: HamburgerProps) => {
 
     const hideHamburger = store.getState().homeInputState.active
     const hameMenuState = store.getState().settingsMenu
-    console.log(hameMenuState)
+    // console.log(hameMenuState)
 
     const hamburgerClasses = () => {
         return "c-hamburger c-hamburger--htx" + (hameMenuState.open ? " is-active" : "")

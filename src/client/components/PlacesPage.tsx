@@ -6,6 +6,7 @@ import * as firebase from "firebase"
 import styled from "styled-components"
 import * as groupArray from "group-array"
 import * as _ from "underscore"
+import { Reusable } from "./Components"
 
 interface PlacesProps extends BaseReduxProps {
     onClick: any;
@@ -27,53 +28,72 @@ export const PlacesPage = (props: PlacesProps) => {
 
 
 
-
-    const basicStyles = {
-        position: "absolute",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        bottom: "0px",
-        left: "0px"
-    }
-
     const Page = styled.div`
         position: absolute;
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
         bottom: 0px;
         left: 0px;
-        background-color: palevioletred;
+        background-color: black;
         height: 100%;
         width: 100%;
+        z-index: 2;
     `
-    const List = styled.ul`
+    const MainList = styled.ul`
         list-style-type: none;
         width: 100%;
-        height: 70%;
-        margin-bottom: 5px;
+        height: 100%;
+        margin: 0px;
         overflowY: scroll;
         background-color: white;
+        padding: 5px 10px;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    `
+
+
+    const CategoryList = styled.ul`
+        list-style-type: none;
+        background-color: white;
+        padding: 5px 10px;
+        border-bottom: 1px solid #666;
     `
 
     const Item = styled.li`
+    `
+
+    const HeaderItem = styled.li`
+        margin-bottom: 5px;
+        color: #B10DC9;
+    `
+
+
+
+    const Span = styled.span`
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
     `
 
     const makeLists = () => {
         let renderArray = []
         _.each(sortedVenues, (value, key) => {
             renderArray.push(
-                <ul>
-                    <Item style={{ color: "pink" }}>{key}</Item>
+                <CategoryList key={key}>
+                    <HeaderItem
+                        key={value}
+                    >
+                        {key}
+                    </HeaderItem>
                     {mapVisitedVenues(value)}
-                </ul>
+                </CategoryList>
             )
         });
-        return renderArray.map((venue) => {
-            return venue
-        })
-
+        return renderArray
     }
 
     const mapVisitedVenues = (venueList: Venue[]) => {
@@ -87,31 +107,19 @@ export const PlacesPage = (props: PlacesProps) => {
         e.stopPropagation()
     }
 
-    const containerStyles = {
-        width: "90%"
-    }
 
-    const Container = styled.div`
-        height: 60%;
-        width: 90%;
-        position: relative;
-    `
+
 
     return (
 
         <Page
             className="accountPage"
-            onClick={props.onClick}
         >
-            <Container
-                className="formContainer"
-                style={containerStyles}
-            >
-                <List>
-                    {makeLists()}
-                </List>
-                <button style={{ width: "100%", color: "black" }} onClick={clearVenues}>Clear venues</button>
-            </Container>
+            <Reusable.TopBar onClick={props.onClick} text="Visited Venues" />
+            <MainList>
+                {makeLists()}
+            </MainList>
+            <Reusable.BottomButton onClick={clearVenues} text="Clear Venues" />
         </Page>
 
     )

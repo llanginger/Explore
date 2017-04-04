@@ -1,6 +1,6 @@
 import { Venue, QueryInfo, User, GooglePlaces } from "../Interfaces"
 import { Action } from "redux"
-export { fireMiddleware, getInitialFireState } from "./fireMiddleware"
+export { fireMiddleware, getInitialFireState, clearFireDB } from "./fireMiddleware"
 
 export interface SimpleAction {
     type: string;
@@ -27,10 +27,11 @@ export const CLEAR_VISITED_VENUES: () => Action = () => {
     }
 }
 
-export const FETCHED_VENUES: (venues: Venue[], queryInfo: QueryInfo) => Action = (venues: Venue[], queryInfo: QueryInfo) => {
+export const FETCHED_VENUES: (venues?: Venue[], visitedVenues?: string[], queryInfo?: QueryInfo) => Action = (venues?: Venue[], visitedVenues?: string[], queryInfo?: QueryInfo) => {
     return {
         type: "FETCHED_VENUES",
         venues,
+        visitedVenues,
         queryInfo,
     }
 }
@@ -48,10 +49,11 @@ export const NEXT_VENUE: (venue?: Venue) => Action = (venue?: Venue) => {
     }
 }
 
-export const PREV_VENUE: (venue?: Venue) => Action = (venue?: Venue) => {
+export const PREV_VENUE: (venue: Venue, oldVenue: Venue) => Action = (venue: Venue, oldVenue: Venue) => {
     return {
         type: "PREV_VENUE",
-        venue
+        venue,
+        oldVenue
     }
 }
 

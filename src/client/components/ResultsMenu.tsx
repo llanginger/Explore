@@ -37,7 +37,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
             maxHeight: "350px",
             overflowY: "scroll",
             margin: "0",
-            borderRadius: "3px",
+            borderRadius: "0px",
             background: "#FFFFFF",
             minWidth: "180px",
             padding: "5px 0px 5px 0px",
@@ -90,6 +90,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
             <Button
                 text="Let's go!"
                 className="pt-fill"
+                style={{ borderRadius: "0px" }}
                 intent={Intent.SUCCESS}
                 onClick={() => {
                     this.props.store.dispatch(LETS_GO(this.getNextVenue(venues)))

@@ -10,6 +10,10 @@ interface VenuePayload extends SimpleAction {
     venue: Venue;
 }
 
+interface OldVenuePayload extends VenuePayload {
+    oldVenue: Venue;
+}
+
 interface UserPayload extends SimpleAction {
     user: User;
 }
@@ -36,11 +40,11 @@ describe("Fetching Venues", () => {
 })
 
 describe("FETCHED_VENUES", () => {
-    const noData = { queryInfo: {}, venues: [] }
+    const noData = { venues: [], visitedVenues: [], queryInfo: {} }
 
     it("Should return FETCHED_VENUES with payload", () => {
-        const result = a.FETCHED_VENUES([], {})
-        expect(result).to.deep.eq({ type: "FETCHED_VENUES", venues: noData.venues, queryInfo: noData.queryInfo })
+        const result = a.FETCHED_VENUES([], [], {})
+        expect(result).to.deep.eq({ type: "FETCHED_VENUES", venues: noData.venues, visitedVenues: noData.visitedVenues, queryInfo: noData.queryInfo })
     })
 })
 
@@ -64,8 +68,8 @@ describe("NEXT_VENUE", () => {
 
 describe("PREV_VENUE", () => {
     it("Should return simple action", () => {
-        const result = a.PREV_VENUE({})
-        const expected: VenuePayload = { type: "PREV_VENUE", venue: {} }
+        const result = a.PREV_VENUE({}, {})
+        const expected: OldVenuePayload = { type: "PREV_VENUE", venue: {}, oldVenue: {} }
 
         expect(result).to.deep.eq(expected)
     })
@@ -153,7 +157,7 @@ describe("DISMISS_MAIN_INPUT_HELP", () => {
 })
 
 describe("LOG_IN", () => {
-    const newUser: User = { name: "Leo", id: "123" }
+    const newUser: User = { email: "Leo@leo.com", id: "123" }
     const result = a.LOG_IN(newUser)
     const expected: UserPayload = { type: "LOG_IN", user: newUser }
     it("should return simple action", () => {

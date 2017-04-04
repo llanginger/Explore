@@ -35,7 +35,7 @@ export class PreferencesContainer extends React.Component<BaseReduxProps, any> {
 
     private choosePage = () => {
         const page = this.props.store.getState().settingsPages.page
-        console.log(page)
+        // console.log(page)
         if (page === "preferences") {
             return <PreferencesPage onClick={this.closePage} />
         } else if (page === "account") {

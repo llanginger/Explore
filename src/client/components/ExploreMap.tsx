@@ -1,9 +1,9 @@
 import * as GoogleMapsLoader from "google-maps"
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import * as React from "react"
-import * as axios from "axios"
 import { BaseReduxProps, Venue } from "../Interfaces"
-import { } from "../actions/actions"
+import { BLUR_INPUT } from "../actions/actions"
+import { Map } from "./Components"
 
 interface ExploreMapProps extends BaseReduxProps {
     className: string;
@@ -22,6 +22,9 @@ interface Marker {
 }
 
 // --- Custom marker colors: http://stackoverflow.com/questions/7095574/google-maps-api-3-custom-marker-color-for-default-dot-marker/18623391#18623391 -- //
+// ---   TODO   --- //
+// Separate this into smart and presentational components. //
+// --- END TODO --- //
 
 
 export class ExploreMap extends React.Component<ExploreMapProps, any> {
@@ -31,18 +34,19 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 
     constructor(props) {
         super(props)
-        this._loadFeatures = this._loadFeatures.bind(this)
+        // this._loadFeatures = this._loadFeatures.bind(this)
         this._createUserPositionMarker = this._createUserPositionMarker.bind(this)
     }
 
 
     componentDidMount() {
         this.map = this._createMap()
-        this._loadFeatures()
+        // this._loadFeatures()
         const { store } = this.props;
         this.unsubscribe = store.subscribe(() => {
             this.forceUpdate()
         })
+        navigator.geolocation.getCurrentPosition(this._createUserPositionMarker, e => console.log(e))
     }
 
     componentWillUnmount() {
@@ -68,39 +72,38 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
     // Inelegant atm - created markers are pushed to this array which is emptied on new marker props
     venueMarkers = []
 
-    _loadFeatures() {
-        const props = this.props
-        const { store } = props
-        let self = this
+    // _loadFeatures() {
+    //     const props = this.props
+    //     const { store } = props
 
-        const currentVenue: Venue = store.getState().currentVenue
-        this._loadMarkers(currentVenue, this.map)
+    //     const currentVenue: Venue = store.getState().currentVenue
+    //     this._loadMarkers(currentVenue, this.map)
 
 
-    }
+    // }
 
-    _loadMarkers(currentVenue, map) {
-        // Ensure only new markers are rendered
 
-        if (currentVenue.name.length > 0) {
-            for (var i of this.venueMarkers) {
-                i.setMap(null);
-            }
-            this.venueMarkers = []
-            navigator.geolocation.getCurrentPosition(this._createUserPositionMarker, e => console.log(e))
-            let marker: Marker = this._createMarker(currentVenue, map)
+    // _loadMarkers(currentVenue, map) {
+    //     // Ensure only new markers are rendered
 
-            // Click func to open/close infowindows
-            marker.addListener("click", function () {
-                console.log(marker.name);
-            });
+    //     if (currentVenue && currentVenue.name && currentVenue.name.length > 0) {
+    //         for (var i of this.venueMarkers) {
+    //             i.setMap(null);
+    //         }
+    //         this.venueMarkers = []
+    //         let marker: Marker = this._createMarker(currentVenue, map)
 
-            this.venueMarkers.push(marker)
+    //         // Click func to open/close infowindows
+    //         marker.addListener("click", function () {
+    //             console.log(marker.name);
+    //         });
 
-        } else {
-            return
-        }
-    }
+    //         this.venueMarkers.push(marker)
+
+    //     } else {
+    //         return
+    //     }
+    // }
 
     _createUserPositionMarker(position) {
         var lat = position.coords.latitude;
@@ -109,8 +112,8 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
             parseFloat(lat.toString()),
             parseFloat(lng.toString())
         )
-        console.log("pointval: ", pointval);
-        console.log("User position: ", lat + " " + lng);
+        // console.log("pointval: ", pointval);
+        // console.log("User position: ", lat + " " + lng);
         return new google.maps.Marker({
             position: pointval,
             map: this.map,
@@ -119,170 +122,49 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
         // return "something";
     }
 
-    _createMarker(val: Venue, map) {
-        let pointval = new google.maps.LatLng(
-            parseFloat(val.location.lat.toString()),
-            parseFloat(val.location.lng.toString())
-        )
-        let marker = new google.maps.Marker({
-            position: pointval,
-            map: map,
-            name: val.name,
-            rating: val.rating.toFixed(0),
-            reviews: val.reviews
-        })
-        console.log("Create marker: ", marker)
-        map.panTo(marker.getPosition())
-        return marker
-    }
+    // _createMarker(val: Venue, map) {
+    //     let pointval = new google.maps.LatLng(
+    //         parseFloat(val.location.lat.toString()),
+    //         parseFloat(val.location.lng.toString())
+    //     )
+    //     let marker = new google.maps.Marker({
+    //         position: pointval,
+    //         map: map,
+    //         name: val.name,
+    //         rating: val.rating.toFixed(0),
+    //         reviews: val.reviews
+    //     })
+    //     // console.log("Create marker: ", marker)
+    //     map.panTo(marker.getPosition())
+    //     return marker
+    // }
 
 
     render() {
-        this._loadFeatures()
-        return <div
-            style={this.props.styles}
-            className="NpsForecastMap"
-            ref={(mapdiv) => this.mapdiv = mapdiv}
-        ></div>
+        const { store } = this.props;
+
+        const currentVenue: Venue = store.getState().currentVenue
+
+        return (
+            <Map
+                styles={this.props.styles}
+                onClick={(e) => {
+                    console.log("Map clicked");
+                    this.props.store.dispatch(BLUR_INPUT())
+                    e.stopPropagation()
+                }}
+                class="ExploreMap"
+                innerRef={(mapdiv) => this.mapdiv = mapdiv}
+                venue={currentVenue}
+                map={this.map}
+            />
+        )
     }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*export class ExploreMap extends React.Component<ExploreMapProps, any> {
-
-	private map: any
-	private unsubscribe: Function;
-
-	constructor(props) {
-		super(props)
-	}
-
-	shouldComponentUpdate(nextProps, nextState) {
-		return false
-	}
-
-	componentDidMount() {
-		const { store } = this.props
-		this.unsubscribe = store.subscribe(() => {
-			this.forceUpdate();
-		})
-	}
-
-	componentWillUnmount() {
-		this.unsubscribe()
-	}
-
-	renderGoogleMap() {
-		const key = "Yosemite Valley";
-		const lat = 37.8651;
-		const lng = 119.5383; 
-		const markers = [{
-		position: {
-			lat,
-			lng,
-		},
-		key,
-		defaultAnimation: 2,
-		infoContent: (
-			<div>
-				<div>
-				I am an infoWindow!
-				</div>
-			</div>
-			)
-		}];
-
-		const GettingStartedGoogleMap = withGoogleMap(props => (
-		<GoogleMap
-			ref={props.onMapLoad}
-			onClick={props.onMapClick}
-			options={{
-			zoom: 6,
-			center: { lat, lng },
-			disableDefaultUI: true
-			}}
-		>
-			{props.markers.map(marker => (
-			<Marker
-			{...marker}
-			onClick={() =>{
-				console.log(marker.key);
-			}}
-			onRightClick={() => props.onMarkerRightClick(marker)}
-			>
-			<InfoWindow>
-				<div>{marker.infoContent}</div>
-			</InfoWindow>
-			</Marker>
-		))}
-		</GoogleMap>
-		));
-
-		return (
-			<GettingStartedGoogleMap
-			containerElement={
-			<div style={{ height: "100%", width: "100%" }} />
-			}
-			mapElement={
-				<div style={{ height: '100%' }} />
-			}
-			onMapLoad={this.handleMapLoad}
-			onMapClick={() => {
-				console.log("Mapp clicked");
-			}}
-			markers={markers}
-			onMarkerRightClick={this.handleMarkerRightClick}
-			/>
-		);
-	}
-	render() {
-		return (
-			<div
-				style={this.props.styles}
-			>
-				{this.renderGoogleMap()}
-			</div>
-		);
-	}
-	
-}*/
+/*
+return (
+            <div
+            ></div>
+        )*/

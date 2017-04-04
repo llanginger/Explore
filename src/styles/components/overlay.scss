@@ -1,5 +1,7 @@
+@import "../variables.scss";
+
 .overlay {
-    background: #B10DC9;
+    background: $lightHighlight;
     opacity: 0.5;
     height: 100%;
     width: 100%;
@@ -13,33 +15,33 @@
 
 .overlayFade-enter {
     opacity: 0;
-    background: #B10DC9;
+    background: $lightHighlight;
 }
 
 .overlayFade-enter.overlayFade-enter-active {
     opacity: 0.5;
-    background: #B10DC9;
+    background: $lightHighlight;
     transition: opacity .3s ease-in-out;
 }
 
 .overlayFade-appear {
     opacity: 1;
-    background: #B10DC9;
+    background: $lightHighlight;
 }
 
 .overlayFade-appear.overlayFade-appear-active {
     opacity: 0.5;
-    background: #B10DC9;
+    background: $lightHighlight;
     transition: opacity 1.2s ease-in-out;
 }
 
 .overlayFade-leave {
-    background: #B10DC9;
+    background: $lightHighlight;
     opacity: 0.5
 }
 
 .overlayFade-leave-active {
-    background: #B10DC9;
+    background: $lightHighlight;
     opacity: 0;
     transition: opacity .3s ease-in-out;
 }
