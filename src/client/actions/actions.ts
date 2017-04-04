@@ -1,6 +1,7 @@
 import { Venue, QueryInfo, User, GooglePlaces } from "../Interfaces"
 import { Action } from "redux"
 export { fireMiddleware, getInitialFireState, clearFireDB } from "./fireMiddleware"
+export { markerMiddleware } from "./markerMiddleware"
 
 export interface SimpleAction {
     type: string;
@@ -42,18 +43,20 @@ export const TOGGLE_BOTTOM_AREA: () => Action = () => {
     }
 }
 
-export const NEXT_VENUE: (venue?: Venue) => Action = (venue?: Venue) => {
+export const NEXT_VENUE: (venue?: Venue, mapRef?: any) => Action = (venue?: Venue, mapRef?: any) => {
     return {
         type: "NEXT_VENUE",
-        venue
+        venue,
+        mapRef
     }
 }
 
-export const PREV_VENUE: (venue: Venue, oldVenue: Venue) => Action = (venue: Venue, oldVenue: Venue) => {
+export const PREV_VENUE: (venue: Venue, oldVenue: Venue, mapRef?: any) => Action = (venue: Venue, oldVenue: Venue, mapRef?: any) => {
     return {
         type: "PREV_VENUE",
         venue,
-        oldVenue
+        oldVenue,
+        mapRef
     }
 }
 
@@ -102,10 +105,11 @@ export const VISITED_VENUE: (venue?: Venue, id?: string) => Action = (venue?: Ve
     }
 }
 
-export const LETS_GO: (venue: Venue) => Action = (venue: Venue) => {
+export const LETS_GO: (venue: Venue, mapRef?: any) => Action = (venue: Venue, mapRef?: any) => {
     return {
         type: "LETS_GO",
-        venue
+        venue,
+        mapRef
     }
 }
 

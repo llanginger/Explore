@@ -91,6 +91,7 @@ export interface Venue {
     categories?: Categories;
     visited?: boolean;
     seen?: boolean;
+    marker?: any;
 }
 
 export interface BaseReduxProps {

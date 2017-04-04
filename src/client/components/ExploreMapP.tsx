@@ -34,6 +34,7 @@ export const Map = (props: MapProps) => {
     let venueMarkers = []
     const loadMarkers = (currentVenue, map) => {
         // Ensure only new markers are rendered
+        // TODO: run New Marker in smart component. Fetch current marker (to delete), action => new maker. TO COMPONENT => new + old marker. MAP COMPONENT => run setmap(null) on old marker and setmap(map) on new marker
 
         if (currentVenue && currentVenue.name && currentVenue.name.length > 0) {
             for (var i of venueMarkers) {
@@ -57,6 +58,7 @@ export const Map = (props: MapProps) => {
     }
 
     const createMarker = (val: Venue, map) => {
+
         let pointval = new google.maps.LatLng(
             parseFloat(val.location.lat.toString()),
             parseFloat(val.location.lng.toString())
@@ -66,7 +68,7 @@ export const Map = (props: MapProps) => {
             map: map,
             name: val.name,
             rating: val.rating.toFixed(0),
-            reviews: val.reviews
+            reviews: val.reviews.slice(0, 5)
         })
         // console.log("Create marker: ", marker)
         map.panTo(marker.getPosition())

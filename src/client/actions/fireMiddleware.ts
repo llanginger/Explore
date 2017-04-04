@@ -1,7 +1,5 @@
 import * as firebase from "firebase"
 
-
-
 export const fireMiddleware = store => next => action => {
     const user = firebase.auth().currentUser
     const venues = store.getState().visitedVenues

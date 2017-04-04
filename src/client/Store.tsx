@@ -3,7 +3,7 @@ import { Venue } from "./Interfaces"
 import { default as thunk } from "redux-thunk";
 import * as logger from "redux-logger"
 import { DevTools } from "./components/Devtools"
-import { fireMiddleware, getInitialFireState, clearFireDB } from "./actions/actions"
+import { fireMiddleware, getInitialFireState, clearFireDB, markerMiddleware } from "./actions/actions"
 import {
     currentResults,
     currentVenue,
@@ -58,7 +58,7 @@ export const Reducers = combineReducers<Reducers>({
 })
 
 const enhancer = compose(
-    applyMiddleware(thunk, fireMiddleware, getInitialFireState, clearFireDB, logger()),
+    applyMiddleware(thunk, fireMiddleware, getInitialFireState, clearFireDB, markerMiddleware, logger()),
     DevTools.instrument()
 )
 

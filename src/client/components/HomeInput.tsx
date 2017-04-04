@@ -24,6 +24,7 @@ import {
 import { FETCHED_VENUES, FETCHING_VENUES, FOCUS_INPUT, CLEAR_VENUES, SHOW_SETTINGS_PAGE, INPUT_GPS, SET_GPS_DATA } from "../actions/actions"
 
 import { ResultsMenu, PlacesAuto } from "./Components"
+import { createNewMarker } from "./createMarker"
 
 export interface InputGroupState {
     disabled?: boolean;
@@ -72,9 +73,18 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
         store.dispatch(FETCHING_VENUES())
         axios.get("queryFourSquare", params)
             .then((response) => {
+                let updatedVenues = []
+
+                for (let venue of response.data) {
+                    updatedVenues.push({
+                        ...venue,
+                        marker: createNewMarker(venue, null)
+                    })
+                }
+                console.log("Updated venues: ", updatedVenues);
                 console.log("Home Input response: ", response)
                 this.props.store.dispatch(FETCHED_VENUES(
-                    response.data,
+                    updatedVenues,
                     store.getState().visitedVenues.visitedIds,
                     params.params
                 ))
@@ -118,6 +128,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
         }
 
         const handleInputClick = () => {
+
             if (this.state.inputActive === false) {
                 store.dispatch(FOCUS_INPUT())
             } else {
