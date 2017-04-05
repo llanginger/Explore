@@ -81,3 +81,30 @@ export const BottomButton = (props: { onClick: any, text: string }) => {
         <Button onClick={props.onClick}>{props.text}</Button>
     )
 }
+
+export const Page = styled.div`
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        bottom: 0px;
+        left: 0px;
+        background-color: black;
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+    `
+export const MainList = styled.ul`
+        list-style-type: none;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        overflowY: scroll;
+        background-color: white;
+        padding: 5px 10px;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    `

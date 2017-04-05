@@ -95,7 +95,7 @@ export class Body extends React.Component<BodyProps, any> {
             position: "absolute",
             top: "5px",
             left: "5px",
-            filter: "drop-shadow(5px 5px 5px #333)"
+            filter: "drop-shadow(5px 5px 3px #333)"
         }
 
         const whichView = () => {

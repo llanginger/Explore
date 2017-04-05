@@ -11,11 +11,18 @@ export const SettingsMenu = (props: BaseReduxProps) => {
 
     const tempProfileUrl = "https://pbs.twimg.com/profile_images/2192831080/cartoon-headshot.png"
     const { store } = props
+    const currentUser = firebase.auth().currentUser
 
     const state = store.getState()
 
     const menuState = state.settingsMenu
-    const getUserName = () => state.loggedIn.user.email
+    const getUserName = () => {
+        if (currentUser.displayName && firebase.auth().currentUser.displayName.length > 0) {
+            return currentUser.displayName
+        } else {
+            return currentUser.email
+        }
+    }
 
     const menuContainerClasses = classNames({
         "settingsMenuContainer": true,
@@ -34,22 +41,12 @@ export const SettingsMenu = (props: BaseReduxProps) => {
                     onClick={() => {
                         store.dispatch(SHOW_SETTINGS_PAGE("account"))
                     }}
-                ><span className="pt-icon-standard pt-icon-manual settingsMenuIcon" />Account</li>
-                <li
-                    onClick={() => {
-                        store.dispatch(SHOW_SETTINGS_PAGE("preferences"))
-                    }}
-                ><span className="pt-icon-standard pt-icon-cog settingsMenuIcon" />Preferences</li>
+                ><span className="pt-icon-standard pt-icon-cog settingsMenuIcon" />Account</li>
                 <li
                     onClick={() => {
                         store.dispatch(SHOW_SETTINGS_PAGE("places"))
                     }}
                 ><span className="pt-icon-standard pt-icon-path-search settingsMenuIcon" />Places you've been</li>
-                <li
-                    onClick={() => {
-                        store.dispatch(SHOW_SETTINGS_PAGE("location"))
-                    }}
-                ><span className="pt-icon-standard pt-icon-locate settingsMenuIcon" />Location</li>
                 <li
                     onClick={() => {
                         firebase.auth().signOut()

@@ -1,7 +1,6 @@
 import * as React from "react"
 import { PrefsPage } from "../Interfaces"
 import Autocomplete from "react-google-autocomplete"
-import { RGA } from "./TestAuto"
 import styled from "styled-components"
 
 
@@ -11,7 +10,7 @@ import styled from "styled-components"
 // Present option for either using gps or entering location
 // have "remember this for next time" checkbox
 
-
+/*
 export const LocationPage = (props: PrefsPage) => {
 
     const Page = styled.div`
@@ -53,4 +52,4 @@ export const LocationPage = (props: PrefsPage) => {
             </Container>
         </Page>
     )
-}
+}*/

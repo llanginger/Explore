@@ -32,7 +32,7 @@ export const BottomArea = (props: BaseReduxProps) => {
         width: 100%;
         margin: 0px;
         height: 100%;
-        padding: 30px 10px 0px 10px;
+        padding: 10px 10px 0px 10px;
         list-style-type: none;
         overflow-y: scroll;
 
@@ -53,6 +53,7 @@ export const BottomArea = (props: BaseReduxProps) => {
         border-bottom: 1px solid $888;
         margin-bottom: 10px;
         parrind-bottom: 10px;
+        font-size: 16px;
     `
 
     const baClasses = classNames({
@@ -99,12 +100,12 @@ export const BottomArea = (props: BaseReduxProps) => {
 
     const RightIconSpan = styled.span`
         color: white;
-        filter: drop-shadow(6px 1px 2px)
+        filter: drop-shadow(6px 1px 2px black)
     `
 
     const LeftIconSpan = styled.span`
         color: white;
-        filter: drop-shadow(-6px 1px 2px)
+        filter: drop-shadow(-6px 1px 2px black)
     `
 
 

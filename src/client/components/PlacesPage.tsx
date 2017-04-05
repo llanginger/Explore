@@ -28,32 +28,7 @@ export const PlacesPage = (props: PlacesProps) => {
 
 
 
-    const Page = styled.div`
-        position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        bottom: 0px;
-        left: 0px;
-        background-color: black;
-        height: 100%;
-        width: 100%;
-        z-index: 2;
-    `
-    const MainList = styled.ul`
-        list-style-type: none;
-        width: 100%;
-        height: 100%;
-        margin: 0px;
-        overflowY: scroll;
-        background-color: white;
-        padding: 5px 10px;
 
-        &::-webkit-scrollbar {
-            display: none;
-        }
-    `
 
 
     const CategoryList = styled.ul`
@@ -112,15 +87,18 @@ export const PlacesPage = (props: PlacesProps) => {
 
     return (
 
-        <Page
+        <Reusable.Page
             className="accountPage"
         >
             <Reusable.TopBar onClick={props.onClick} text="Visited Venues" />
-            <MainList>
+            <Reusable.MainList>
                 {makeLists()}
-            </MainList>
+            </Reusable.MainList>
             <Reusable.BottomButton onClick={clearVenues} text="Clear Venues" />
-        </Page>
+        </Reusable.Page>
 
     )
 }
+
+
+// Rip out venue objects, only need ids

@@ -31,50 +31,6 @@ interface MapProps {
 export const Map = (props: MapProps) => {
 
 
-    let venueMarkers = []
-    const loadMarkers = (currentVenue, map) => {
-        // Ensure only new markers are rendered
-        // TODO: run New Marker in smart component. Fetch current marker (to delete), action => new maker. TO COMPONENT => new + old marker. MAP COMPONENT => run setmap(null) on old marker and setmap(map) on new marker
-
-        if (currentVenue && currentVenue.name && currentVenue.name.length > 0) {
-            for (var i of venueMarkers) {
-                console.log("This should trigger to remove markers")
-                i.setMap(null);
-            }
-            venueMarkers = []
-            let marker: Marker = createMarker(currentVenue, map)
-            console.log("Marker: ", marker)
-            // Click func to open/close infowindows
-            marker.addListener("click", function () {
-                console.log(marker.name);
-            });
-
-            venueMarkers.push(marker)
-            console.log("Venue markers: ", venueMarkers);
-
-        } else {
-            return
-        }
-    }
-
-    const createMarker = (val: Venue, map) => {
-
-        let pointval = new google.maps.LatLng(
-            parseFloat(val.location.lat.toString()),
-            parseFloat(val.location.lng.toString())
-        )
-        let marker = new google.maps.Marker({
-            position: pointval,
-            map: map,
-            name: val.name,
-            rating: val.rating.toFixed(0),
-            reviews: val.reviews.slice(0, 5)
-        })
-        // console.log("Create marker: ", marker)
-        map.panTo(marker.getPosition())
-        return marker
-    }
-    loadMarkers(props.venue, props.map)
 
     return (
         <div

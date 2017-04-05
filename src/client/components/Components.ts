@@ -15,7 +15,7 @@ import { AccountPage } from "./AccountPage"
 import { LoginPage } from "./LoginPage"
 import { FirebaseForm } from "./FirebaseForm"
 import { FirebaseUserForm } from "./FirebaseUserForm"
-import { LocationPage } from "./LocationPage"
+// import { LocationPage } from "./LocationPage"
 import { PlacesAuto } from "./PlacesAuto"
 import { Map } from "./ExploreMapP"
 import * as Reusable from "./SettingsComponents"
@@ -30,7 +30,7 @@ export {
     Hamburger,
     HomeInput,
     LoginPage,
-    LocationPage,
+    // LocationPage,
     InfoCard,
     Map,
     ResultItem,

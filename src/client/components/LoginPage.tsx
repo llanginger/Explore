@@ -23,7 +23,7 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
         const email = this.email.value;
         const pass = this.password.value;
         const promise = firebase.auth().signInWithEmailAndPassword(email, pass);
-        promise.catch(e => console.log(e.message))
+        promise.catch(e => alert(e.message))
         e.preventDefault()
     }
 
@@ -40,7 +40,7 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
                 visitedVenues: {}
             })
         });
-        promise.catch(e => console.log(e.message))
+        promise.catch(e => alert(e.message))
         e.preventDefault()
     }
 
