@@ -10,10 +10,56 @@ export interface UserFormProps {
 }
 
 interface UserFormState {
-    isActive: boolean;
+    buttonGreen: boolean
 }
 
+interface BProps {
+    isGreen: boolean
+}
 
+const Input = styled.input`
+    width: 90%;
+    padding: 10px;
+    border: ${(props: BProps) => props.isGreen ? "2px #2BC016 solid" : "2px #669EFF solid"} ;
+    border-right: none;
+
+    &:focus {
+        outline: none;
+    }
+`
+
+const ExtraInput = styled(Input) `
+    width: 100%;
+    border: 2px #669EFF solid;
+`
+
+const Button = styled.button`
+    width: 10%;
+    height: 100%;
+    color: white;
+    padding: 10px;
+    background: ${(props: BProps) => props.isGreen ? "#2BC016" : "#669EFF"};
+    border: ${(props: BProps) => props.isGreen ? "2px #2BC016 solid" : "2px #669EFF solid"} ;
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:active {
+        background: #336BCC;
+        border: 2px #336BCC solid;
+    }
+`
+
+const Form = styled.form`
+    margin-bottom: 10px;
+    width: 100%;
+`
+
+const IconSpan = styled.span`
+    font-size: 14px;
+`
 export class FirebaseUserForm extends React.Component<UserFormProps, UserFormState> {
     private preInput
     private input;
@@ -24,6 +70,9 @@ export class FirebaseUserForm extends React.Component<UserFormProps, UserFormSta
         super(props)
         this._handleSubmit = this._handleSubmit.bind(this)
         this.user = firebase.auth().currentUser
+        this.state = {
+            buttonGreen: false
+        }
     }
 
 
@@ -32,16 +81,19 @@ export class FirebaseUserForm extends React.Component<UserFormProps, UserFormSta
         const target = this.props.profileTarget
 
         if (target === "password") {
-            console.log("Preinput: ", this.preInput.value);
+            const oldPass = this.preInput.value
+            const newPass = this.input.value
+            console.log("Preinput: ", oldPass);
+            console.log("Input: ", newPass);
             const credential = firebase.auth.EmailAuthProvider.credential(
                 this.user.email,
-                this.preInput.value
+                oldPass
             );
             console.log("Credential: ", credential)
 
             this.user.reauthenticate(credential).then(() => {
-                this.user.updatePassword(this.input.value).then(() => {
-                    console.log("Password updated!")
+                this.user.updatePassword(newPass).then(() => {
+                    console.log("Password updated to: ", newPass)
                 })
             })
         } else if (target === "email") {
@@ -53,12 +105,18 @@ export class FirebaseUserForm extends React.Component<UserFormProps, UserFormSta
                 console.log("Updated: ", target, " ", this.user);
             })
         }
+        this.setState({ buttonGreen: true })
+        this.input.blur()
         e.preventDefault()
     }
 
 
     render() {
-
+        if (this.state.buttonGreen === true) {
+            setTimeout(() => {
+                this.setState({ buttonGreen: false })
+            }, 1500)
+        }
         const addInput = () => {
             if (this.props.profileTarget === "password") {
                 return (
@@ -66,6 +124,7 @@ export class FirebaseUserForm extends React.Component<UserFormProps, UserFormSta
                         type="text"
                         innerRef={(input) => this.preInput = input}
                         placeholder="Old password"
+                        isGreen={this.state.buttonGreen}
                     />
                 )
             } else {
@@ -73,49 +132,6 @@ export class FirebaseUserForm extends React.Component<UserFormProps, UserFormSta
             }
         }
 
-        const Input = styled.input`
-            width: 90%;
-            padding: 10px;
-            border: 2px #669EFF solid;
-            border-right: none;
-
-            &:focus {
-                outline: none;
-            }
-        `
-
-        const ExtraInput = styled(Input) `
-            width: 100%;
-            border: 2px #669EFF solid;
-        `
-
-        const Button = styled.button`
-            width: 10%;
-            height: 100%;
-            color: white;
-            padding: 10px;
-            background: #669EFF;
-            border: 2px #669EFF solid;
-            cursor: pointer;
-
-            &:focus {
-                outline: none;
-            }
-
-            &:active {
-                background: #336BCC;
-                border: 2px #336BCC solid;
-            }
-        `
-
-        const Form = styled.form`
-            margin-bottom: 10px;
-            width: 100%;
-        `
-
-        const IconSpan = styled.span`
-            font-size: 14px;
-        `
         const choosePlaceholder = () => {
             if (this.props.profileTarget !== "password") {
                 return this.user[this.props.profileTarget]
@@ -135,10 +151,12 @@ export class FirebaseUserForm extends React.Component<UserFormProps, UserFormSta
                     type="text"
                     innerRef={(input) => this.input = input}
                     placeholder={choosePlaceholder()}
+                    isGreen={this.state.buttonGreen}
                 />
                 <Button
                     type="submit"
                     value={this.props.buttonName}
+                    isGreen={this.state.buttonGreen}
                 >
                     <IconSpan className="pt-icon pt-icon-tick" ></IconSpan>
                 </Button>

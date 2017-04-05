@@ -13,13 +13,10 @@
 }
 
 .prefPanel-leave {
-    transform: scale(1, 1) translateY(0%);
-    filter: opacity(1)
-    
+    transform: translateY(0%);    
 }
 
 .prefPanel-leave.prefPanel-leave-active {
-    transform: scale(0.7, 0.2) translateY(100%);
-    filter: opacity(0);
+    transform: translateY(100%);
     transition: all .5s ease-in-out;
 }

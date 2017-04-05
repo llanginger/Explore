@@ -29,7 +29,7 @@ export const AccountPage = (props: AccountProps) => {
 
 
     const Item = styled.li`
-        background: #009688;
+        background: #FC7A57;
         margin: 0px 0px 10px 0px;
         display: flex;
         align-items: center;
@@ -74,8 +74,37 @@ export const AccountPage = (props: AccountProps) => {
         width: 100%;
         background: white;
         margin-left: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
     `
 
+    const PicText = styled.p`
+        padding: 5px;
+    `
+
+    const PicButton = styled.button`
+        width: 96%;
+        background: white;
+        box-sizing: border-box;
+        color: black;
+        border: 2px solid black;
+        margin-bottom: 5px;
+        padding: 6px;
+        box-shadow: 1px 1px 2px #333;
+
+        &:active {
+            box-shadow: none;
+            outline: none;
+            background: #888;
+            color: white;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    `
 
     const onImageDrop = (files) => {
         console.log("File: ", files[0]);
@@ -140,8 +169,8 @@ export const AccountPage = (props: AccountProps) => {
                         </Dropzone>
                     </PicContainer>
                     <PicInfo>
-                        <p>Drag your photo onto the image to the left, or click the button bellow to upload a new profile pic</p>
-                        <button>Upload photo</button>
+                        <PicText>Drag a photo onto the image to the left, or click the button bellow to upload a new profile picture.</PicText>
+                        <PicButton>Upload photo</PicButton>
                     </PicInfo>
                 </Item>
                 <InputItem>
@@ -149,7 +178,7 @@ export const AccountPage = (props: AccountProps) => {
                         Update your Username:
                     </Info>
                     <FirebaseUserForm
-                        inputPlaceholder="Username"
+                        inputPlaceholder={reduxUser.userName}
                         buttonName="Submit"
                         profileTarget="displayName"
                     />
@@ -159,7 +188,7 @@ export const AccountPage = (props: AccountProps) => {
                         Update your Email:
                     </Info>
                     <FirebaseUserForm
-                        inputPlaceholder="Email"
+                        inputPlaceholder={reduxUser.email}
                         buttonName="Submit"
                         profileTarget="email"
                     />
