@@ -44,17 +44,17 @@ export const getInitialFireState = store => next => action => {
 
 }
 
-export const clearFireDB = store => next => action => {
-    const user = firebase.auth().currentUser
-    switch (action.type) {
-        case "CLEAR_VISITED_VENUES":
+// export const clearFireDB = store => next => action => {
+//     const user = firebase.auth().currentUser
+//     switch (action.type) {
+//         case "CLEAR_VISITED_VENUES":
 
-            firebase.database().ref("users/" + user.uid).set({
-                visitedIds: [],
-                visitedVenues: []
-            })
-            return next(action)
-    }
-    next(action)
+//             firebase.database().ref("users/" + user.uid).set({
+//                 visitedIds: [],
+//                 visitedVenues: []
+//             })
+//             return next(action)
+//     }
+//     next(action)
 
-}
+// }

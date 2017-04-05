@@ -1,5 +1,5 @@
 import * as React from "react"
-import * as axios from "axios"
+import axios from "axios"
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import * as Transition from 'react-inline-transition-group';
 

@@ -1,5 +1,8 @@
+import { Reducer } from "redux"
 import { Venue } from "../Interfaces"
-const initState: Venue = {
+
+export interface currentVenue extends Venue { }
+const initState: currentVenue = {
     location: {},
     contact: {},
     name: "",
@@ -16,7 +19,7 @@ interface cvAction {
     mapRef?: any;
 }
 
-export const currentVenue = (state: Venue = initState, action: cvAction) => {
+export const currentVenue: Reducer<currentVenue> = (state: currentVenue = initState, action: cvAction) => {
     switch (action.type) {
         case "PREV_VENUE":
         case "NEXT_VENUE":
@@ -26,6 +29,8 @@ export const currentVenue = (state: Venue = initState, action: cvAction) => {
             // return { ...currentVenue }
             return { ...action.venue, seen: true }
         case "CLEAR_VENUES":
+        case "SET_GPS_DATA":
+        case "BLUR_GPS":
         case "LOG_OUT":
             return initState
         default:

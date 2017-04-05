@@ -11,9 +11,10 @@ export const SettingsMenu = (props: BaseReduxProps) => {
 
     const tempProfileUrl = "https://pbs.twimg.com/profile_images/2192831080/cartoon-headshot.png"
     const { store } = props
-    const currentUser = firebase.auth().currentUser
-
     const state = store.getState()
+    const currentUser = firebase.auth().currentUser
+    const reduxUser = state.loggedIn.user
+
 
     const menuState = state.settingsMenu
     const getUserName = () => {
@@ -60,11 +61,12 @@ export const SettingsMenu = (props: BaseReduxProps) => {
 
 
     const renderProfile = () => {
+
         return (
             <div className="profilePanel">
                 <img
                     className="profileImage"
-                    src="https://pbs.twimg.com/profile_images/2192831080/cartoon-headshot.png"
+                    src={reduxUser.profilePic}
                 />
                 <div className="profileTextContainer">
                     <span className="profileText">{getUserName()}</span>

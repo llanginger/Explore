@@ -1,9 +1,9 @@
-import { combineReducers, createStore, applyMiddleware, Reducer, Store, compose } from "redux"
+import { Action, combineReducers, createStore, applyMiddleware, Reducer, Store, compose } from "redux"
 import { Venue } from "./Interfaces"
 import { default as thunk } from "redux-thunk";
 import * as logger from "redux-logger"
 import { DevTools } from "./components/Devtools"
-import { fireMiddleware, getInitialFireState, clearFireDB, markerMiddleware } from "./actions/actions"
+import { fireMiddleware, getInitialFireState, markerMiddleware } from "./actions/actions"
 import {
     currentResults,
     currentVenue,
@@ -23,7 +23,7 @@ import {
 
 
 export interface Reducers {
-    currentVenue: Venue;
+    currentVenue: currentVenue;
     initState: initState;
     loggedIn: loggedIn;
     seenVenues: string[];
@@ -39,7 +39,7 @@ export interface Reducers {
     markers: markers;
 }
 
-
+console.log("CurrentVenue from Store: ", currentVenue);
 export const Reducers = combineReducers<Reducers>({
     currentVenue,
     bottomArea,
@@ -58,8 +58,10 @@ export const Reducers = combineReducers<Reducers>({
 })
 
 const enhancer = compose(
-    applyMiddleware(thunk, fireMiddleware, getInitialFireState, clearFireDB, markerMiddleware, logger()),
+    applyMiddleware(thunk, fireMiddleware, getInitialFireState, markerMiddleware, logger()),
     DevTools.instrument()
 )
 
 export const store: Store<Reducers> = createStore(Reducers, enhancer)
+console.log("Store: ", store);
+console.log("Reducers: ", Reducers);

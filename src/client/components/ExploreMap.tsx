@@ -2,8 +2,9 @@ import * as GoogleMapsLoader from "google-maps"
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import * as React from "react"
 import { BaseReduxProps, Venue } from "../Interfaces"
-import { BLUR_INPUT } from "../actions/actions"
+import { BLUR_INPUT, BLUR_GPS } from "../actions/actions"
 import { Map } from "./Components"
+
 
 interface ExploreMapProps extends BaseReduxProps {
     className: string;
@@ -65,7 +66,12 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
     }
     _mapClick() {
         if (this.props.store.getState().homeInputState.active === true) {
-            this.props.store.dispatch(BLUR_INPUT())
+            if (this.props.store.getState().homeInputState.isInGPSMode === true) {
+                this.props.store.dispatch(BLUR_GPS())
+            } else {
+
+                this.props.store.dispatch(BLUR_INPUT())
+            }
         } else {
             return
         }

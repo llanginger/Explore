@@ -14,10 +14,12 @@
     "dependencies": {
         "@blueprintjs/core": "^1.9.0",
         "@types/async": "^2.0.38",
+        "@types/googlemaps": "^3.26.8",
         "@types/pure-render-decorator": "^0.2.27",
         "@types/react": "^15.0.11",
         "@types/react-addons-css-transition-group": "^15.0.1",
         "@types/react-dom": "^0.14.23",
+        "@types/react-dropzone": "^0.0.32",
         "@types/request": "^0.0.40",
         "@types/underscore": "^1.8.0",
         "async": "^2.1.5",
@@ -36,6 +38,7 @@
         "react": "^15.4.2",
         "react-addons-css-transition-group": "^15.4.2",
         "react-dom": "^15.4.2",
+        "react-dropzone": "^3.12.2",
         "react-google-autocomplete": "^1.0.12",
         "react-google-maps": "beta",
         "react-inline-transition-group": "^2.1.5",
@@ -51,7 +54,6 @@
     },
     "devDependencies": {
         "@types/chai": "^3.4.35",
-        "@types/firebase": "^2.4.31",
         "@types/mocha": "^2.2.39",
         "babel-polyfill": "^6.23.0",
         "babel-preset-env": "^1.1.8",

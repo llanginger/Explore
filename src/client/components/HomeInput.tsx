@@ -4,7 +4,7 @@
 
 import * as classNames from "classnames";
 import * as React from "react"
-import * as axios from "axios"
+import axios from "axios"
 import { BaseReduxProps, GooglePlaces } from "../Interfaces"
 
 import {
@@ -203,6 +203,8 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
                         <PlacesAuto
                             onPlaceSelected={(place) => {
                                 console.log(place)
+                                const mapRef = store.getState().markers.mapRef
+                                mapRef.setCenter({ lat: place.geometry.lat, lng: place.geometry.lng })
                                 store.dispatch(SET_GPS_DATA(place))
                             }}
                         />

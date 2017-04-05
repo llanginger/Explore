@@ -1,14 +1,22 @@
 import * as React from "react"
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import { BaseReduxProps } from "../Interfaces"
-import { CLOSE_SETTINGS_PAGE } from "../actions/actions"
+import { CLOSE_SETTINGS_PAGE, UPDATE_PROFILE_INFO } from "../actions/actions"
 import styled from "styled-components"
 import { FirebaseUserForm, Reusable } from "./Components"
 import * as firebase from "firebase"
+import * as Dropzone from "react-dropzone"
 
-const tempImgUrl = "https://www.activarcpg.com/sites/default/files/product-images/VLFPVC-OPEN%20600x600.jpg"
+interface AccountProps extends BaseReduxProps {
+    onClick: any;
+}
 
-export const AccountPage = (props) => {
+export const AccountPage = (props: AccountProps) => {
+
+    const { store } = props
+    const storageRef = firebase.storage().ref();
+    const currentUser = firebase.auth().currentUser
+    const reduxUser = store.getState().loggedIn.user
 
     const changeUserName = (e) => {
         e.stopPropagation()
@@ -19,13 +27,9 @@ export const AccountPage = (props) => {
         padding: 0px;
     `
 
-    const Pic = styled.img`
-        height: 100%;
-        width: 100%;
-    `
 
     const Item = styled.li`
-        background: #999;
+        background: #009688;
         margin: 0px 0px 10px 0px;
         display: flex;
         align-items: center;
@@ -44,13 +48,13 @@ export const AccountPage = (props) => {
     `
 
     const PicContainer = styled.div`
-        box-sizing: boder-box;
-        border: 2px solid #669EFF;
+        box-sizing: border-box;
+        border: 8px solid white;
         background: white;
         height: 125px;
         width: 125px;
-        margin: 0px 10 0px 0px;
         flex-shrink: 0;
+        overflow: hidden;
     `
 
     const PicUpdater = styled.div`
@@ -60,7 +64,63 @@ export const AccountPage = (props) => {
         background: white;
     `
 
+    const Pic = styled.img`
+        max-height: 100%;
+        width: 100%;
+    `
 
+    const PicInfo = styled.div`
+        height: 125px;
+        width: 100%;
+        background: white;
+        margin-left: 15px;
+    `
+
+
+    const onImageDrop = (files) => {
+        console.log("File: ", files[0]);
+        const user = firebase.auth().currentUser
+        const fileName = files[0].name;
+        const uploadTask = storageRef.child("images/" + fileName).put(files[0])
+
+        uploadTask.on("state_changed",
+            function (snapshot) {
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case firebase.storage.TaskState.PAUSED:
+                        console.log('Upload is paused');
+                        break;
+                    case firebase.storage.TaskState.RUNNING:
+                        console.log('Upload is running');
+                        break;
+                }
+            }, function (error) {
+
+                // A full list of error codes is available at
+                // https://firebase.google.com/docs/storage/web/handle-errors
+                switch (error.code) {
+                    case 'storage/unauthorized':
+                        // User doesn't have permission to access the object
+                        break;
+
+                    case 'storage/canceled':
+                        // User canceled the upload
+                        break;
+
+                    case 'storage/unknown':
+                        // Unknown error occurred, inspect error.serverResponse
+                        break;
+                }
+            }, function () {
+                // Upload completed successfully, now we can get the download URL
+                var downloadURL = uploadTask.snapshot.downloadURL;
+                user.updateProfile({ displayName: user.displayName, photoURL: downloadURL })
+                props.store.dispatch(UPDATE_PROFILE_INFO({ profilePic: downloadURL }))
+                console.log("Download url: ", downloadURL);
+                console.log("User info: ", user);
+            });
+    }
 
     return (
 
@@ -70,8 +130,19 @@ export const AccountPage = (props) => {
             <AccountList>
                 <Item>
                     <PicContainer>
-                        <Pic src={tempImgUrl} />
+                        <Dropzone
+                            multiple={false}
+                            accept="image/*"
+                            style={{}}
+                            onDrop={onImageDrop}
+                        >
+                            <Pic src={reduxUser.profilePic} />
+                        </Dropzone>
                     </PicContainer>
+                    <PicInfo>
+                        <p>Drag your photo onto the image to the left, or click the button bellow to upload a new profile pic</p>
+                        <button>Upload photo</button>
+                    </PicInfo>
                 </Item>
                 <InputItem>
                     <Info>

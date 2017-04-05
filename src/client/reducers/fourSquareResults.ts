@@ -1,6 +1,5 @@
+import { Reducer } from "redux"
 import { Venue, QueryInfo } from "../Interfaces"
-
-
 
 export interface fourSquareResults {
     queryInfo: QueryInfo;
@@ -18,7 +17,7 @@ const initState: fourSquareResults = {
     venues: []
 }
 
-export const fourSquareResults = (state: fourSquareResults[] = [initState], action: FSAction) => {
+export const fourSquareResults: Reducer<fourSquareResults[]> = (state: fourSquareResults[] = [initState], action: FSAction) => {
     switch (action.type) {
         case "FETCHING_VENUES":
             return state

@@ -1,6 +1,6 @@
 import { Venue, QueryInfo, User, GooglePlaces } from "../Interfaces"
 import { Action } from "redux"
-export { fireMiddleware, getInitialFireState, clearFireDB } from "./fireMiddleware"
+export { fireMiddleware, getInitialFireState } from "./fireMiddleware"
 export { markerMiddleware } from "./markerMiddleware"
 
 export interface SimpleAction {
@@ -119,8 +119,8 @@ export const DISMISS_MAIN_INPUT_HELP: () => Action = () => {
     }
 }
 
-export const LOG_IN: (user: User) => Action = (user: User) => {
-    return { type: "LOG_IN", user: user }
+export const LOG_IN: (userInfo: { email?: string, userName?: string, profilePic?: string }) => Action = (userInfo: { email?: string, userName?: string, profilePic?: string }) => {
+    return { type: "LOG_IN", userInfo }
 }
 
 export const LOG_OUT: () => Action = () => {
@@ -135,6 +135,17 @@ export const INPUT_GPS: () => Action = () => {
     return { type: "INPUT_GPS" }
 }
 
+export const BLUR_GPS: () => Action = () => {
+    return { type: "BLUR_GPS" }
+}
+
 export const SET_GPS_DATA: (gpsData: GooglePlaces) => Action = (gpsData: GooglePlaces) => {
     return { type: "SET_GPS_DATA", gpsData }
+}
+
+export const UPDATE_PROFILE_INFO: (userInfo: { email?: string, userName?: string, profilePic?: string }) => Action = (userInfo: { email?: string, userName?: string, profilePic?: string }) => {
+    return {
+        type: "UPDATE_PROFILE_INFO",
+        userInfo
+    }
 }

@@ -48,7 +48,11 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 console.log(user)
-                this.props.store.dispatch(LOG_IN({ email: user.email }))
+                this.props.store.dispatch(LOG_IN({
+                    email: user.email,
+                    userName: user.displayName,
+                    profilePic: user.photoURL
+                }))
             } else {
                 console.log("Not logged in")
             }
@@ -59,7 +63,8 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
     render() {
         const dummyUser: User = {
             email: "Leo",
-            id: "123"
+            userName: "LEO",
+            profilePic: "www.google.com"
         }
 
 

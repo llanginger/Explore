@@ -1,3 +1,4 @@
+import { Reducer } from "redux"
 export interface markers {
     mapRef: any;
 }
@@ -5,7 +6,7 @@ export interface markers {
 const initState: markers = {
     mapRef: ""
 }
-export const markers = (state: markers = initState, action) => {
+export const markers: Reducer<markers> = (state: markers = initState, action) => {
     switch (action.type) {
         case "MAP_LOADED":
             return { ...state, mapRef: action.mapRef }

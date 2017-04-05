@@ -1,10 +1,11 @@
+import { Reducer } from "redux"
 import { openClose } from "../Interfaces"
 
 export interface settingsPages {
     page: string;
 }
 
-export const settingsPages = (state: settingsPages = {
+export const settingsPages: Reducer<settingsPages> = (state: settingsPages = {
     page: "closed"
 }, action) => {
     switch (action.type) {

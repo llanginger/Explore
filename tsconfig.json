@@ -1,16 +1,22 @@
 {
-		"include": [
-			"src/**.*",
-			"src/client/components/**.*"
-		],
+    "include": [
+        "src/**.*",
+        "src/client/components/**.*"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
     "compilerOptions": {
         "module": "commonjs",
         "target": "es5",
         "noImplicitAny": false,
         "sourceMap": false,
-				"noEmitOnError": false,
-				"jsx": "react",
-        "lib": ["es2015", "dom"],
+        "noEmitOnError": false,
+        "jsx": "react",
+        "lib": [
+            "es2015",
+            "dom"
+        ],
         "allowJs": true
     }
 }

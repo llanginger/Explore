@@ -1,3 +1,4 @@
+import { Reducer } from "redux"
 import { Venue } from "../Interfaces"
 
 export interface visitedVenues {
@@ -17,13 +18,17 @@ const initState = {
     visitedVenues: []
 }
 
-export const visitedVenues = (state: visitedVenues = initState, action: VVAction) => {
+export const visitedVenues: Reducer<visitedVenues> = (state: visitedVenues = initState, action: VVAction) => {
     switch (action.type) {
         case "VISITED_VENUE":
+            const formattedVenue: Venue = {
+                ...action.venue,
+                marker: {}
+            }
             return {
                 ...state,
                 visitedIds: [...state.visitedIds, action.id],
-                visitedVenues: [...state.visitedVenues, action.venue]
+                visitedVenues: [...state.visitedVenues, formattedVenue]
             }
         case "FIREBASE_VENUES":
             return {

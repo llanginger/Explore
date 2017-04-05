@@ -1,3 +1,4 @@
+import { Reducer } from "redux"
 import { MasterAction } from "../Interfaces"
 
 export interface bottomArea {
@@ -9,7 +10,7 @@ const initState: bottomArea = {
     big: false,
     show: false
 }
-export const bottomArea = (state: bottomArea = initState, action: MasterAction) => {
+export const bottomArea: Reducer<bottomArea> = (state: bottomArea = initState, action: MasterAction) => {
     switch (action.type) {
         case "TOGGLE_BOTTOM_AREA":
             return { ...state, big: !state.big }

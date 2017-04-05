@@ -1,3 +1,4 @@
+import { Reducer } from "redux"
 import { Venue, QueryInfo } from "../Interfaces"
 
 export interface currentResults {
@@ -20,7 +21,7 @@ const initState = {
     venues: []
 }
 
-export const currentResults = (state: currentResults = initState, action: CRAction) => {
+export const currentResults: Reducer<currentResults> = (state: currentResults = initState, action: CRAction) => {
     switch (action.type) {
         case "VISITED_VENUE":
             const newVisitedState = state.venues.map((venue) => {
@@ -62,6 +63,8 @@ export const currentResults = (state: currentResults = initState, action: CRActi
                 })
             }
         case "CLEAR_VENUES":
+        case "SET_GPS_DATA":
+        case "BLUR_GPS":
         case "FETCHING_VENUES":
         case "INPUT_GPS":
         case "LOG_OUT":

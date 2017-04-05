@@ -41,8 +41,9 @@ export interface Categories {
     secondary?: Category[]
 }
 export interface User {
-    email?: string;
-    id?: string;
+    email: string;
+    userName: string;
+    profilePic: string;
 }
 
 export interface Contact {

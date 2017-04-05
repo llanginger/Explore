@@ -17,6 +17,9 @@ export const markerMiddleware = store => next => action => {
             mapRef.panTo(newVenue.marker.getPosition())
             action = { ...action, venue: newVenue }
             return next(action)
+        case "INPUT_GPS":
+            currentVenue.marker.setMap(null)
+            return next(action)
 
     }
     next(action)

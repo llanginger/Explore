@@ -10,8 +10,8 @@ export const InfoCard = (props: InfoCardProps) => {
 
     const { store } = props
     const venue = store.getState().currentVenue
-    const inputState = store.getState().homeInputState.active
-    if (venue.name.length > 0 && inputState == false) {
+    const inputState = store.getState().homeInputState
+    if (venue.name.length > 0 && inputState.active == false) {
         const { rating } = venue
         const pickRatingColor = () => {
             if (rating >= 7) {
@@ -66,7 +66,7 @@ export const InfoCard = (props: InfoCardProps) => {
             </div>
         )
     } else {
-        return <div />
+        return null
     }
 
 }

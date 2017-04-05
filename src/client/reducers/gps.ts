@@ -1,3 +1,4 @@
+import { Reducer } from "redux"
 export interface gps {
     formattedAddress?: string;
     geometry: {
@@ -17,7 +18,7 @@ const initState: gps = {
     }
 }
 
-export const gps = (state = initState, action) => {
+export const gps: Reducer<gps> = (state = initState, action) => {
     switch (action.type) {
         case "SET_GPS_DATA":
             return { ...action.gpsData }
