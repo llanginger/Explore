@@ -12,6 +12,7 @@ export const createNewMarker = (venue: Venue, map) => {
         position: pointval,
         map: map,
         name: venue.name,
+        animation: google.maps.Animation.DROP,
         rating: venue.rating.toFixed(0),
         reviews: ["This is the new marker generator"]
     }
@@ -20,17 +21,3 @@ export const createNewMarker = (venue: Venue, map) => {
     return marker
 
 }
-
-
-// Implementation: 
-// const dummyVenue = {
-//     name: "Hi there",
-//     location: {
-//         lat: 47.666122804221374,
-//         lng: -122.38309135874057
-//     },
-//     rating: 8.5,
-// }
-
-// let newMarker = createNewMarker(dummyVenue, store.getState().markers.mapRef)
-// console.log("New marker: ", newMarker);

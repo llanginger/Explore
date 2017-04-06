@@ -17,11 +17,6 @@ export const Overlay = (props: OverlayProps) => {
             className="overlay"
             onClick={() => store.dispatch(BLUR_INPUT())}
         >
-            <span
-                style={OverlayIconStyles}
-            >
-                Icon here
-            </span>
         </div>
     )
 } 

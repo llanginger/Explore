@@ -82,9 +82,10 @@ export const AccountPage = (props: AccountProps) => {
 
     const PicText = styled.p`
         padding: 5px;
+        margin-bottom: 3px;
     `
 
-    const PicButton = styled.button`
+    const PicButton = styled.label`
         width: 96%;
         background: white;
         box-sizing: border-box;
@@ -106,11 +107,23 @@ export const AccountPage = (props: AccountProps) => {
         }
     `
 
+    const onImageSelect = (e) => {
+        const file = e.target.files[0];
+        console.log("File: ", file);
+        uploadImage(file)
+    }
+
     const onImageDrop = (files) => {
+        console.log("Whole file: ", files);
         console.log("File: ", files[0]);
+        const file = files[0];
+        uploadImage(file)
+    }
+
+
+    const uploadImage = (file) => {
         const user = firebase.auth().currentUser
-        const fileName = files[0].name;
-        const uploadTask = storageRef.child("images/" + fileName).put(files[0])
+        const uploadTask = storageRef.child("images/" + file.name).put(file)
 
         uploadTask.on("state_changed",
             function (snapshot) {
@@ -170,7 +183,12 @@ export const AccountPage = (props: AccountProps) => {
                     </PicContainer>
                     <PicInfo>
                         <PicText>Drag a photo onto the image to the left, or click the button bellow to upload a new profile picture.</PicText>
-                        <PicButton type="file">Upload photo</PicButton>
+
+                        <PicButton>
+                            Upload here
+                                <input type="file" style={{ display: "none" }} onChange={onImageSelect} />
+                        </PicButton>
+
                     </PicInfo>
                 </Item>
                 <InputItem>

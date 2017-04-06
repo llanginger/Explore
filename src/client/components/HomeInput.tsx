@@ -154,7 +154,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
         const gpsButton = () => {
             return (
                 <Button
-                    iconName="pt-icon-locate"
+                    iconName="pt-icon-geosearch"
                     onClick={() => {
                         this.setState({ category: "" })
                         store.dispatch(INPUT_GPS())
@@ -203,7 +203,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
                         <PlacesAuto
                             onPlaceSelected={(place) => {
                                 console.log(place)
-                                const mapRef = store.getState().markers.mapRef
+                                const mapRef = store.getState().map.mapRef
                                 mapRef.setCenter({ lat: place.geometry.lat, lng: place.geometry.lng })
                                 store.dispatch(SET_GPS_DATA(place))
                             }}

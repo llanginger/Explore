@@ -3,7 +3,7 @@ import { Venue } from "./Interfaces"
 import { default as thunk } from "redux-thunk";
 import * as logger from "redux-logger"
 import { DevTools } from "./components/Devtools"
-import { fireMiddleware, getInitialFireState, markerMiddleware, syncLocationInfo } from "./actions/actions"
+import { fireMiddleware, getInitialFireState, markerMiddleware, syncLocationInfo, naviMiddleware } from "./actions/actions"
 import {
     currentResults,
     currentVenue,
@@ -18,7 +18,8 @@ import {
     settingsPages,
     loggedIn,
     gps,
-    markers
+    userReducer,
+    map
 } from "./reducers/reducers"
 
 
@@ -36,7 +37,8 @@ export interface Reducers {
     bottomArea: bottomArea
     settingsPages: settingsPages;
     gps: gps;
-    markers: markers;
+    userReducer: userReducer;
+    map: map;
 }
 
 console.log("CurrentVenue from Store: ", currentVenue);
@@ -53,12 +55,13 @@ export const Reducers = combineReducers<Reducers>({
     visitedVenues,
     spinner,
     gps,
-    markers,
+    userReducer,
+    map,
     settingsPages
 })
 
 const enhancer = compose(
-    applyMiddleware(thunk, fireMiddleware, getInitialFireState, markerMiddleware, syncLocationInfo, logger()),
+    applyMiddleware(thunk, fireMiddleware, getInitialFireState, markerMiddleware, syncLocationInfo, naviMiddleware, logger()),
     DevTools.instrument()
 )
 

@@ -15,9 +15,8 @@ import { AccountPage } from "./AccountPage"
 import { LoginPage } from "./LoginPage"
 import { FirebaseForm } from "./FirebaseForm"
 import { FirebaseUserForm } from "./FirebaseUserForm"
-// import { LocationPage } from "./LocationPage"
 import { PlacesAuto } from "./PlacesAuto"
-import { Map } from "./ExploreMapP"
+import { GPSButton } from "./GPSButton"
 import * as Reusable from "./SettingsComponents"
 
 export {
@@ -28,11 +27,10 @@ export {
     FirebaseForm,
     FirebaseUserForm,
     Hamburger,
+    GPSButton,
     HomeInput,
     LoginPage,
-    // LocationPage,
     InfoCard,
-    Map,
     ResultItem,
     ResultsMenu,
     Overlay,

@@ -197,7 +197,6 @@ export const BottomArea = (props: BaseReduxProps) => {
         }
     }
 
-    console.log("Bottom area logging");
     return (
         <div
             className={baClasses}

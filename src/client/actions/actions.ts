@@ -2,6 +2,7 @@ import { Venue, QueryInfo, User, GooglePlaces } from "../Interfaces"
 import { Action } from "redux"
 export { fireMiddleware, getInitialFireState, syncLocationInfo } from "./fireMiddleware"
 export { markerMiddleware } from "./markerMiddleware"
+export { naviMiddleware } from "./naviMiddleware"
 
 export interface SimpleAction {
     type: string;
@@ -43,20 +44,18 @@ export const TOGGLE_BOTTOM_AREA: () => Action = () => {
     }
 }
 
-export const NEXT_VENUE: (venue?: Venue, mapRef?: any) => Action = (venue?: Venue, mapRef?: any) => {
+export const NEXT_VENUE: (venue?: Venue) => Action = (venue?: Venue) => {
     return {
         type: "NEXT_VENUE",
-        venue,
-        mapRef
+        venue
     }
 }
 
-export const PREV_VENUE: (venue: Venue, oldVenue: Venue, mapRef?: any) => Action = (venue: Venue, oldVenue: Venue, mapRef?: any) => {
+export const PREV_VENUE: (venue: Venue, oldVenue: Venue) => Action = (venue: Venue, oldVenue: Venue) => {
     return {
         type: "PREV_VENUE",
         venue,
-        oldVenue,
-        mapRef
+        oldVenue
     }
 }
 
@@ -147,5 +146,11 @@ export const UPDATE_PROFILE_INFO: (userInfo: { email?: string, userName?: string
     return {
         type: "UPDATE_PROFILE_INFO",
         userInfo
+    }
+}
+
+export const FOCUS_USER_MARKER: () => Action = () => {
+    return {
+        type: "FOCUS_USER_MARKER"
     }
 }

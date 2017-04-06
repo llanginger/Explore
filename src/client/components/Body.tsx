@@ -15,7 +15,8 @@ import {
     SettingsMenu,
     PreferencesPage,
     PreferencesContainer,
-    LoginPage
+    LoginPage,
+    GPSButton
 } from "./Components"
 
 
@@ -161,7 +162,7 @@ export class Body extends React.Component<BodyProps, any> {
                         >
                             {renderBottomArea()}
                         </ReactCSSTransitionGroup>
-
+                        <GPSButton store={store} />
                         <PreferencesContainer store={store} />
                     </div>
                 )

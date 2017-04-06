@@ -3,7 +3,6 @@ import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import * as React from "react"
 import { BaseReduxProps, Venue } from "../Interfaces"
 import { BLUR_INPUT, BLUR_GPS } from "../actions/actions"
-import { Map } from "./Components"
 
 
 interface ExploreMapProps extends BaseReduxProps {
@@ -30,7 +29,6 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 
     constructor(props) {
         super(props)
-        this._createUserPositionMarker = this._createUserPositionMarker.bind(this)
         this._mapClick = this._mapClick.bind(this)
     }
 
@@ -42,7 +40,6 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
             this.forceUpdate()
         })
         store.dispatch({ type: "MAP_LOADED", mapRef: this.map })
-        navigator.geolocation.getCurrentPosition(this._createUserPositionMarker, e => console.log(e))
     }
 
     componentWillUnmount() {
@@ -77,28 +74,12 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
             return
         }
     }
-    _createUserPositionMarker(position) {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-        let pointval = new google.maps.LatLng(
-            parseFloat(lat.toString()),
-            parseFloat(lng.toString())
-        )
-        // console.log("pointval: ", pointval);
-        // console.log("User position: ", lat + " " + lng);
-        return new google.maps.Marker({
-            position: pointval,
-            map: this.map,
-            icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-        })
-        // return "something";
-    }
+
 
 
 
     render() {
         const { store } = this.props
-
 
         return (
             <div
@@ -106,7 +87,8 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
                 style={this.props.styles}
                 className="ExploreMap"
                 ref={(mapdiv) => this.mapdiv = mapdiv}
-            ></div>
+            >
+            </div>
         )
     }
 }

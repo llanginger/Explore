@@ -11,7 +11,8 @@ import { seenVenues } from "./seenVenues"
 import { spinner } from "./spinner"
 import { settingsPages } from "./settingsPages"
 import { loggedIn } from "./loggedIn"
-import { markers } from "./markers"
+import { map } from "./markers"
+import { userReducer } from "./userReducer"
 
 export {
     bottomArea,
@@ -20,11 +21,12 @@ export {
     fourSquareResults,
     homeInputState,
     gps,
-    markers,
+    map,
     initState,
     loggedIn,
     settingsMenu,
     visitedVenues,
+    userReducer,
     seenVenues,
     spinner,
     settingsPages
