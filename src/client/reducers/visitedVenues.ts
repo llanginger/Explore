@@ -30,7 +30,7 @@ export const visitedVenues: Reducer<visitedVenues> = (state: visitedVenues = ini
                 visitedIds: [...state.visitedIds, action.id],
                 visitedVenues: [...state.visitedVenues, formattedVenue]
             }
-        case "FIREBASE_VENUES":
+        case "SYNC_FIREBASE":
             return {
                 ...state,
                 visitedIds: action.fireVenues.visitedIds,

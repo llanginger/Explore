@@ -52,16 +52,17 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
     _createMap() {
         let mapOptions = {
             zoom: 13,
-            center: this._mapCenter(),
+            center: this._mapCenter([51.5073509,
+                -0.12775829999998223]),
             disableDefaultUI: true
         }
         return new google.maps.Map(this.mapdiv, mapOptions)
     }
 
-    _mapCenter() {
+    _mapCenter(gps) {
         return new google.maps.LatLng(
-            47.625058,
-            -122.337680
+            gps[0],
+            gps[1]
         )
     }
     _mapClick() {
@@ -96,8 +97,8 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 
 
     render() {
-        // this._loadFeatures()
         const { store } = this.props
+
 
         return (
             <div

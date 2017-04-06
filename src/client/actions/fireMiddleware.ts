@@ -1,19 +1,17 @@
 import * as firebase from "firebase"
+import { GPS } from "../Interfaces"
 
 export const fireMiddleware = store => next => action => {
     const user = firebase.auth().currentUser
+    const dbRef = firebase.database().ref("users/" + user.uid + "/visitedVenues/")
     const venues = store.getState().visitedVenues
     switch (action.type) {
         case "VISITED_VENUE":
         case "LETS_GO":
-            firebase.database().ref("users/" + user.uid).set({
-                visitedVenues: venues
-            })
+            dbRef.set(venues)
             return next(action)
         case "CLEAR_VISITED_VENUES":
-            firebase.database().ref("users/" + user.uid).set({
-                visitedVenues: {}
-            })
+            dbRef.set({})
             return next(action)
     }
     next(action)
@@ -21,20 +19,25 @@ export const fireMiddleware = store => next => action => {
 
 export const getInitialFireState = store => next => action => {
     const user = firebase.auth().currentUser
+    const dbRef = firebase.database().ref("users/" + user.uid)
     switch (action.type) {
         case "LOG_IN":
-            let fireVenues = {};
-            firebase.database().ref("users/" + user.uid).once("value").then((dataSnap) => {
+            dbRef.once("value").then((dataSnap) => {
+                console.log("DataSnap: ", dataSnap.val());
                 if (dataSnap.val().visitedVenues) {
 
-                    fireVenues = dataSnap.val().visitedVenues
+                    const fireVenues = dataSnap.val().visitedVenues
+                    const fireLocation: GPS = dataSnap.val().location
+
                     store.dispatch({
-                        type: "FIREBASE_VENUES",
-                        fireVenues
+                        type: "SYNC_FIREBASE",
+                        fireVenues,
+                        gpsData: fireLocation
                     })
                 } else {
-                    firebase.database().ref("users/" + user.uid).set({
-                        visitedVenues: {}
+                    dbRef.set({
+                        visitedVenues: {},
+                        location: {}
                     })
                 }
             })
@@ -42,6 +45,20 @@ export const getInitialFireState = store => next => action => {
     }
     next(action)
 
+}
+
+export const syncLocationInfo = store => next => action => {
+    const user = firebase.auth().currentUser
+    const dbRef = firebase.database().ref("users/" + user.uid + "/location/")
+    switch (action.type) {
+        case "SET_GPS_DATA":
+            if (action.gpsData && action.gpsData !== undefined) {
+
+                dbRef.set(action.gpsData)
+            }
+            return next(action)
+    }
+    return next(action)
 }
 
 // export const clearFireDB = store => next => action => {

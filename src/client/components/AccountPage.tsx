@@ -170,7 +170,7 @@ export const AccountPage = (props: AccountProps) => {
                     </PicContainer>
                     <PicInfo>
                         <PicText>Drag a photo onto the image to the left, or click the button bellow to upload a new profile picture.</PicText>
-                        <PicButton>Upload photo</PicButton>
+                        <PicButton type="file">Upload photo</PicButton>
                     </PicInfo>
                 </Item>
                 <InputItem>

@@ -36,6 +36,18 @@ export interface Category {
     primary?: boolean
 }
 
+export interface GPS {
+    formattedAddress?: string;
+    geometry: {
+        lat: number;
+        lng: number;
+    }; // tease this out
+    name?: string;
+    photos?: any[]; // tease this out
+    types?: string[];
+    vicinity?: string;
+}
+
 export interface Categories {
     primary?: Category;
     secondary?: Category[]

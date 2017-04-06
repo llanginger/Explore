@@ -70,8 +70,8 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
                     lng: response.geometry.location.lng()
                 },
                 name: response.name,
-                types: response.types,
-                vicinity: response.vicinity
+                types: response.types ? response.types : "",
+                vicinity: response.vicinity ? response.vicinity : ""
             }
             console.log("response: ", response)
             this.props.onPlaceSelected(formattedResponse);

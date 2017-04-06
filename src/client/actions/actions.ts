@@ -1,6 +1,6 @@
 import { Venue, QueryInfo, User, GooglePlaces } from "../Interfaces"
 import { Action } from "redux"
-export { fireMiddleware, getInitialFireState } from "./fireMiddleware"
+export { fireMiddleware, getInitialFireState, syncLocationInfo } from "./fireMiddleware"
 export { markerMiddleware } from "./markerMiddleware"
 
 export interface SimpleAction {
