@@ -1,11 +1,15 @@
 import * as React from "react"
 import styled from "styled-components"
 import { BaseReduxProps } from "../Interfaces"
+import { FOCUS_USER_MARKER } from "../actions/actions"
 
 export const GPSButton = (props: BaseReduxProps) => {
 
-    const venues = props.store.getState().currentResults.venues
-    const inputState = props.store.getState().homeInputState
+    const Store = props.store.getState()
+
+    const venues = Store.currentResults.venues
+    const inputState = Store.homeInputState
+    const userMarker: google.maps.Marker = Store.userReducer.positionMarker
 
     const Button = styled.button`
         position: absolute;
@@ -13,24 +17,30 @@ export const GPSButton = (props: BaseReduxProps) => {
         right: 5%;
         background: transparent;
         border: none;
-        color: #333;
+        color: #669EFF;
         font-size: 32px;
-        filter: drop-shadow(3px 3px 3px #333);
+        filter: drop-shadow(3px 3px 2px black);
         transition: transform .02s ease-in-out;
 
         &:active {
             outline: none;
             transform: translateY(1px)
-            filter: drop-shadow(2px 2px 2p #333)
+            filter: drop-shadow(2px 2px 1px #333)
         }
 
         &:focus {
             outline: none;
         }
     `
+
+    const focusUser = () => {
+        console.log("marker pos: ", userMarker.getPosition());
+        props.store.dispatch(FOCUS_USER_MARKER(userMarker.getPosition()))
+    }
+
     if (venues.length > 0 && inputState.active == false) {
         return (
-            <Button><span className="pt-icon pt-icon-locate" /></Button>
+            <Button onClick={focusUser}><span className="pt-icon pt-icon-locate" /></Button>
         )
     } else {
         return null

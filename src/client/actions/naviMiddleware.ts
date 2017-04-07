@@ -30,8 +30,10 @@ export const naviMiddleware = store => next => action => {
         case "MAP_LOADED":
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(createUserMarker, error)
+                return next(action)
             } else {
                 store.dispatch({ type: "NO_GPS_AVAILABLE" })
+                return next(action)
             }
     }
     return next(action)

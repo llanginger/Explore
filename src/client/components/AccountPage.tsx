@@ -16,7 +16,7 @@ export const AccountPage = (props: AccountProps) => {
     const { store } = props
     const storageRef = firebase.storage().ref();
     const currentUser = firebase.auth().currentUser
-    const reduxUser = store.getState().loggedIn.user
+    const reduxUser = store.getState().userReducer
 
     const changeUserName = (e) => {
         e.stopPropagation()

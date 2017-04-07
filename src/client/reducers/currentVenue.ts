@@ -30,9 +30,12 @@ export const currentVenue: Reducer<currentVenue> = (state: currentVenue = initSt
             return { ...action.venue, seen: true }
         case "CLEAR_VENUES":
         case "SET_GPS_DATA":
+        case "INPUT_GPS":
         case "BLUR_GPS":
         case "LOG_OUT":
             return initState
+        case "FOCUS_USER_INPUT":
+            return state;
         default:
             return state;
     }

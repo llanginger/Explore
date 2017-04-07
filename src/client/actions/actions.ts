@@ -130,8 +130,11 @@ export const BLUR_INPUT: () => Action = () => {
     return { type: "BLUR_INPUT" }
 }
 
-export const INPUT_GPS: () => Action = () => {
-    return { type: "INPUT_GPS" }
+export const INPUT_GPS: (marker: google.maps.Marker) => Action = (marker: google.maps.Marker) => {
+    return {
+        type: "INPUT_GPS",
+        marker
+    }
 }
 
 export const BLUR_GPS: () => Action = () => {
@@ -149,8 +152,9 @@ export const UPDATE_PROFILE_INFO: (userInfo: { email?: string, userName?: string
     }
 }
 
-export const FOCUS_USER_MARKER: () => Action = () => {
+export const FOCUS_USER_MARKER: (marker: any) => Action = (marker: any) => {
     return {
-        type: "FOCUS_USER_MARKER"
+        type: "FOCUS_USER_MARKER",
+        marker
     }
 }

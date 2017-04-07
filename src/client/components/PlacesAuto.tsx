@@ -5,8 +5,10 @@ import {
     Button
 } from "@blueprintjs/core"
 import { BaseReduxProps, GooglePlaces } from "../Interfaces"
+import styled from "styled-components"
 
-import { INPUT_GPS, BLUR_INPUT } from "../actions/actions"
+import { INPUT_GPS, BLUR_INPUT, FOCUS_USER_MARKER } from "../actions/actions"
+import { store } from "../Store"
 
 
 interface PlacesAutoState {
@@ -21,8 +23,35 @@ interface PlacesAutoProps {
     bounds?: {};
 }
 
-export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState> {
+const GPSPrompt = styled.div`
+    width: 100%;
+    background: white;
+    color: black;
+    height: 40px;
+    box-sizing: border-box;
+    border-bottom: 2px solid #669EFF;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 
+    &:hover {
+        background-color: #669EFF;
+        color: white
+    }
+
+    &:hover span {
+        color: white;
+    }
+
+`
+
+const IconSpan = styled.span`
+    color: #669EFF;
+    margin: 0px 12px;
+`
+
+export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState> {
+    private unsubscribe;
     private autocomplete;
     private input;
     private gpsInput;
@@ -38,9 +67,15 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
         this.autocomplete = null;
         this._onSelected = this._onSelected.bind(this)
         this.state = { inputValue: "", refGps: true }
+        this._renderGpsButton = this._renderGpsButton.bind(this)
+        this._focusUserMarker = this._focusUserMarker.bind(this)
     }
 
     componentDidMount() {
+        this.unsubscribe = store.subscribe(() => {
+            this.forceUpdate()
+        })
+
         const { types = [], componentRestrictions, bounds, } = this.props;
         const config: any = {
             types,
@@ -52,11 +87,8 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
         }
 
         this.gpsInput.focus()
-
         this.autocomplete = new google.maps.places.Autocomplete(this.gpsInput, config);
-
         this.autocomplete.addListener('place_changed', this._onSelected);
-
 
     }
 
@@ -76,6 +108,25 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
             console.log("response: ", response)
             this.props.onPlaceSelected(formattedResponse);
         }
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
+        const elem = document.body.getElementsByClassName("pac-container")[0]
+        document.body.removeChild(elem)
+    }
+
+    _renderGpsButton() {
+        if (store.getState().userReducer.hasGps === true) {
+            return <GPSPrompt onClick={this._focusUserMarker}><IconSpan className="pt-icon pt-icon-locate" />   <span>Use GPS Coordinates?</span></GPSPrompt>
+        } else {
+            return null
+        }
+    }
+
+    _focusUserMarker() {
+        const userMarker: google.maps.Marker = store.getState().userReducer.positionMarker
+        store.dispatch(FOCUS_USER_MARKER(userMarker.getPosition()))
     }
 
     render() {
@@ -99,6 +150,8 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
             e.stopPropagation()
         }
 
+
+
         const { onPlaceSelected, types, componentRestrictions, bounds, ...rest } = this.props;
         return (
             <div>
@@ -116,6 +169,7 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
                     value={this.state.inputValue}
                     {...rest}
                 />
+                {this._renderGpsButton()}
             </div>
         );
     }

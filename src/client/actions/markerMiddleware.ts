@@ -18,13 +18,16 @@ export const markerMiddleware = store => next => action => {
             action = { ...action, venue: newVenue }
             return next(action)
         case "INPUT_GPS":
-            if (currentVenue.marker && currentVenue.marker.map && currentVenue.marker.map.length > 0) {
-                currentVenue.marker.setMap(null)
-            }
+            action.marker.setMap(null)
             return next(action)
         case "SYNC_FIREBASE":
             console.log("Mapref: ", mapRef);
             mapRef.setCenter({ lat: action.gpsData.geometry.lat, lng: action.gpsData.geometry.lng })
+            return next(action)
+        case "FOCUS_USER_MARKER":
+            console.log("Marker: ", action.marker);
+            mapRef.panTo(action.marker)
+            return next(action);
     }
     next(action)
 }

@@ -13,7 +13,7 @@ export const SettingsMenu = (props: BaseReduxProps) => {
     const { store } = props
     const state = store.getState()
     const currentUser = firebase.auth().currentUser
-    const reduxUser = state.loggedIn.user
+    const reduxUser = state.userReducer
 
 
     const menuState = state.settingsMenu

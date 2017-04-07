@@ -19,6 +19,7 @@ export const homeInputState: Reducer<homeInputState> = (state: homeInputState = 
         case "BLUR_GPS":
         case "SET_GPS_DATA":
         case "LOG_OUT":
+        case "FOCUS_USER_MARKER":
             return { ...state, active: false, isInGPSMode: false }
         case "INPUT_GPS":
             return { ...state, active: true, isInGPSMode: true }

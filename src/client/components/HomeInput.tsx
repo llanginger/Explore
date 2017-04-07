@@ -111,6 +111,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
         const inputState = store.getState().homeInputState.active
         const spinnerState = store.getState().spinner
         const gps = store.getState().gps.geometry
+        const currentVenue = store.getState().currentVenue
 
         const handleInputChange = (event) => {
             this.setState({ category: event.target.value })
@@ -157,7 +158,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
                     iconName="pt-icon-geosearch"
                     onClick={() => {
                         this.setState({ category: "" })
-                        store.dispatch(INPUT_GPS())
+                        store.dispatch(INPUT_GPS(currentVenue.marker))
                     }}
                 />
             )
