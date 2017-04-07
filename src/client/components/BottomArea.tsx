@@ -3,7 +3,7 @@ import { BaseReduxProps } from "../Interfaces"
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import * as classNames from "classnames"
 import { Reusable } from "./Components"
-import { TOGGLE_BOTTOM_AREA, NEXT_VENUE, PREV_VENUE } from "../actions/actions"
+import { TOGGLE_BOTTOM_AREA, NEXT_VENUE, PREV_VENUE, SHOW_DIRECTIONS } from "../actions/actions"
 import styled from "styled-components"
 
 export const BottomArea = (props: BaseReduxProps) => {
@@ -13,6 +13,7 @@ export const BottomArea = (props: BaseReduxProps) => {
     const venue = store.getState().currentVenue
     const big = store.getState().bottomArea.big
     const show = store.getState().bottomArea.show
+    const userMarker: google.maps.Marker = store.getState().userReducer.positionMarker
 
     const imageStyles = {
         height: big ? "200px" : "100%",
@@ -154,7 +155,11 @@ export const BottomArea = (props: BaseReduxProps) => {
             )
         })
     }
-
+    const directionsObj = () => {
+        const start = { lat: userMarker.getPosition().lat(), lng: userMarker.getPosition().lat() }
+        const end = { lat: currentVenue.location.lat, lng: currentVenue.location.lng }
+        return { start, end }
+    }
     const renderList = () => {
         if (big === true) {
             return (
@@ -168,8 +173,8 @@ export const BottomArea = (props: BaseReduxProps) => {
                         {mapReviewsToList()}
                     </ReviewList>
                     <Reusable.BottomButton
-                        onClick={() => console.log("Bottom button pressed")}
-                        text="Do something"
+                        onClick={() => store.dispatch(SHOW_DIRECTIONS(directionsObj()))}
+                        text="Take me here!"
                     />
                 </ReviewContainer>
             )

@@ -11,7 +11,7 @@ import { seenVenues } from "./seenVenues"
 import { spinner } from "./spinner"
 import { settingsPages } from "./settingsPages"
 import { loggedIn } from "./loggedIn"
-import { map } from "./markers"
+import { map } from "./mapReducer"
 import { userReducer } from "./userReducer"
 
 export {

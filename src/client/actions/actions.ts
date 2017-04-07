@@ -3,6 +3,7 @@ import { Action } from "redux"
 export { fireMiddleware, getInitialFireState, syncLocationInfo } from "./fireMiddleware"
 export { markerMiddleware } from "./markerMiddleware"
 export { naviMiddleware } from "./naviMiddleware"
+// export { directionsMiddleware } from "./directionsMiddleware"
 
 export interface SimpleAction {
     type: string;
@@ -152,9 +153,34 @@ export const UPDATE_PROFILE_INFO: (userInfo: { email?: string, userName?: string
     }
 }
 
-export const FOCUS_USER_MARKER: (marker: any) => Action = (marker: any) => {
+export const FOCUS_USER_MARKER: (marker: google.maps.Marker) => Action = (marker: google.maps.Marker) => {
     return {
         type: "FOCUS_USER_MARKER",
         marker
+    }
+}
+
+export const MOVED_MARKER: (marker: google.maps.Marker) => Action = (marker: google.maps.Marker) => {
+    return {
+        type: "MOVED_MARKER",
+        marker
+    }
+}
+
+export const SHOW_DIRECTIONS: (startEnd: {}) => Action = (startEnd: {}) => {
+    return {
+        type: "SHOW_DIRECTIONS",
+        startEnd
+    }
+}
+
+export const MAP_LOADED: (mapRef: google.maps.Map, directionRenderer: google.maps.DirectionsRenderer, directionService: google.maps.DirectionsService) => Action = (mapRef: google.maps.Map, directionRenderer: google.maps.DirectionsRenderer, directionService: google.maps.DirectionsService) => {
+    return {
+        type: "MAP_LOADED",
+        payload: {
+            mapRef,
+            directionRenderer,
+            directionService
+        }
     }
 }

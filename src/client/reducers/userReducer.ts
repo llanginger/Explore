@@ -6,6 +6,10 @@ export interface userReducer {
     profilePic: string;
     positionMarker?: any;
     hasGps: boolean;
+    showDirections?: {
+        start: {};
+        end: {};
+    }
 }
 
 const initState = {
@@ -29,7 +33,13 @@ export const userReducer: Reducer<userReducer> = (state: userReducer = initState
                 ...action.userInfo,
                 hasGps: true
             }
+        case "MOVED_MARKER":
+            return {
+                ...state,
+                positionMarker: action.marker
+            }
         case "LOG_OUT":
+
             return { ...initState }
         default:
             return state;

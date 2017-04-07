@@ -3,6 +3,7 @@ import { Venue } from "../Interfaces"
 export const markerMiddleware = store => next => action => {
     const currentVenue = store.getState().currentVenue
     const mapRef = store.getState().map.mapRef
+    console.log("MapRef from markermiddleware: ", mapRef);
     switch (action.type) {
         case "NEXT_VENUE":
         case "PREV_VENUE":

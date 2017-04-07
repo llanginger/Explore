@@ -1,4 +1,4 @@
-
+import { MOVED_MARKER } from "./actions"
 
 export const naviMiddleware = store => next => action => {
 
@@ -12,10 +12,12 @@ export const naviMiddleware = store => next => action => {
 
         const marker = new google.maps.Marker({
             position: pointval,
-            map: action.mapRef,
+            map: action.payload.mapRef,
             draggable: true,
             icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
         })
+        marker.addListener("dragend", () => store.dispatch(MOVED_MARKER(marker)))
+
         console.log("user Marker: ", marker);
         store.dispatch({ type: "USER_MARKER_CREATED", userInfo: { positionMarker: marker } })
         return next(action)

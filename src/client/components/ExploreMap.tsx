@@ -2,7 +2,7 @@ import * as GoogleMapsLoader from "google-maps"
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import * as React from "react"
 import { BaseReduxProps, Venue } from "../Interfaces"
-import { BLUR_INPUT, BLUR_GPS } from "../actions/actions"
+import { BLUR_INPUT, BLUR_GPS, MAP_LOADED } from "../actions/actions"
 
 
 interface ExploreMapProps extends BaseReduxProps {
@@ -24,6 +24,8 @@ interface Marker {
 
 export class ExploreMap extends React.Component<ExploreMapProps, any> {
     private mapdiv
+    private directionService
+    private directionDisplay
     public map: any
     private unsubscribe: Function;
 
@@ -35,15 +37,28 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 
     componentDidMount() {
         this.map = this._createMap()
+        this.directionService = this._initDirectionService()
+        this.directionDisplay = this._initDirectionRenderer()
+
         const { store } = this.props;
         this.unsubscribe = store.subscribe(() => {
             this.forceUpdate()
         })
-        store.dispatch({ type: "MAP_LOADED", mapRef: this.map })
+        store.dispatch(MAP_LOADED(this.map, this.directionService, this.directionDisplay))
     }
 
     componentWillUnmount() {
         this.unsubscribe()
+    }
+
+    _initDirectionService() {
+        return new google.maps.DirectionsService()
+    }
+    _initDirectionRenderer() {
+        return new google.maps.DirectionsRenderer({
+            map: this.map
+        })
+
     }
 
     _createMap() {
@@ -80,6 +95,22 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 
     render() {
         const { store } = this.props
+        const directions = store.getState().userReducer.showDirections
+
+        if (directions.start) {
+            this.directionService.route({
+                origin: directions.start,
+                destination: directions.end,
+                travelMode: google.maps.TravelMode.WALKING
+            }, (result, status) => {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    console.log("Directions response: ", result);
+                    this.directionDisplay.setDirections(result);
+                } else {
+                    console.log("Failed to set directions");
+                }
+            })
+        }
 
         return (
             <div
