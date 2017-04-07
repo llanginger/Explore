@@ -1,12 +1,14 @@
 import { Reducer } from "redux"
 export interface map {
     mapRef: google.maps.Map | string;
-    directionRenderer: google.maps.DirectionsRenderer | string;
+    directionsRenderer: google.maps.DirectionsRenderer | string;
+    directionsService: google.maps.DirectionsService | string;
 }
 
 const initState: map = {
     mapRef: "",
-    directionRenderer: ""
+    directionsRenderer: "",
+    directionsService: ""
 }
 export const map: Reducer<map> = (state: map = initState, action) => {
     switch (action.type) {

@@ -44,6 +44,7 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
         this.unsubscribe = store.subscribe(() => {
             this.forceUpdate()
         })
+        console.log("Directions renderer: ", this.directionDisplay);
         store.dispatch(MAP_LOADED(this.map, this.directionService, this.directionDisplay))
     }
 

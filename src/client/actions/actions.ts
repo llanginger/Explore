@@ -3,7 +3,7 @@ import { Action } from "redux"
 export { fireMiddleware, syncLocationInfo } from "./fireMiddleware"
 export { markerMiddleware } from "./markerMiddleware"
 export { naviMiddleware } from "./naviMiddleware"
-// export { directionsMiddleware } from "./directionsMiddleware"
+export { directionsMiddleware } from "./directionsMiddleware"
 
 export interface SimpleAction {
     type: string;
@@ -188,13 +188,13 @@ export const SHOW_DIRECTIONS: (startEnd: {}) => Action = (startEnd: {}) => {
     }
 }
 
-export const MAP_LOADED: (mapRef: google.maps.Map, directionRenderer: google.maps.DirectionsRenderer, directionService: google.maps.DirectionsService) => Action = (mapRef: google.maps.Map, directionRenderer: google.maps.DirectionsRenderer, directionService: google.maps.DirectionsService) => {
+export const MAP_LOADED: (mapRef: google.maps.Map, directionsRenderer: google.maps.DirectionsRenderer, directionsService: google.maps.DirectionsService) => Action = (mapRef: google.maps.Map, directionsRenderer: google.maps.DirectionsRenderer, directionsService: google.maps.DirectionsService) => {
     return {
         type: "MAP_LOADED",
         payload: {
             mapRef,
-            directionRenderer,
-            directionService
+            directionsRenderer,
+            directionsService
         }
     }
 }
