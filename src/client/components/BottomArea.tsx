@@ -6,6 +6,11 @@ import { Reusable } from "./Components"
 import { TOGGLE_BOTTOM_AREA, NEXT_VENUE, PREV_VENUE, SHOW_DIRECTIONS } from "../actions/actions"
 import styled from "styled-components"
 
+interface LatLng {
+    lat: number;
+    lng: number;
+}
+
 export const BottomArea = (props: BaseReduxProps) => {
 
 
@@ -156,9 +161,11 @@ export const BottomArea = (props: BaseReduxProps) => {
         })
     }
     const directionsObj = () => {
-        const start = { lat: userMarker.getPosition().lat(), lng: userMarker.getPosition().lat() }
+        const start = { lat: userMarker.getPosition().lat(), lng: userMarker.getPosition().lng() }
         const end = { lat: currentVenue.location.lat, lng: currentVenue.location.lng }
-        return { start, end }
+        const result: { start: LatLng, end: LatLng } = { start, end }
+        console.log(" Start/End Result: ", result);
+        return result
     }
     const renderList = () => {
         if (big === true) {
