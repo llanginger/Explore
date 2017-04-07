@@ -10,7 +10,8 @@ const initState: currentVenue = {
     photoSrc: [],
     reviews: [],
     rating: null,
-    categories: []
+    categories: [],
+    marker: undefined
 }
 
 interface cvAction {

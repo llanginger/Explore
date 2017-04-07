@@ -1,6 +1,6 @@
 import { Venue, QueryInfo, User, GooglePlaces } from "../Interfaces"
 import { Action } from "redux"
-export { fireMiddleware, getInitialFireState, syncLocationInfo } from "./fireMiddleware"
+export { fireMiddleware, syncLocationInfo } from "./fireMiddleware"
 export { markerMiddleware } from "./markerMiddleware"
 export { naviMiddleware } from "./naviMiddleware"
 // export { directionsMiddleware } from "./directionsMiddleware"
@@ -119,9 +119,23 @@ export const DISMISS_MAIN_INPUT_HELP: () => Action = () => {
     }
 }
 
-export const LOG_IN: (userInfo: { email?: string, userName?: string, profilePic?: string }) => Action = (userInfo: { email?: string, userName?: string, profilePic?: string }) => {
-    return { type: "LOG_IN", userInfo }
-}
+export const LOG_IN: (userInfo: {
+    profileInfo: {
+        email?: string,
+        userName?: string,
+        profilePic?: string
+    },
+    dbInfo: {
+        visitedVenues: {};
+        location: {};
+    }
+}) => Action = (userInfo: {
+    email?: string,
+    userName?: string,
+    profilePic?: string
+}) => {
+        return { type: "LOG_IN", userInfo }
+    }
 
 export const LOG_OUT: () => Action = () => {
     return { type: "LOG_OUT" }

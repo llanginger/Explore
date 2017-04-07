@@ -19,7 +19,9 @@ export const markerMiddleware = store => next => action => {
             action = { ...action, venue: newVenue }
             return next(action)
         case "INPUT_GPS":
-            action.marker.setMap(null)
+            if (action.marker !== undefined) {
+                action.marker.setMap(null)
+            }
             return next(action)
         case "SYNC_FIREBASE":
             console.log("Mapref: ", mapRef);

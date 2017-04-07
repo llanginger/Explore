@@ -25,7 +25,7 @@ export const loggedIn: Reducer<loggedIn> = (state: loggedIn = initState, action)
                 loggedIn: true,
                 user: {
                     ...state.user,
-                    ...action.userInfo
+                    ...action.userInfo.profileInfo
                 }
             }
         case "LOG_OUT":

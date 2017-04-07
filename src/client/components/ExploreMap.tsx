@@ -95,22 +95,6 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 
     render() {
         const { store } = this.props
-        const directions = store.getState().userReducer.showDirections
-
-        if (directions.start) {
-            this.directionService.route({
-                origin: directions.start,
-                destination: directions.end,
-                travelMode: google.maps.TravelMode.WALKING
-            }, (result, status) => {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    console.log("Directions response: ", result);
-                    this.directionDisplay.setDirections(result);
-                } else {
-                    console.log("Failed to set directions");
-                }
-            })
-        }
 
         return (
             <div

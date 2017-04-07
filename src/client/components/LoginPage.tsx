@@ -47,12 +47,70 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
     componentDidMount() {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log(user)
-                this.props.store.dispatch(LOG_IN({
-                    email: user.email,
-                    userName: user.displayName,
-                    profilePic: user.photoURL
-                }))
+                const dbRef = firebase.database().ref("users/" + user.uid)
+                dbRef.once("value").then((snap) => {
+                    if (snap.val() === null) {
+                        // --- If database empty, populate with placeholder data --- //
+                        console.log("Snap was null");
+                        dbRef.set({
+                            visitedVenues: {
+                                visitedVenues: [{
+                                    placeholder: "placeholder"
+                                }],
+                                visitedIds: ["123"]
+                            },
+                            location: {
+                                formattedAddress: "",
+                                geometry: {
+                                    lat: 0,
+                                    lng: 0
+                                },
+                                name: "",
+                                types: "",
+                                vicinity: ""
+                            }
+                        })
+                    }
+                    dbRef.once("value").then((snap) => {
+                        const initFireState = snap.val()
+                        console.log("Init fire db state: ", initFireState);
+                        const loginObj = {
+                            profileInfo: {
+                                email: user.email,
+                                userName: user.displayName,
+                                profilePic: user.photoURL
+                            },
+                            dbInfo: {
+                                visitedVenues: initFireState.visitedVenues,
+                                location: initFireState.location
+                            }
+                        }
+                        console.log("LoginObj: ", loginObj);
+                        this.props.store.dispatch(LOG_IN(loginObj))
+                    })
+                })
+
+
+
+
+
+
+
+
+
+
+
+
+                // console.log("User: ", user);
+                // dbRef.set({ testing: "Hello" })
+                // dbRef.once("value").then((snap) => console.log("Second DB response: ", snap.val()))
+                // let test = {}
+                // dbRef.once("value").then((snap) => {
+                //     test = snap.val()
+                //     console.log("Inner test: ", test);
+                // })
+                // console.log("Test: ", test);
+
             } else {
                 console.log("Not logged in")
             }

@@ -10,7 +10,11 @@ interface VVAction {
     type: string;
     id?: string;
     venue?: Venue;
-    fireVenues?: visitedVenues;
+    userInfo: {
+        dbInfo: {
+            visitedVenues: visitedVenues
+        }
+    };
 }
 
 const initState = {
@@ -30,11 +34,11 @@ export const visitedVenues: Reducer<visitedVenues> = (state: visitedVenues = ini
                 visitedIds: [...state.visitedIds, action.id],
                 visitedVenues: [...state.visitedVenues, formattedVenue]
             }
-        case "SYNC_FIREBASE":
+        case "LOG_IN":
             return {
                 ...state,
-                visitedIds: action.fireVenues.visitedIds,
-                visitedVenues: action.fireVenues.visitedVenues
+                visitedIds: action.userInfo.dbInfo.visitedVenues.visitedIds,
+                visitedVenues: action.userInfo.dbInfo.visitedVenues.visitedVenues
             }
         case "CLEAR_VISITED_VENUES":
             return { ...initState }
