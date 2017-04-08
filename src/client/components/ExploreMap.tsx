@@ -69,7 +69,10 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
                 -0.12775829999998223]),
             disableDefaultUI: true
         }
-        return new google.maps.Map(this.mapdiv, mapOptions)
+
+        const thisMap = new google.maps.Map(this.mapdiv, mapOptions)
+
+        return thisMap
     }
 
     _mapCenter(gps) {

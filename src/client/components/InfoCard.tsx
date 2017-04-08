@@ -30,7 +30,7 @@ export const InfoCard = (props: InfoCardProps) => {
             boxShadow: "5px 5px 5px #333",
             width: "90%",
             position: "absolute",
-            top: "19%",
+            top: "17%",
             left: "5%",
         }
 

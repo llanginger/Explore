@@ -19,8 +19,9 @@ export const markerMiddleware = store => next => action => {
             action = { ...action, venue: newVenue }
             return next(action)
         case "INPUT_GPS":
-            if (action.marker !== undefined) {
-                action.marker.setMap(null)
+        case "FOCUS_INPUT":
+            if (currentVenue.marker !== undefined) {
+                currentVenue.marker.setMap(null)
             }
             return next(action)
         case "SYNC_FIREBASE":
