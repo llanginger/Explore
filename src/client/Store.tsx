@@ -65,6 +65,6 @@ const enhancer = compose(
     DevTools.instrument()
 )
 
-export const store: Store<Reducers> = createStore(Reducers, enhancer)
+export const store: Store<Reducers> = createStore(Reducers, enhancer) as Store<Reducers>
 console.log("Store: ", store);
 console.log("Reducers: ", Reducers);

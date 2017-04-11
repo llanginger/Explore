@@ -62,24 +62,3 @@ export class PreferencesContainer extends React.Component<BaseReduxProps, any> {
         )
     }
 }
-    // const closePage = () => {
-
-
-
-
-    // }
-
-    // const choosePage = () => {
-    //     switch (props.page) {
-    //         case "preferences":
-
-    //         default:
-    //             return <div />
-
-    //     }
-    // }
-
-    // return (
-    //     choosePage()
-    // )
-

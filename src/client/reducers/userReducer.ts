@@ -6,6 +6,7 @@ export interface userReducer {
     profilePic: string;
     positionMarker?: any;
     hasGps: boolean;
+    gpsCoords?: google.maps.LatLng;
     showDirections?: {
         start: {};
         end: {};
@@ -25,18 +26,23 @@ export const userReducer: Reducer<userReducer> = (state: userReducer = initState
         case "UPDATE_PROFILE_INFO":
             return {
                 ...state,
-                ...action.userInfo
+                ...action.userInfo.profileInfo
             }
         case "USER_MARKER_CREATED":
             return {
                 ...state,
-                ...action.userInfo,
+                ...action.userInfo.profileInfo,
                 hasGps: true
             }
         case "MOVED_MARKER":
             return {
                 ...state,
                 positionMarker: action.marker
+            }
+        case "NO_GPS_AVAILABLE":
+            return {
+                ...state,
+                hasGps: false
             }
         case "LOG_OUT":
 

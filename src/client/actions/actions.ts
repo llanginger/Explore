@@ -167,7 +167,8 @@ export const UPDATE_PROFILE_INFO: (userInfo: { email?: string, userName?: string
     }
 }
 
-export const FOCUS_USER_MARKER: (marker: google.maps.Marker) => Action = (marker: google.maps.Marker) => {
+// Rename marker to "position"
+export const FOCUS_USER_MARKER: (marker: google.maps.LatLng) => Action = (marker: google.maps.LatLng) => {
     return {
         type: "FOCUS_USER_MARKER",
         marker
@@ -196,5 +197,11 @@ export const MAP_LOADED: (mapRef: google.maps.Map, directionsRenderer: google.ma
             directionsRenderer,
             directionsService
         }
+    }
+}
+
+export const USE_GPS_POS: () => Action = () => {
+    return {
+        type: "USE_GPS_POS"
     }
 }

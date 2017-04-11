@@ -26,11 +26,6 @@ export const PlacesPage = (props: PlacesProps) => {
         console.log("underscore value: ", value)
     })
 
-
-
-
-
-
     const CategoryList = styled.ul`
         list-style-type: none;
         background-color: white;
@@ -45,8 +40,6 @@ export const PlacesPage = (props: PlacesProps) => {
         margin-bottom: 5px;
         color: #B10DC9;
     `
-
-
 
     const Span = styled.span`
         color: white;
@@ -81,9 +74,6 @@ export const PlacesPage = (props: PlacesProps) => {
         props.store.dispatch(CLEAR_VISITED_VENUES())
         e.stopPropagation()
     }
-
-
-
 
     return (
 

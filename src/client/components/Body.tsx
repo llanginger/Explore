@@ -20,9 +20,6 @@ import {
 } from "./Components"
 
 
-let init_lng = -98.5795
-let init_lat = 39.8282
-
 interface BodyProps extends BaseReduxProps {
 }
 
@@ -125,45 +122,45 @@ export class Body extends React.Component<BodyProps, any> {
                             }}
                             className="mapiv"
                             store={store}
-                            init_lat={init_lat}
-                            init_lng={init_lng}
                         />
-                        <ReactCSSTransitionGroup
-                            transitionName="overlayFade"
-                            transitionEnterTimeout={300}
-                            transitionLeaveTimeout={300}
-                            transitionAppear={true}
-                            transitionAppearTimeout={1200}
-                        >
-                            {renderOverlay()}
-                        </ReactCSSTransitionGroup>
-                        <Hamburger
-                            store={store}
-                            styles={burgerStyles}
-                        />
-                        <HomeInput
-                            style={{ marginTop: "100px" }}
-                            placeholder="What Would You Like?"
-                            store={store}
-                        />
-                        <InfoCard store={store} />
-                        <ReactCSSTransitionGroup
-                            transitionName="settingsMenuLoad"
-                            transitionEnterTimeout={500}
-                            transitionLeaveTimeout={500}
-                        >
-                            {renderSettingsMenu()}
-                        </ReactCSSTransitionGroup>
-                        <BottomButtons store={store} />
-                        <ReactCSSTransitionGroup
-                            transitionName="bottomAreaRise"
-                            transitionEnterTimeout={300}
-                            transitionLeaveTimeout={300}
-                        >
-                            {renderBottomArea()}
-                        </ReactCSSTransitionGroup>
-                        <GPSButton store={store} />
-                        <PreferencesContainer store={store} />
+                        <div>
+                            <ReactCSSTransitionGroup
+                                transitionName="overlayFade"
+                                transitionEnterTimeout={300}
+                                transitionLeaveTimeout={300}
+                                transitionAppear={true}
+                                transitionAppearTimeout={1200}
+                            >
+                                {renderOverlay()}
+                            </ReactCSSTransitionGroup>
+                            <Hamburger
+                                store={store}
+                                styles={burgerStyles}
+                            />
+                            <HomeInput
+                                style={{ marginTop: "100px" }}
+                                placeholder="What Would You Like?"
+                                store={store}
+                            />
+                            <InfoCard store={store} />
+                            <ReactCSSTransitionGroup
+                                transitionName="settingsMenuLoad"
+                                transitionEnterTimeout={500}
+                                transitionLeaveTimeout={500}
+                            >
+                                {renderSettingsMenu()}
+                            </ReactCSSTransitionGroup>
+                            <BottomButtons store={store} />
+                            <ReactCSSTransitionGroup
+                                transitionName="bottomAreaRise"
+                                transitionEnterTimeout={300}
+                                transitionLeaveTimeout={300}
+                            >
+                                {renderBottomArea()}
+                            </ReactCSSTransitionGroup>
+                            <GPSButton store={store} />
+                            <PreferencesContainer store={store} />
+                        </div>
                     </div>
                 )
             } else {

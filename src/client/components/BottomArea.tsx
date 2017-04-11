@@ -4,12 +4,25 @@ import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import * as classNames from "classnames"
 import { Reusable } from "./Components"
 import { TOGGLE_BOTTOM_AREA, NEXT_VENUE, PREV_VENUE, SHOW_DIRECTIONS } from "../actions/actions"
+import { Colors } from "./Utility/Colors"
 import styled from "styled-components"
+import { BottomAreaList } from "./BottomAreaComponents/BottomAreaList"
+import { BottomAreaButtons } from "./BottomAreaComponents/BottomAreaButtons"
+import { BottomAreaImage } from "./BottomAreaComponents/BottomAreaImage"
+import { BottomAreaContainer } from "./BottomAreaComponents/BottomAreaContainer"
 
 interface LatLng {
     lat: number;
     lng: number;
 }
+
+
+interface ContainerProps {
+    big: boolean
+    className: string;
+}
+
+interface CProps extends ContainerProps { }
 
 export const BottomArea = (props: BaseReduxProps) => {
 
@@ -20,146 +33,16 @@ export const BottomArea = (props: BaseReduxProps) => {
     const show = store.getState().bottomArea.show
     const userMarker: google.maps.Marker = store.getState().userReducer.positionMarker
 
-    const imageStyles = {
-        height: big ? "200px" : "100%",
-        width: big ? "100%" : "100%",
-        borderRadius: big ? "0px" : "10px 10px 0px 0px",
-        transition: "all .5s",
-        backgroundImage: "url('" + venue.photoSrc[0] + "')",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        display: "flex",
-        alignItems: "center"
-    }
-
-
-    const ReviewList = styled.ul`
-        background: white;
-        width: 100%;
-        margin: 0px;
-        height: 100%;
-        padding: 10px 10px 0px 10px;
-        list-style-type: none;
-        overflow-y: scroll;
-
-        &::-webkit-scrollbar {
-            display: none;
-        }
-    `
-
-
-    const liStyles = {
-        borderBottom: "1px #888 solid",
-        marginBottom: "10px",
-        paddingBottom: "10px"
-    }
-
-
-    const ListItem = styled.li`
-        border-bottom: 1px solid $888;
-        margin-bottom: 10px;
-        parrind-bottom: 10px;
-        font-size: 16px;
-    `
-
     const baClasses = classNames({
         "bottomArea": true,
         "big": big,
         "small": !big,
     })
 
-
-    const RightButton = styled.button`
-        position: absolute;
-        right: 10px;
-        font-size: 48px;
-        background: transparent;
-        padding: 5px;
-        border: none;
-        color: black;
-        
-        &:focus {
-            outline: none;
-        }
-    `
-
-    const LeftButton = styled.button`
-        position: absolute;
-        left: 10px;
-        font-size: 48px;
-        background: transparent;
-        padding: 5px;
-        border: none;
-        color: black;
-
-        &:focus {
-            outline: none;
-        }
-    `
-
-    const ReviewContainer = styled.div`
-        height: 100%;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-    `
-
-    const RightIconSpan = styled.span`
-        color: white;
-        filter: drop-shadow(6px 1px 2px black)
-    `
-
-    const LeftIconSpan = styled.span`
-        color: white;
-        filter: drop-shadow(-6px 1px 2px black)
-    `
-
-
     const venues = store.getState().currentResults.venues
     const currentVenue = store.getState().currentVenue
 
-    const getNextVenue = () => {
-        for (let venue of venues) {
-            if (venue.seen === false && venue.visited !== true) {
-                return venue
-            }
-        }
-    }
 
-    const handleNext = (e) => {
-        e.stopPropagation()
-        store.dispatch(NEXT_VENUE(getNextVenue()))
-    }
-
-    const getLastVenue = () => {
-        console.log("Current venue: ", currentVenue);
-        for (let i = 0; i < venues.length; i++) {
-            if (i > 0 && venues[i].id === currentVenue.id) {
-                console.log("Successfully retrived previous venue: ", venues[i - 1]);
-                return { ...venues[i - 1], seen: false }
-            }
-        }
-    }
-
-    const handlePrev = (e) => {
-        e.stopPropagation()
-        store.dispatch(PREV_VENUE(getLastVenue(), currentVenue))
-    }
-
-
-    const mapReviewsToList = () => {
-        // Maybe turn this into a factory? Need some way of rendering only a couple
-        return venue.reviews.slice(0, 5).map((rev, i) => {
-            return (
-                <ListItem
-                    style={liStyles}
-                    key={i}
-                >
-                    {rev}
-                </ListItem>
-            )
-        })
-    }
     const directionsObj = () => {
         const start = { lat: userMarker.getPosition().lat(), lng: userMarker.getPosition().lng() }
         const end = { lat: currentVenue.location.lat, lng: currentVenue.location.lng }
@@ -167,64 +50,103 @@ export const BottomArea = (props: BaseReduxProps) => {
         console.log(" Start/End Result: ", result);
         return result
     }
+
     const renderList = () => {
+
+        const topBarClick = () => {
+            store.dispatch(TOGGLE_BOTTOM_AREA())
+        }
+
+        const bottomButtonClick = () => {
+            store.dispatch(SHOW_DIRECTIONS(directionsObj()))
+        }
+
         if (big === true) {
             return (
-                <ReviewContainer>
-                    <Reusable.TopBar
-                        onClick={() => {
-                            store.dispatch(TOGGLE_BOTTOM_AREA())
-                        }}
-                        text={venue.name} />
-                    <ReviewList>
-                        {mapReviewsToList()}
-                    </ReviewList>
-                    <Reusable.BottomButton
-                        onClick={() => store.dispatch(SHOW_DIRECTIONS(directionsObj()))}
-                        text="Take me here!"
-                    />
-                </ReviewContainer>
+                <BottomAreaList
+                    venue={venue}
+                    topBarOnclick={topBarClick}
+                    bottomButtonOnClick={bottomButtonClick}
+                    bottomButtonText="Take Me Here!"
+                />
             )
         } else {
-            return
+            return null
         }
     }
 
     const renderButtons = () => {
+        const getNextVenue = () => {
+            for (let venue of venues) {
+                if (venue.seen === false && venue.visited !== true) {
+                    return venue
+                }
+            }
+        }
+
+        const handleNext = (e) => {
+            e.stopPropagation()
+            store.dispatch(NEXT_VENUE(getNextVenue()))
+        }
+
+        const getLastVenue = () => {
+            console.log("Current venue: ", currentVenue);
+            for (let i = 0; i < venues.length; i++) {
+                if (i > 0 && venues[i].id === currentVenue.id) {
+                    console.log("Successfully retrived previous venue: ", venues[i - 1]);
+                    return { ...venues[i - 1], seen: false }
+                }
+            }
+        }
+
+        const handlePrev = (e) => {
+            e.stopPropagation()
+            store.dispatch(PREV_VENUE(getLastVenue(), currentVenue))
+        }
+
         if (big === true) {
             return (
-                <div style={{ marginTop: "-51px" }}>
-                    <LeftButton
-                        onClick={handlePrev}
-                    >
-                        <LeftIconSpan className="pt-icon pt-icon-chevron-left" />
-                    </LeftButton>
-                    <RightButton
-                        onClick={handleNext}
-                    >
-                        <RightIconSpan className="pt-icon pt-icon-chevron-right" />
-                    </RightButton>
-                </div>
+                <BottomAreaButtons
+                    leftButtonOnClick={handlePrev}
+                    rightButtonOnClick={handleNext}
+                />
             )
+        } else {
+            return null;
         }
     }
 
+    // --- ??? Why does this work here but not from imported module? --- //
+    const Container = styled.div`
+        background: ${Colors.GOOD};
+        position: absolute;
+        height: ${(props: CProps) => props.big ? "100%" : "20%"};
+        width: ${(props: CProps) => props.big ? "100%" : "90%"};
+        left: ${(props: CProps) => props.big ? "0%" : "5%"};
+        bottom: ${(props: CProps) => props.big ? "0px" : "-80px"};
+        border-radius: ${(props: CProps) => props.big ? "0px" : "10px 10px 0px 0px"};
+        box-shadow: ${(props: CProps) => props.big ? "none" : "5px 5px 7px #333"};
+        display: flex;
+        flex-direction: column;
+        
+    `
+
     return (
-        <div
-            className={baClasses}
-            key={Date.now()}
+        <Container
+            className="bottomArea"
+            big={big}
         >
-            <div
-                className="imgContainer"
-                style={imageStyles}
+            <BottomAreaImage
                 onClick={() => {
                     store.dispatch(TOGGLE_BOTTOM_AREA())
                 }}
+                big={big}
+                image={venue.photoSrc[0]}
             >
                 {renderButtons()}
-            </div>
+            </BottomAreaImage>
             {renderList()}
-        </div>
+        </Container>
 
     )
 }

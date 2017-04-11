@@ -8,8 +8,6 @@ import { BLUR_INPUT, BLUR_GPS, MAP_LOADED } from "../actions/actions"
 interface ExploreMapProps extends BaseReduxProps {
     className: string;
     styles: {};
-    init_lat: number;
-    init_lng: number;
 }
 
 interface Marker {

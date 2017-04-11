@@ -19,12 +19,24 @@ export const naviMiddleware = store => next => action => {
         marker.addListener("dragend", () => store.dispatch(MOVED_MARKER(marker)))
         console.log("user Marker: ", marker);
 
-        store.dispatch({ type: "USER_MARKER_CREATED", userInfo: { positionMarker: marker } })
+        store.dispatch({
+            type: "USER_MARKER_CREATED",
+            userInfo: {
+                profileInfo: {
+                    positionMarker: marker,
+                    gpsCoords: {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    }
+                }
+            }
+        })
         return next(action)
     }
 
     const error = (err) => {
-        console.log("Error retrieving gps data")
+        console.log("Error retrieving gps data", err)
+        store.dispatch({ type: "NO_GPS_AVAILABLE" })
         return next(action)
     }
 
@@ -40,5 +52,3 @@ export const naviMiddleware = store => next => action => {
     }
     return next(action)
 }
-
-

@@ -7,7 +7,7 @@ import {
 import { BaseReduxProps, GooglePlaces } from "../Interfaces"
 import styled from "styled-components"
 
-import { INPUT_GPS, BLUR_INPUT, FOCUS_USER_MARKER } from "../actions/actions"
+import { INPUT_GPS, BLUR_INPUT, FOCUS_USER_MARKER, USE_GPS_POS } from "../actions/actions"
 import { store } from "../Store"
 
 
@@ -23,30 +23,48 @@ interface PlacesAutoProps {
     bounds?: {};
 }
 
-const GPSPrompt = styled.div`
+const promptBase = styled.div`
     width: 100%;
     background: white;
     color: black;
     height: 40px;
     box-sizing: border-box;
-    border-bottom: 2px solid #669EFF;
     cursor: pointer;
     display: flex;
     align-items: center;
 
     &:hover {
-        background-color: #669EFF;
         color: white
     }
 
     &:hover span {
         color: white;
     }
-
 `
 
-const IconSpan = styled.span`
+const GPSPrompt = styled(promptBase) `
+    border-bottom: 2px solid #669EFF;
+
+    &:hover {
+        background-color: #669EFF;
+    }
+`
+
+const NoGPSPrompt = styled(promptBase) `
+    border-bottom: 2px solid #0f9960;
+
+    &:hover {
+        background-color: #0f9960;
+    }
+`
+
+const GPSIconSpan = styled.span`
     color: #669EFF;
+    margin: 0px 12px;
+`
+
+const NoGPSIconSpan = styled.span`
+    color: #f44336;
     margin: 0px 12px;
 `
 
@@ -118,15 +136,15 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
 
     _renderGpsButton() {
         if (store.getState().userReducer.hasGps === true) {
-            return <GPSPrompt onClick={this._focusUserMarker}><IconSpan className="pt-icon pt-icon-locate" />   <span>Use GPS Coordinates?</span></GPSPrompt>
+            return <GPSPrompt onClick={this._focusUserMarker}><GPSIconSpan className="pt-icon pt-icon-locate" />   <span>Use GPS Coordinates?</span></GPSPrompt>
         } else {
-            return null
+            return <NoGPSPrompt onClick={() => { this.gpsInput.focus() }}><NoGPSIconSpan className="pt-icon pt-icon-lock" />   <span>Oh no! No GPS info available!</span></NoGPSPrompt>
         }
     }
 
     _focusUserMarker() {
         const userMarker: google.maps.Marker = store.getState().userReducer.positionMarker
-        store.dispatch(FOCUS_USER_MARKER(userMarker.getPosition()))
+        store.dispatch(USE_GPS_POS())
     }
 
     render() {
