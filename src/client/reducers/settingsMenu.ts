@@ -13,6 +13,7 @@ export const settingsMenu: Reducer<settingsMenu> = (state: settingsMenu = initSt
             return { open: true };
         case "CLOSE_MENU":
         case "LOG_OUT":
+        case "OVERLAY_CLICKED":
         case "SHOW_SETTINGS_PAGE":
             return { open: false };
         default:

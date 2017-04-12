@@ -17,13 +17,19 @@ interface AccountComponentProps {
 export const AccountPageComponents = (props: AccountComponentProps) => {
     const AccountList = styled(Reusable.MainList) `
     padding: 0px;
+    background-color: palevioletred;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflowY: scroll;
 `
 
 
     const Item = styled.li`
-    background: #FC7A57;
-    margin: 0px 0px 10px 0px;
+    background: mediumvioletred;
+    margin: 0;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     padding: 15px;
     box-sizing: border-box;

@@ -178,7 +178,8 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
             width: inputState ? "100%" : "90%",
             left: inputState ? "0px" : "5%",
             boxShadow: inputState ? "" : "5px 5px 5px #333",
-            transition: "all, .3s"
+            transition: "all, .3s",
+            zIndex: inputState ? "700" : "0"
         }
 
         const displaySpinner = () => {

@@ -4,7 +4,6 @@ import { BaseReduxProps } from "../Interfaces"
 import { OPEN_MENU, CLOSE_MENU } from "../actions/actions"
 
 export interface HamburgerProps extends BaseReduxProps {
-    styles: {};
 }
 
 export const Hamburger = (props: HamburgerProps) => {
@@ -20,7 +19,6 @@ export const Hamburger = (props: HamburgerProps) => {
     if (hideHamburger === false) {
         return (
             <button
-                style={props.styles}
                 onClick={() => {
                     if (hamMenuState.open === false) {
                         store.dispatch(OPEN_MENU())

@@ -3,6 +3,7 @@ export interface Colors {
     MEDIUM: string;
     BAD: string;
     NO_RATING: string;
+    BLUE: string;
     HIGHLIGHT: string;
 }
 
@@ -11,5 +12,6 @@ export const Colors: Colors = {
     MEDIUM: "#D9822B",
     BAD: "#F55656",
     NO_RATING: "#669EFF",
+    BLUE: "#669EFF",
     HIGHLIGHT: "#B10DC9"
 }

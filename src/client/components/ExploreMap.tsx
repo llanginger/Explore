@@ -3,11 +3,11 @@ import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import * as React from "react"
 import { BaseReduxProps, Venue } from "../Interfaces"
 import { BLUR_INPUT, BLUR_GPS, MAP_LOADED } from "../actions/actions"
+import styled from "styled-components"
 
 
 interface ExploreMapProps extends BaseReduxProps {
     className: string;
-    styles: {};
 }
 
 interface Marker {
@@ -19,6 +19,10 @@ interface Marker {
     addListener?: Function;
 }
 
+const MapComponent = styled.div`
+    height: 100%;
+    width: 100%;
+`
 
 export class ExploreMap extends React.Component<ExploreMapProps, any> {
     private mapdiv
@@ -62,7 +66,7 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
 
     _createMap() {
         let mapOptions = {
-            zoom: 13,
+            zoom: 16,
             center: this._mapCenter([51.5073509,
                 -0.12775829999998223]),
             disableDefaultUI: true
@@ -99,13 +103,12 @@ export class ExploreMap extends React.Component<ExploreMapProps, any> {
         const { store } = this.props
 
         return (
-            <div
+            <MapComponent
                 onClick={this._mapClick}
-                style={this.props.styles}
                 className="ExploreMap"
-                ref={(mapdiv) => this.mapdiv = mapdiv}
+                innerRef={(mapdiv) => this.mapdiv = mapdiv}
             >
-            </div>
+            </MapComponent>
         )
     }
 }

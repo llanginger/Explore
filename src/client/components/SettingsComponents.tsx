@@ -5,7 +5,8 @@ export const TopBar = (props: { onClick: any, text: string }) => {
 
     const Bar = styled.div`
         width: 100%;
-        height: 10%;
+        height: 8%;
+        min-height: 45px;
         background: #669EFF;
         position: relative;
         cursor: pointer;
@@ -13,6 +14,11 @@ export const TopBar = (props: { onClick: any, text: string }) => {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        flex-shrink: 0;
+
+        @media(min-height: 800px) {
+            height: 64px;
+        }
     `
 
     const Spacer = styled.span`
@@ -68,13 +74,19 @@ export const TopBar = (props: { onClick: any, text: string }) => {
 
 export const BottomButton = (props: { onClick: any, text: string }) => {
     const Button = styled.button`
-        height: 15%;
+        height: 10%;
+        min-height: 45px;
         color: white;
         font-size: 20px;
         background-color: #B10DC9;
         width: 100%;
         border: none;
         cursor: pointer;
+        flex-shrink: 0;
+
+        @media(min-height: 800px) {
+            height: 80px;
+        }
     `
 
     return (
@@ -89,11 +101,11 @@ export const Page = styled.div`
         justify-content: center;
         flex-direction: column;
         bottom: 0px;
+        z-index: 600;
         left: 0px;
         background-color: black;
         height: 100%;
         width: 100%;
-        z-index: 2;
     `
 export const MainList = styled.ul`
         list-style-type: none;

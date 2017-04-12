@@ -1,0 +1,26 @@
+.darkOverlayFade-enter {
+    opacity: 0;
+}
+
+.darkOverlayFade-enter.darkOverlayFade-enter-active {
+    opacity: 0.5;
+    transition: opacity .3s ease-in-out;
+}
+
+.darkOverlayFade-appear {
+    opacity: 1;
+}
+
+.darkOverlayFade-appear.darkOverlayFade-appear-active {
+    opacity: 0.5;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.darkOverlayFade-leave {
+    opacity: 0.5
+}
+
+.darkOverlayFade-leave-active {
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+}

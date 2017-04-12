@@ -1,6 +1,10 @@
 .c-hamburger {
   display: block;
   position: relative;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  filter: drop-shadow(5px 5px 3px #333);
   overflow: hidden;
   margin: 0;
   padding: 0;

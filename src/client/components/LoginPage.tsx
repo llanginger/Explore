@@ -26,6 +26,10 @@ const Page = styled.div`
 
 const Form = styled.form`
     width: 80%;
+
+    @media(min-width: 700px) {
+        width: 500px;
+    }
 `
 
 const Input = styled.input`

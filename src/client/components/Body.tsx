@@ -2,14 +2,16 @@ import * as React from "react"
 import axios from "axios"
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import * as Transition from 'react-inline-transition-group';
-
+import styled from "styled-components"
 import { BaseReduxProps } from "../Interfaces"
+import { OVERLAY_CLICKED } from "../actions/actions"
 import {
     BottomArea,
     BottomButtons,
     HomeInput,
     Hamburger,
     ExploreMap,
+    DarkOverlay,
     InfoCard,
     Overlay,
     SettingsMenu,
@@ -19,6 +21,27 @@ import {
     GPSButton
 } from "./Components"
 
+
+const ContentContainer = styled.div`
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+
+    & > * {
+        pointer-events: all;
+    }
+
+    @media(min-width: 700px) {
+        width: 700px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+`
 
 interface BodyProps extends BaseReduxProps {
 }
@@ -54,6 +77,7 @@ export class Body extends React.Component<BodyProps, any> {
         const showPreferecesPage = storeRef.settingsPages.page
         const showSettingsMenu = storeRef.settingsMenu
         const showLoginPage = storeRef.loggedIn
+        const showDarkOverlay = storeRef.overlay.showOverlay
 
         // --- Set up render conditionals --- //
         const renderOverlay = () => {
@@ -63,6 +87,18 @@ export class Body extends React.Component<BodyProps, any> {
                 return
             }
         }
+
+        const renderDarkOverlay = () => {
+            if (showDarkOverlay === true) {
+                return (<DarkOverlay
+                    active={showDarkOverlay}
+                    store={store}
+                />)
+            } else {
+                return
+            }
+        }
+
         const renderBottomArea = () => {
             if (showBottomArea === true && venues.length > 0) {
                 return <BottomArea store={store} />
@@ -87,15 +123,6 @@ export class Body extends React.Component<BodyProps, any> {
         //     }
         // }
 
-        // --- STYLES --- //
-
-        const burgerStyles = {
-            position: "absolute",
-            top: "5px",
-            left: "5px",
-            filter: "drop-shadow(5px 5px 3px #333)"
-        }
-
         const whichView = () => {
             if (showLoginPage.loggedIn === true) {
                 return (
@@ -103,39 +130,33 @@ export class Body extends React.Component<BodyProps, any> {
                         height: "100%",
                         width: "100%"
                     }}>
-                        <div
-                            style={{
-                                position: "absolute",
-                                width: "100%",
-                                height: "100%",
-                                zIndex: 500,
-                                backgroundColor: "#333",
-                                filter: showSettingsMenu.open ? "opacity(0.5)" : "opacity(0)",
-                                transition: "all .5s linear",
-                                pointerEvents: "none"
-                            }}
+                        <DarkOverlay
+                            active={showDarkOverlay}
+                            store={store}
                         />
                         <ExploreMap
-                            styles={{
-                                height: "100%",
-                                width: "100%"
-                            }}
                             className="mapiv"
                             store={store}
                         />
-                        <div>
-                            <ReactCSSTransitionGroup
-                                transitionName="overlayFade"
-                                transitionEnterTimeout={300}
-                                transitionLeaveTimeout={300}
-                                transitionAppear={true}
-                                transitionAppearTimeout={1200}
-                            >
-                                {renderOverlay()}
-                            </ReactCSSTransitionGroup>
+                        <ReactCSSTransitionGroup
+                            transitionName="settingsMenuLoad"
+                            transitionEnterTimeout={500}
+                            transitionLeaveTimeout={500}
+                        >
+                            {renderSettingsMenu()}
+                        </ReactCSSTransitionGroup>
+                        <ReactCSSTransitionGroup
+                            transitionName="overlayFade"
+                            transitionEnterTimeout={300}
+                            transitionLeaveTimeout={300}
+                            transitionAppear={true}
+                            transitionAppearTimeout={1200}
+                        >
+                            {renderOverlay()}
+                        </ReactCSSTransitionGroup>
+                        <ContentContainer>
                             <Hamburger
                                 store={store}
-                                styles={burgerStyles}
                             />
                             <HomeInput
                                 style={{ marginTop: "100px" }}
@@ -143,13 +164,6 @@ export class Body extends React.Component<BodyProps, any> {
                                 store={store}
                             />
                             <InfoCard store={store} />
-                            <ReactCSSTransitionGroup
-                                transitionName="settingsMenuLoad"
-                                transitionEnterTimeout={500}
-                                transitionLeaveTimeout={500}
-                            >
-                                {renderSettingsMenu()}
-                            </ReactCSSTransitionGroup>
                             <BottomButtons store={store} />
                             <ReactCSSTransitionGroup
                                 transitionName="bottomAreaRise"
@@ -160,7 +174,7 @@ export class Body extends React.Component<BodyProps, any> {
                             </ReactCSSTransitionGroup>
                             <GPSButton store={store} />
                             <PreferencesContainer store={store} />
-                        </div>
+                        </ContentContainer>
                     </div>
                 )
             } else {

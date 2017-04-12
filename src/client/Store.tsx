@@ -14,6 +14,7 @@ import {
     settingsMenu,
     visitedVenues,
     spinner,
+    overlay,
     bottomArea,
     settingsPages,
     loggedIn,
@@ -34,6 +35,7 @@ export interface Reducers {
     homeInputState: homeInputState;
     visitedVenues: visitedVenues;
     spinner: boolean;
+    overlay: overlay;
     bottomArea: bottomArea
     settingsPages: settingsPages;
     gps: gps;
@@ -50,6 +52,7 @@ export const Reducers = combineReducers<Reducers>({
     seenVenues,
     settingsMenu,
     fourSquareResults,
+    overlay,
     currentResults,
     homeInputState,
     visitedVenues,

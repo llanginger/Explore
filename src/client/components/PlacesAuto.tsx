@@ -87,6 +87,7 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
         this.state = { inputValue: "", refGps: true }
         this._renderGpsButton = this._renderGpsButton.bind(this)
         this._focusUserMarker = this._focusUserMarker.bind(this)
+        this._clearButton = this._clearButton.bind(this);
     }
 
     componentDidMount() {
@@ -110,6 +111,12 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
 
     }
 
+    componentWillUnmount() {
+        this.unsubscribe();
+        const elem = document.body.getElementsByClassName("pac-container")[0]
+        document.body.removeChild(elem)
+    }
+
     _onSelected() {
         if (this.props.onPlaceSelected) {
             const response = this.autocomplete.getPlace();
@@ -128,12 +135,6 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
         }
     }
 
-    componentWillUnmount() {
-        this.unsubscribe();
-        const elem = document.body.getElementsByClassName("pac-container")[0]
-        document.body.removeChild(elem)
-    }
-
     _renderGpsButton() {
         if (store.getState().userReducer.hasGps === true) {
             return <GPSPrompt onClick={this._focusUserMarker}><GPSIconSpan className="pt-icon pt-icon-locate" />   <span>Use GPS Coordinates?</span></GPSPrompt>
@@ -147,20 +148,24 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
         store.dispatch(USE_GPS_POS())
     }
 
+    _clearButton() {
+
+        if (this.gpsInput && this.gpsInput.value.length > 0) {
+            return (
+                <Button
+                    iconName="pt-icon-delete"
+                    onClick={(e) => {
+                        this.gpsInput.value = ""
+                        this.gpsInput.focus()
+                        e.stopPropagation()
+                    }}
+                />
+            )
+        }
+    }
+
     render() {
         const clearButton = () => {
-            if (this.input && this.input.value.length > 0) {
-                return (
-                    <Button
-                        iconName="pt-icon-delete"
-                        onClick={(e) => {
-                            this.input.value = ""
-                            this.input.focus()
-                            e.stopPropagation()
-                        }}
-                    />
-                )
-            }
         }
 
         const handleInputChange = (e) => {
@@ -182,7 +187,7 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
                     intent={Intent.SUCCESS}
                     leftIconName="pt-icon-path-search"
                     placeholder="Where are you?"
-                    rightElement={clearButton()}
+                    rightElement={this._clearButton()}
                     onChange={handleInputChange}
                     value={this.state.inputValue}
                     {...rest}

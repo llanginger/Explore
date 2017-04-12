@@ -15,7 +15,10 @@ export const bottomArea: Reducer<bottomArea> = (state: bottomArea = initState, a
         case "TOGGLE_BOTTOM_AREA":
             return { ...state, big: !state.big }
         case "SHOW_DIRECTIONS":
+        case "BOTTOM_AREA_SMALL":
             return { ...state, big: false }
+        case "BOTTOM_AREA_BIG":
+            return { ...state, big: true }
         case "FETCHED_VENUES":
         case "FETCHING_VENUES":
             return { ...state, show: false }

@@ -6,6 +6,7 @@ import * as classNames from "classnames"
 import { CLOSE_MENU, SHOW_SETTINGS_PAGE, LOG_OUT } from "../actions/actions"
 import * as firebase from "firebase"
 import Autocomplete from "react-google-autocomplete"
+import { SettingsMenuComponents } from "./SettingsMenuComponents"
 
 export const SettingsMenu = (props: BaseReduxProps) => {
 
@@ -17,7 +18,7 @@ export const SettingsMenu = (props: BaseReduxProps) => {
 
 
     const menuState = state.settingsMenu
-    const getUserName = () => {
+    const getUserName: () => string = () => {
         if (currentUser.displayName && firebase.auth().currentUser.displayName.length > 0) {
             return currentUser.displayName
         } else {
@@ -25,6 +26,8 @@ export const SettingsMenu = (props: BaseReduxProps) => {
         }
     }
 
+
+    // Don't think I need this
     const menuContainerClasses = classNames({
         "settingsMenuContainer": true,
         "open": menuState.open,
@@ -35,67 +38,33 @@ export const SettingsMenu = (props: BaseReduxProps) => {
         console.log(val)
     }
 
-    const renderList = () => {
-        return (
-            <ul className="settingsMenuUl">
-                <li
-                    onClick={() => {
-                        store.dispatch(SHOW_SETTINGS_PAGE("account"))
-                    }}
-                ><span className="pt-icon-standard pt-icon-cog settingsMenuIcon" />Account</li>
-                <li
-                    onClick={() => {
-                        store.dispatch(SHOW_SETTINGS_PAGE("places"))
-                    }}
-                ><span className="pt-icon-standard pt-icon-path-search settingsMenuIcon" />Places you've been</li>
-                <li
-                    onClick={() => {
-                        firebase.auth().signOut()
-                        store.dispatch(LOG_OUT())
-                    }}
-                ><span className="pt-icon-standard pt-icon-social-media settingsMenuIcon" />Log Out</li>
-            </ul>
-        )
-    }
-
-
-
-    const renderProfile = () => {
-
-        return (
-            <div className="profilePanel">
-                <img
-                    className="profileImage"
-                    src={reduxUser.profilePic}
-                />
-                <div className="profileTextContainer">
-                    <span className="profileText">{getUserName()}</span>
-                </div>
-            </div>
-        )
-    }
 
     const closeMenu = () => {
         store.dispatch(CLOSE_MENU())
     }
 
+    const placesClick = (page: string) => {
+        store.dispatch(SHOW_SETTINGS_PAGE("places"))
+    }
+
+    const accountClick = (page: string) => {
+        store.dispatch(SHOW_SETTINGS_PAGE("account"))
+    }
+
+    const logOut = () => {
+        firebase.auth().signOut()
+        store.dispatch(LOG_OUT())
+    }
 
     return (
 
-        <div
-            className={menuContainerClasses}
-        >
-            <div className="settingsMenu" >
-                <div className="profileContainer">
-                    {renderProfile()}
-                </div>
-                {renderList()}
-            </div>
-            <div
-                onClick={closeMenu}
-                className="settingsMenuBuffer"
-            />
-        </div>
-
+        <SettingsMenuComponents
+            profileImage={reduxUser.profilePic}
+            userName={getUserName()}
+            accountOnClick={accountClick}
+            placesOnClick={placesClick}
+            logOutOnClick={logOut}
+            bufferOnClick={closeMenu}
+        />
     )
 }

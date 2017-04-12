@@ -205,3 +205,21 @@ export const USE_GPS_POS: () => Action = () => {
         type: "USE_GPS_POS"
     }
 }
+
+export const OVERLAY_CLICKED: () => Action = () => {
+    return {
+        type: "OVERLAY_CLICKED"
+    }
+}
+
+export const BOTTOM_AREA_BIG: () => Action = () => {
+    return {
+        type: "BOTTOM_AREA_BIG"
+    }
+}
+
+export const BOTTOM_AREA_SMALL: () => Action = () => {
+    return {
+        type: "BOTTOM_AREA_SMALL"
+    }
+}

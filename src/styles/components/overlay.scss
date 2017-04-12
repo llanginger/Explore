@@ -15,33 +15,27 @@
 
 .overlayFade-enter {
     opacity: 0;
-    background: $lightHighlight;
 }
 
 .overlayFade-enter.overlayFade-enter-active {
     opacity: 0.5;
-    background: $lightHighlight;
     transition: opacity .3s ease-in-out;
 }
 
 .overlayFade-appear {
     opacity: 1;
-    background: $lightHighlight;
 }
 
 .overlayFade-appear.overlayFade-appear-active {
     opacity: 0.5;
-    background: $lightHighlight;
     transition: opacity 1.2s ease-in-out;
 }
 
 .overlayFade-leave {
-    background: $lightHighlight;
     opacity: 0.5
 }
 
 .overlayFade-leave-active {
-    background: $lightHighlight;
     opacity: 0;
     transition: opacity .3s ease-in-out;
 }

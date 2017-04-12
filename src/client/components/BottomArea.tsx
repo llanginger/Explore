@@ -3,7 +3,7 @@ import { BaseReduxProps } from "../Interfaces"
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import * as classNames from "classnames"
 import { Reusable } from "./Components"
-import { TOGGLE_BOTTOM_AREA, NEXT_VENUE, PREV_VENUE, SHOW_DIRECTIONS } from "../actions/actions"
+import { TOGGLE_BOTTOM_AREA, NEXT_VENUE, PREV_VENUE, SHOW_DIRECTIONS, BOTTOM_AREA_BIG, BOTTOM_AREA_SMALL } from "../actions/actions"
 import { Colors } from "./Utility/Colors"
 import styled from "styled-components"
 import { BottomAreaList } from "./BottomAreaComponents/BottomAreaList"
@@ -65,7 +65,7 @@ export const BottomArea = (props: BaseReduxProps) => {
             return (
                 <BottomAreaList
                     venue={venue}
-                    topBarOnclick={topBarClick}
+                    topBarOnclick={bottomAreaSize}
                     bottomButtonOnClick={bottomButtonClick}
                     bottomButtonText="Take Me Here!"
                 />
@@ -116,10 +116,19 @@ export const BottomArea = (props: BaseReduxProps) => {
         }
     }
 
+    const bottomAreaSize = () => {
+        if (!big) {
+            store.dispatch(BOTTOM_AREA_BIG())
+        } else {
+            store.dispatch(BOTTOM_AREA_SMALL())
+        }
+    }
+
     // --- ??? Why does this work here but not from imported module? --- //
     const Container = styled.div`
         background: ${Colors.GOOD};
         position: absolute;
+        z-index: ${(props: CProps) => props.big ? "700" : "0"};
         height: ${(props: CProps) => props.big ? "100%" : "20%"};
         width: ${(props: CProps) => props.big ? "100%" : "90%"};
         left: ${(props: CProps) => props.big ? "0%" : "5%"};
@@ -128,6 +137,11 @@ export const BottomArea = (props: BaseReduxProps) => {
         box-shadow: ${(props: CProps) => props.big ? "none" : "5px 5px 7px #333"};
         display: flex;
         flex-direction: column;
+        transition: all .5s ease-in-out;
+
+        @media(min-width: 700px) and (min-height: 800px) {
+            height: ${(props: CProps) => props.big ? "100%" : "170px"};
+        }
         
     `
 
@@ -137,9 +151,7 @@ export const BottomArea = (props: BaseReduxProps) => {
             big={big}
         >
             <BottomAreaImage
-                onClick={() => {
-                    store.dispatch(TOGGLE_BOTTOM_AREA())
-                }}
+                onClick={bottomAreaSize}
                 big={big}
                 image={venue.photoSrc[0]}
             >

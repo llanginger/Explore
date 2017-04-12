@@ -17,12 +17,14 @@ import { FirebaseForm } from "./FirebaseForm"
 import { FirebaseUserForm } from "./FirebaseUserForm"
 import { PlacesAuto } from "./PlacesAuto"
 import { GPSButton } from "./GPSButton"
+import { DarkOverlay } from "./DarkOverlay"
 import * as Reusable from "./SettingsComponents"
 
 export {
     AccountPage,
     BottomArea,
     BottomButtons,
+    DarkOverlay,
     ExploreMap,
     FirebaseForm,
     FirebaseUserForm,

@@ -2370,6 +2370,10 @@ google-maps-infobox@^1.1.13:
   version "1.1.14"
   resolved "https://registry.yarnpkg.com/google-maps-infobox/-/google-maps-infobox-1.1.14.tgz#daed6c9775696056408e767d17f4b13b6fe1d02d"
 
+googlemaps-js-rich-marker:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/googlemaps-js-rich-marker/-/googlemaps-js-rich-marker-1.0.2.tgz#ba9584e166f8499e55d6f3dc60499c105ed9ada3"
+
 graceful-fs@^3.0.0:
   version "3.0.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-3.0.11.tgz#7613c778a1afea62f25c630a086d7f3acbbdd818"

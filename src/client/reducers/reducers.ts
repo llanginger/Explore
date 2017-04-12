@@ -13,6 +13,7 @@ import { settingsPages } from "./settingsPages"
 import { loggedIn } from "./loggedIn"
 import { map } from "./mapReducer"
 import { userReducer } from "./userReducer"
+import { overlay } from "./overlay"
 
 export {
     bottomArea,
@@ -22,6 +23,7 @@ export {
     homeInputState,
     gps,
     map,
+    overlay,
     initState,
     loggedIn,
     settingsMenu,
