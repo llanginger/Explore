@@ -33,6 +33,8 @@ export const ResultItem = (props: ResultItemProps) => {
                 height: "150px",
                 padding: "10px",
                 backgroundImage: "url('" + props.venue.photoSrc[0] + "')",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
                 cursor: "pointer",
                 position: "relative"
             }}

@@ -12,7 +12,26 @@ import { ResultItem } from "./ResultItem"
 import { BaseReduxProps, Venue } from "../Interfaces"
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import { LETS_GO, DISMISS_MAIN_INPUT_HELP } from "../actions/actions"
+import styled from "styled-components"
 
+const MyMenu = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 350px;
+    overflow-y: scroll;
+    margin: 0;
+    border-radius: 0px;
+    background: #FFFFFF;
+    min-width: 180px;
+    padding: 5px 0px 5px 0px;
+    list-style: none;
+    text-align: "left";
+    color: #182026;
+
+    @media(min-height: 800px) {
+        max-height: 60vh;
+    }
+`
 
 export class ResultsMenu extends React.Component<BaseReduxProps, any> {
 
@@ -51,7 +70,9 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
         if (venues.length > 0 && inputState.active === true) {
             return (
                 <div>
-                    <div style={menuStyles} className="resultsMenu">
+                    <MyMenu
+                        className="resultsMenu"
+                    >
                         {this.showInputToolTip()}
                         <ReactCSSTransitionGroup
                             style={{
@@ -66,7 +87,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                         >
                             {this.mapVenuesToMenuItems(venues)}
                         </ReactCSSTransitionGroup>
-                    </div>
+                    </MyMenu>
                     {this.letsGoButton()}
                 </div>
             )
