@@ -53,7 +53,7 @@ gulp.task("copy-html", function() {
 
 gulp.task("copy-resources", function() {
     return gulp
-        .src("./src/client/resources/icons/*")
+        .src("./src/styles/vendor/resources/icons/*")
         .pipe(gulp.dest("./build/resources/icons/"));
 });
 
@@ -113,12 +113,19 @@ function bundle() {
 
 gulp.task(
     "default",
-    ["copy-html", "apply-dev-env", "sass:watch", "copy-css"],
+    [
+        "copy-html",
+        "copy-resources",
+        "apply-dev-env",
+        "copy-css",
+        "sass",
+        "sass:watch"
+    ],
     bundle
 );
 gulp.task(
     "production",
-    ["copy-html", "apply-prod-env", "sass:watch", "copy-css"],
+    ["copy-html", "apply-prod-env", "sass:watch", "copy-css", "copy-resources"],
     bundle
 );
 
@@ -126,7 +133,6 @@ gulp.task("build-production", [
     "copy-html",
     "apply-prod-env",
     "sass",
-    "copy-css",
     "build-prod"
 ]);
 
