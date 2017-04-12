@@ -9,7 +9,9 @@
         "test-reducers": "mocha -r ts-node/register src/client/reducers/tests/test.ts",
         "test-actions": "mocha -r ts-node/register src/client/actions/tests/test.ts",
         "test-components": "mocha -r ts-node/register src/client/components/tests/test.ts",
-        "test": "yarn run test-reducers && yarn run test-actions && yarn run test-components"
+        "test": "yarn run test-reducers && yarn run test-actions && yarn run test-components",
+        "start": "node server.js",
+        "postinstall": "gulp build-production"
     },
     "dependencies": {
         "@blueprintjs/core": "^1.9.0",
@@ -32,7 +34,6 @@
         "google-maps": "^3.2.1",
         "googlemaps-js-rich-marker": "^1.0.2",
         "group-array": "^0.3.2",
-        "gulp-envify": "^1.0.0",
         "hamburgers": "^0.7.0",
         "istanbul": "^0.4.5",
         "polished": "^1.0.2",
@@ -51,9 +52,7 @@
         "redux-thunk": "^2.2.0",
         "request": "^2.79.0",
         "styled-components": "^1.4.4",
-        "underscore": "^1.8.3"
-    },
-    "devDependencies": {
+        "underscore": "^1.8.3",
         "@types/chai": "^3.4.35",
         "@types/mocha": "^2.2.39",
         "babel-polyfill": "^6.23.0",
@@ -64,6 +63,7 @@
         "chai": "^3.5.0",
         "expect": "^1.20.2",
         "gulp": "^3.9.1",
+        "gulp-envify": "^1.0.0",
         "gulp-plumber": "^1.1.0",
         "gulp-sass": "^3.1.0",
         "gulp-sourcemaps": "^2.4.1",

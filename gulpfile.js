@@ -1,11 +1,14 @@
 var gulp = require("gulp");
 var browserify = require("browserify");
 var source = require("vinyl-source-stream");
+var buffer = require("vinyl-buffer");
+var sourcemaps = require("gulp-sourcemaps");
 var watchify = require("watchify");
 var tsify = require("tsify");
 var gutil = require("gulp-util");
 var sass = require("gulp-sass");
 var plumber = require("gulp-plumber");
+var uglify = require("gulp-uglify");
 var paths = {
     pages: ["src/server/*.html"]
 };
@@ -20,6 +23,29 @@ var watchedBrowserify = watchify(
         packageCache: {}
     }).plugin(tsify)
 );
+
+gulp.task("build-prod", function() {
+    var b = browserify({
+        basedir: ".",
+        debug: true,
+        entries: ["src/client/app.tsx"],
+        cache: {},
+        packageCache: {}
+    }).plugin(tsify);
+
+    return b
+        .bundle()
+        .on("error", function(error) {
+            console.error(error.toString());
+        })
+        .pipe(source("bundle.js"))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(uglify())
+        .on("error", gutil.log)
+        .pipe(sourcemaps.write("./"))
+        .pipe(gulp.dest("build"));
+});
 
 gulp.task("copy-html", function() {
     return gulp.src(paths.pages).pipe(gulp.dest("build"));
@@ -84,6 +110,7 @@ function bundle() {
         .pipe(source("bundle.js"))
         .pipe(gulp.dest("build"));
 }
+
 gulp.task(
     "default",
     ["copy-html", "apply-dev-env", "sass:watch", "copy-css"],
@@ -94,6 +121,14 @@ gulp.task(
     ["copy-html", "apply-prod-env", "sass:watch", "copy-css"],
     bundle
 );
+
+gulp.task("build-production", [
+    "copy-html",
+    "apply-prod-env",
+    "sass",
+    "copy-css",
+    "build-prod"
+]);
 
 watchedBrowserify.on("update", bundle);
 watchedBrowserify.on("log", gutil.log);

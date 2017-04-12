@@ -3,6 +3,7 @@ var path = require("path");
 var app = express();
 var request = require("request");
 var async = require("async");
+var fs = require("fs");
 
 app.use(express.static(path.join(__dirname, "./build")));
 
