@@ -133,6 +133,7 @@ gulp.task("build-production", [
     "copy-html",
     "apply-prod-env",
     "sass",
+    "copy-resources",
     "build-prod"
 ]);
 
