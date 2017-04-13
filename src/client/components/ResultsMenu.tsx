@@ -50,22 +50,6 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
     public makeMenu() {
         const venues: Venue[] = this.props.store.getState().currentResults.venues
         const inputState = this.props.store.getState().homeInputState
-        const menuStyles = {
-            display: "flex",
-            flexWrap: "wrap",
-            maxHeight: "350px",
-            overflowY: "scroll",
-            margin: "0",
-            borderRadius: "0px",
-            background: "#FFFFFF",
-            minWidth: "180px",
-            padding: "5px 0px 5px 0px",
-            listStyle: "none",
-            textAlign: "left",
-            color: "#182026"
-        }
-
-
 
         if (venues.length > 0 && inputState.active === true) {
             return (
@@ -128,7 +112,7 @@ export class ResultsMenu extends React.Component<BaseReduxProps, any> {
                     width: "100%"
                 }}>
                     <MenuItem
-                        text="Click to remove places you've been"
+                        text="Click to remove places you've already visited!"
                         intent={Intent.SUCCESS}
                         iconName="pt-icon-help"
                         onClick={() => {

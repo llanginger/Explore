@@ -1,4 +1,5 @@
 import { Venue } from "../Interfaces"
+import { newUserMarker } from "../components/Utility/createUserMarker"
 
 export const markerMiddleware = store => next => action => {
     const currentVenue = store.getState().currentVenue
@@ -41,6 +42,20 @@ export const markerMiddleware = store => next => action => {
                 userMarker.setPosition(newCoords)
             } else {
                 console.log("No PositionMarker");
+                const marker = newUserMarker(action.gpsData.geometry, mapRef)
+                store.dispatch({
+                    type: "USER_MARKER_CREATED",
+                    userInfo: {
+                        profileInfo: {
+                            positionMarker: marker,
+                            gpsCoords: {
+                                lat: marker.getPosition().lat(),
+                                lng: marker.getPosition().lng()
+                            }
+                        }
+                    }
+                })
+                mapRef.setCenter(marker.getPosition())
                 // Create a new marker
             }
             return next(action)

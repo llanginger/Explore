@@ -16,6 +16,7 @@ export const bottomArea: Reducer<bottomArea> = (state: bottomArea = initState, a
             return { ...state, big: !state.big }
         case "SHOW_DIRECTIONS":
         case "BOTTOM_AREA_SMALL":
+        case "OVERLAY_CLICKED":
             return { ...state, big: false }
         case "BOTTOM_AREA_BIG":
             return { ...state, big: true }

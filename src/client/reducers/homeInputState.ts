@@ -21,6 +21,7 @@ export const homeInputState: Reducer<homeInputState> = (state: homeInputState = 
         case "LOG_OUT":
         case "FOCUS_USER_MARKER":
         case "USE_GPS_POS":
+        case "OVERLAY_CLICKED":
             return { ...state, active: false, isInGPSMode: false }
         case "INPUT_GPS":
             return { ...state, active: true, isInGPSMode: true }

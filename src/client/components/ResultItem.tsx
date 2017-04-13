@@ -45,6 +45,7 @@ export const ResultItem = (props: ResultItemProps) => {
         background-image: url("${photoUrl()}");
         background-size: cover;
         background-repeat: no-repeat;
+        background-position: center;
         cursor: pointer;
         position: relative;
 
