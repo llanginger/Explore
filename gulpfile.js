@@ -51,10 +51,14 @@ gulp.task("copy-html", function() {
     return gulp.src(paths.pages).pipe(gulp.dest("build"));
 });
 
-gulp.task("copy-resources", function() {
+gulp.task("copy-icon-fonts", function() {
     return gulp
         .src("./src/styles/vendor/resources/icons/*")
         .pipe(gulp.dest("./build/resources/icons/"));
+});
+
+gulp.task("copy-elements", function() {
+    return gulp.src("./src/elements/**/*").pipe(gulp.dest("./build/elements/"));
 });
 
 gulp.task("sass", function() {
@@ -115,7 +119,8 @@ gulp.task(
     "default",
     [
         "copy-html",
-        "copy-resources",
+        "copy-icon-fonts",
+        "copy-elements",
         "apply-dev-env",
         "copy-css",
         "sass",
@@ -125,15 +130,24 @@ gulp.task(
 );
 gulp.task(
     "production",
-    ["copy-html", "apply-prod-env", "sass:watch", "copy-css", "copy-resources"],
+    [
+        "copy-html",
+        "copy-icon-fonts",
+        "copy-elements",
+        "apply-prod-env",
+        "copy-css",
+        "sass",
+        "sass:watch"
+    ],
     bundle
 );
 
 gulp.task("build-production", [
     "copy-html",
+    "copy-icon-fonts",
+    "copy-elements",
     "apply-prod-env",
     "sass",
-    "copy-resources",
     "build-prod"
 ]);
 
