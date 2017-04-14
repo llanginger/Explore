@@ -29,16 +29,52 @@ export const PlacesPage = (props: PlacesProps) => {
     const CategoryList = styled.ul`
         list-style-type: none;
         background-color: white;
-        padding: 5px 10px;
-        border-bottom: 1px solid #666;
+        padding-left: 10px;
+        border-bottom: 1px solid #888;
     `
 
     const Item = styled.li`
-    `
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        transition: all .06s linear;
+        cursor: pointer;
 
+        &:hover {
+            background: #669EFF;
+            color: white;
+        }
+    `
     const HeaderItem = styled.li`
+        padding: 10px;
         margin-bottom: 5px;
         color: #B10DC9;
+        display: flex;
+        justify-content: space-between;
+        transition: all .06s linear;
+        cursor: pointer;
+
+        &:hover {
+            background: black;
+            color: white;
+        }
+
+        &:hover > span {
+            color: white;
+        }
+    `
+
+    const HeartIcon = styled.span`
+        color: white;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+        &:hover {
+            color: pink;
+            text-shadow: none;
+        }
+    `
+
+    const CloseIcon = styled.span`
+        color: black;
     `
 
     const Span = styled.span`
@@ -56,6 +92,7 @@ export const PlacesPage = (props: PlacesProps) => {
                         key={value}
                     >
                         {key}
+                        <CloseIcon className="pt-icon-large pt-icon-cross" />
                     </HeaderItem>
                     {mapVisitedVenues(value)}
                 </CategoryList>
@@ -66,7 +103,7 @@ export const PlacesPage = (props: PlacesProps) => {
 
     const mapVisitedVenues = (venueList: Venue[]) => {
         return venueList.map((venue, i) => {
-            return <Item key={i}>{venue.name}</Item>
+            return <Item key={i}>{venue.name}<HeartIcon className="pt-icon-large pt-icon-heart" /></Item>
         })
     }
 

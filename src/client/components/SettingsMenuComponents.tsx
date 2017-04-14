@@ -27,9 +27,13 @@ const Menu = styled.div`
 const ProfilePanelContainer = styled.div`
     position: relative;
     transition: all .3s ease-in-out;
-    height: 10%;
+    height: 66px;
     width: 100%;    
     background: black;
+
+    @media(min-height: 800px) {
+        height: 80px;
+    }
 `
 
 const ProfilePanel = styled.div`
@@ -46,9 +50,14 @@ const ProfilePanel = styled.div`
 const ProfileImage = styled.img`
     transition: all .3s ease-in-out;
     width: 46px;
+    height: 46px;
     flex-shrink: 0;
-    height: 100%;
     border-radius: 50%;
+
+    @media(min-height: 800px) {
+        height: 60px;
+        width: 60px;
+    }
 `
 
 const ProfileTextContainer = styled.div`
