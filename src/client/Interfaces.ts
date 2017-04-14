@@ -93,6 +93,17 @@ export interface MasterAction {
     page?: string;
 }
 
+export interface Colors {
+    P_COLOR_DARK?: string;
+    P_COLOR?: string;
+    P_COLOR_LIGHT?: string;
+    ACCENT?: string;
+    PRIMARY_TEXT?: string;
+    SECONDARY_TEXT?: string;
+    ICONS?: string;
+    DIVIDER?: string;
+}
+
 export interface Venue {
     location?: Location;
     contact?: Contact;

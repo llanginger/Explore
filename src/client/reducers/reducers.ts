@@ -14,6 +14,7 @@ import { loggedIn } from "./loggedIn"
 import { map } from "./mapReducer"
 import { userReducer } from "./userReducer"
 import { overlay } from "./overlay"
+import { colors } from "./colors"
 
 export {
     bottomArea,
@@ -21,6 +22,7 @@ export {
     currentVenue,
     fourSquareResults,
     homeInputState,
+    colors,
     gps,
     map,
     overlay,

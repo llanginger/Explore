@@ -20,7 +20,7 @@ import {
     LoginPage,
     GPSButton
 } from "./Components"
-
+import { ColorPicker } from "./ColorPicker"
 
 const ContentContainer = styled.div`
     height: 100%;
@@ -174,7 +174,9 @@ export class Body extends React.Component<BodyProps, any> {
                             </ReactCSSTransitionGroup>
                             <GPSButton store={store} />
                             <PreferencesContainer store={store} />
+
                         </ContentContainer>
+                        <ColorPicker store={store} />
                     </div>
                 )
             } else {

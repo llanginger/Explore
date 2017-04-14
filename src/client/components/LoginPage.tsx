@@ -175,11 +175,11 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
                     <p>Log In here</p>
                     <Input
                         type="text"
-                        placeholder="UserName"
+                        placeholder="Email Address"
                         innerRef={(input) => this.email = input}
                     />
                     <Input
-                        type="text"
+                        type="password"
                         placeholder="Password"
                         innerRef={(input) => this.password = input}
                         onSubmit={this._logIn}

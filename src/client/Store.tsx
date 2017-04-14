@@ -19,6 +19,7 @@ import {
     settingsPages,
     loggedIn,
     gps,
+    colors,
     userReducer,
     map
 } from "./reducers/reducers"
@@ -36,6 +37,7 @@ export interface Reducers {
     visitedVenues: visitedVenues;
     spinner: boolean;
     overlay: overlay;
+    colors: colors;
     bottomArea: bottomArea
     settingsPages: settingsPages;
     gps: gps;
@@ -57,6 +59,7 @@ export const Reducers = combineReducers<Reducers>({
     homeInputState,
     visitedVenues,
     spinner,
+    colors,
     gps,
     userReducer,
     map,

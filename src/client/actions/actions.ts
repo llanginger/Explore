@@ -1,4 +1,4 @@
-import { Venue, QueryInfo, User, GooglePlaces } from "../Interfaces"
+import { Venue, QueryInfo, User, GooglePlaces, Colors } from "../Interfaces"
 import { Action } from "redux"
 export { fireMiddleware, syncLocationInfo } from "./fireMiddleware"
 export { markerMiddleware } from "./markerMiddleware"
@@ -221,5 +221,14 @@ export const BOTTOM_AREA_BIG: () => Action = () => {
 export const BOTTOM_AREA_SMALL: () => Action = () => {
     return {
         type: "BOTTOM_AREA_SMALL"
+    }
+}
+
+export const COLOR_UPDATE: (color: Colors) => Action = (color: Colors) => {
+    return {
+        type: "COLOR_UPDATE",
+        payload: {
+            color
+        }
     }
 }
