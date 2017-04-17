@@ -20,13 +20,14 @@ export const GPSButton = (props: BaseReduxProps) => {
         border: none;
         color: ${colors.ACCENT};
         font-size: 32px;
-        filter: drop-shadow(3px 3px 1px black);
+        filter: drop-shadow(1px 1px 1px black);
         transition: transform .02s ease-in-out;
+        cursor: pointer;
 
         &:active {
             outline: none;
             transform: translateY(1px)
-            filter: drop-shadow(2px 2px 1px #333)
+            filter: drop-shadow(0px 0px 1px #333)
         }
 
         &:focus {
