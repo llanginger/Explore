@@ -35,7 +35,7 @@ export interface Reducers {
     currentResults: currentResults;
     homeInputState: homeInputState;
     visitedVenues: visitedVenues;
-    spinner: boolean;
+    spinner: spinner;
     overlay: overlay;
     colors: colors;
     bottomArea: bottomArea

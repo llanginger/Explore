@@ -167,6 +167,13 @@ export const UPDATE_PROFILE_INFO: (userInfo: { email?: string, userName?: string
     }
 }
 
+export const UPDATE_PROFILE_PIC: (profilePic: string) => Action = (profilePic: string) => {
+    return {
+        type: "UPDATE_PROFILE_PIC",
+        profilePic
+    }
+}
+
 // Rename marker to "position"
 export const FOCUS_USER_MARKER: (marker: google.maps.LatLng) => Action = (marker: google.maps.LatLng) => {
     return {
@@ -230,5 +237,11 @@ export const COLOR_UPDATE: (color: Colors) => Action = (color: Colors) => {
         payload: {
             color
         }
+    }
+}
+
+export const UPLOADING_PROFILE_PIC: () => Action = () => {
+    return {
+        type: "UPLOADING_PROFILE_PIC"
     }
 }

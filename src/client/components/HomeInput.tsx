@@ -16,40 +16,17 @@ import {
     MenuItem,
     Popover,
     Position,
-    Spinner,
     Switch,
     Tag,
     Tooltip,
 } from "@blueprintjs/core";
 import { FETCHED_VENUES, FETCHING_VENUES, FOCUS_INPUT, CLEAR_VENUES, SHOW_SETTINGS_PAGE, INPUT_GPS, SET_GPS_DATA } from "../actions/actions"
 
-import { ResultsMenu, PlacesAuto } from "./Components"
+import { ResultsMenu, PlacesAuto, Spinner } from "./Components"
 import { createNewMarker } from "./createMarker"
 
-import styled, { keyframes } from "styled-components"
+import styled from "styled-components"
 
-const spin = keyframes`
-
-0% {
-    transform: rotate(0deg);
-}
-
-100% {
-    transform: rotate(360deg);
-}
-
-`
-
-const MySpinner = styled.div`
-    border: 16px solid #607D8B;
-    border-top: 16px solid white;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-
-    animation: ${spin} 2s linear infinite;
-
-`
 interface ICProps {
     inputState: boolean;
 }
@@ -147,7 +124,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
         const { store } = props
         const { category } = state
         const inputState = store.getState().homeInputState.active
-        const spinnerState = store.getState().spinner
+        const spinnerState = store.getState().spinner.searchResultsSpinner
         const gps = store.getState().gps.geometry
         const currentVenue = store.getState().currentVenue
 
@@ -213,7 +190,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
         const displaySpinner = () => {
             if (spinnerState === true) {
                 return (
-                    <MySpinner
+                    <Spinner
                         className={"centerAbsolute marginTop50P pt-large"}
                     />
                 )

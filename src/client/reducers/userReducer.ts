@@ -28,6 +28,11 @@ export const userReducer: Reducer<userReducer> = (state: userReducer = initState
                 ...state,
                 ...action.userInfo.profileInfo
             }
+        case "UPDATE_PROFILE_PIC":
+            return {
+                ...state,
+                profilePic: action.profilePic
+            }
         case "USER_MARKER_CREATED":
             return {
                 ...state,

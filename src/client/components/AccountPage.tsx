@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import { BaseReduxProps, Colors } from "../Interfaces"
-import { CLOSE_SETTINGS_PAGE, UPDATE_PROFILE_INFO } from "../actions/actions"
+import { CLOSE_SETTINGS_PAGE, UPDATE_PROFILE_INFO, UPDATE_PROFILE_PIC } from "../actions/actions"
 import styled from "styled-components"
 import { FirebaseUserForm, Reusable } from "./Components"
 import * as firebase from "firebase"
@@ -18,6 +18,7 @@ export const AccountPage = (props: AccountProps) => {
     const storageRef = firebase.storage().ref();
     const currentUser = firebase.auth().currentUser
     const reduxUser = store.getState().userReducer
+    const imageSpinner = store.getState().spinner.imageUploadSpinner
     const colors: Colors = store.getState().colors
     console.log("AccountPage updated");
 
@@ -48,14 +49,19 @@ export const AccountPage = (props: AccountProps) => {
 
         uploadTask.on("state_changed",
             function (snapshot) {
+                store.dispatch({ type: "UPLOADING_IMAGE" })
                 var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 console.log('Upload is ' + progress + '% done');
                 switch (snapshot.state) {
                     case firebase.storage.TaskState.PAUSED:
+
                         console.log('Upload is paused');
                         break;
                     case firebase.storage.TaskState.RUNNING:
                         console.log('Upload is running');
+                        break;
+                    case firebase.storage.TaskState.SUCCESS:
+                        console.log("Upload completed inside switch");
                         break;
                 }
             }, function (error: Error) {
@@ -83,7 +89,7 @@ export const AccountPage = (props: AccountProps) => {
                 var downloadURL = uploadTask.snapshot.downloadURL;
                 user.updateProfile({ displayName: user.displayName, photoURL: downloadURL }).then(() => {
 
-                    props.store.dispatch(UPDATE_PROFILE_INFO({ profilePic: user.photoURL }))
+                    props.store.dispatch(UPDATE_PROFILE_PIC(user.photoURL))
                     console.log("Download url: ", downloadURL);
                     console.log("User info: ", user.photoURL);
                     console.log("Redux user: ", reduxUser);
@@ -93,6 +99,7 @@ export const AccountPage = (props: AccountProps) => {
 
     return (
         <AccountPageComponents
+            imageSpinner={imageSpinner}
             headerOnClick={props.onClick}
             profilePic={reduxUser.profilePic}
             profilePicOnDrop={onImageDrop}

@@ -18,6 +18,7 @@ import { FirebaseUserForm } from "./FirebaseUserForm"
 import { PlacesAuto } from "./PlacesAuto"
 import { GPSButton } from "./GPSButton"
 import { DarkOverlay } from "./DarkOverlay"
+import { Spinner } from "./Spinner"
 import * as Reusable from "./SettingsComponents"
 
 export {
@@ -37,6 +38,7 @@ export {
     ResultsMenu,
     Overlay,
     SettingsMenu,
+    Spinner,
     Reusable,
     PlacesPage,
     PlacesAuto,

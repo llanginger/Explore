@@ -1,6 +1,6 @@
 import * as React from "react"
 import styled from "styled-components"
-import { FirebaseUserForm, Reusable } from "./Components"
+import { FirebaseUserForm, Reusable, Spinner } from "./Components"
 import * as Dropzone from "react-dropzone"
 import { Colors } from "../Interfaces"
 
@@ -14,6 +14,7 @@ interface AccountComponentProps {
     profileName: string;
     profileEmail: string;
     colors: Colors
+    imageSpinner: any;
 }
 
 export const AccountPageComponents = (props: AccountComponentProps) => {
@@ -82,6 +83,16 @@ export const AccountPageComponents = (props: AccountComponentProps) => {
         width: 100%;
     `
 
+    const PicUploading = styled.div`
+        height: 100%;
+        width: 100%;
+        background: ${colors.P_COLOR_LIGHT};
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+    `
+
     const PicInfo = styled.div`
         height: 125px;
         width: 100%;
@@ -127,22 +138,35 @@ export const AccountPageComponents = (props: AccountComponentProps) => {
         }
     `
 
+    const picOrSpin = () => {
+        if (props.imageSpinner === true) {
+            return (
+                <PicUploading>
+                    <span>Image Uploading!</span>
+                </PicUploading>
+            )
+        } else {
+            return (
+                <Dropzone
+                    multiple={false}
+                    accept="image/*"
+                    style={{}}
+                    onDrop={props.profilePicOnDrop}
+                >
+                    <Pic src={props.profilePic} />
+                </Dropzone>
+            )
+        }
+    }
+
     return (
 
-        <Reusable.Page
-        >
+        <Reusable.Page>
             <Reusable.TopBar onClick={props.headerOnClick} text="Account Page" />
             <AccountList>
                 <Item>
                     <PicContainer>
-                        <Dropzone
-                            multiple={false}
-                            accept="image/*"
-                            style={{}}
-                            onDrop={props.profilePicOnDrop}
-                        >
-                            <Pic src={props.profilePic} />
-                        </Dropzone>
+                        {picOrSpin()}
                     </PicContainer>
                     <PicInfo>
                         <PicText>Drag a photo onto the image to the left, or click the button bellow to upload a new profile picture.</PicText>
