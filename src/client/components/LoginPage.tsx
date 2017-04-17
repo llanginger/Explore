@@ -3,6 +3,11 @@ import { BaseReduxProps, User } from "../Interfaces"
 import { LOG_IN } from "../actions/actions"
 import * as firebase from "firebase"
 import styled from "styled-components"
+import { Colors } from "../Interfaces"
+
+interface LCProps {
+    color: any
+}
 
 const dummyUser: User = {
     email: "Leo",
@@ -14,7 +19,7 @@ const dummyUser: User = {
 const Page = styled.div`
     height: 100%;
     width: 100%;
-    background-color: #669EFF;
+    background-color: ${(props: LCProps) => props.color.ACCENT};
     position: relative;
     display: flex;
     align-items: center;
@@ -140,6 +145,14 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
                     dbRef.once("value").then((snap) => {
                         const initFireState = snap.val()
                         console.log("Init fire db state: ", initFireState);
+
+                        let initVenues = {
+                            visitedIds: [],
+                            visitedVenues: []
+                        }
+                        if (initFireState.visitedVenues && initFireState.visitedVenues.visitedIds) {
+                            initVenues = initFireState.visitedVenues
+                        }
                         const loginObj = {
                             profileInfo: {
                                 email: user.email,
@@ -147,7 +160,7 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
                                 profilePic: user.photoURL
                             },
                             dbInfo: {
-                                visitedVenues: initFireState.visitedVenues,
+                                visitedVenues: initVenues,
                                 location: initFireState.location
                             }
                         }
@@ -164,9 +177,11 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
 
 
     render() {
+        const colors = this.props.store.getState().colors
         return (
             <Page
                 className="logginPage"
+                color={colors}
             >
                 <Form
                     onSubmit={this._logIn}

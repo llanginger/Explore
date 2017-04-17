@@ -10,6 +10,7 @@ export const GPSButton = (props: BaseReduxProps) => {
     const venues = Store.currentResults.venues
     const inputState = Store.homeInputState
     const userMarker: google.maps.Marker = Store.userReducer.positionMarker
+    const colors = Store.colors
 
     const Button = styled.button`
         position: absolute;
@@ -17,9 +18,9 @@ export const GPSButton = (props: BaseReduxProps) => {
         right: 5%;
         background: transparent;
         border: none;
-        color: #669EFF;
+        color: ${colors.ACCENT};
         font-size: 32px;
-        filter: drop-shadow(3px 3px 2px black);
+        filter: drop-shadow(3px 3px 1px black);
         transition: transform .02s ease-in-out;
 
         &:active {

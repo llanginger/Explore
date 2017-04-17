@@ -121,7 +121,7 @@ export class FirebaseUserForm extends React.Component<UserFormProps, UserFormSta
             if (this.props.profileTarget === "password") {
                 return (
                     <ExtraInput
-                        type="text"
+                        type="password"
                         innerRef={(input) => this.preInput = input}
                         placeholder="Old password"
                         isGreen={this.state.buttonGreen}
@@ -148,7 +148,7 @@ export class FirebaseUserForm extends React.Component<UserFormProps, UserFormSta
             >
                 {addInput()}
                 <Input
-                    type="text"
+                    type={this.props.profileTarget === "password" ? "password" : "text"}
                     innerRef={(input) => this.input = input}
                     placeholder={choosePlaceholder()}
                     isGreen={this.state.buttonGreen}

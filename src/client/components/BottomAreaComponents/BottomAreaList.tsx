@@ -1,20 +1,25 @@
 import * as React from "react"
 import { Reusable } from "./../Components"
 import styled from "styled-components"
-import { Venue } from "../../Interfaces"
+import { Venue, Colors } from "../../Interfaces"
 
 interface BottomAreaListProps {
     venue: Venue;
     topBarOnclick: any;
     bottomButtonOnClick: any;
     bottomButtonText: string;
+    colors: Colors;
 }
 
 export const BottomAreaList = (props: BottomAreaListProps) => {
 
+    const colors = props.colors
     const mapReviewsToList = () => {
-        // Maybe turn this into a factory? Need some way of rendering only a couple
-        return props.venue.reviews.slice(0, 5).map((rev, i) => {
+        let reviews = [...props.venue.reviews]
+        if (reviews.length > 15) {
+            reviews = reviews.slice(0, 15)
+        }
+        return reviews.map((rev, i) => {
             return (
                 <ListItem
                     key={i}
@@ -26,10 +31,12 @@ export const BottomAreaList = (props: BottomAreaListProps) => {
     }
 
     const ListItem = styled.li`
-        border-bottom: 1px solid #888;
+        border-bottom: 1px solid ${colors.DIVIDER};
         margin-bottom: 10px;
-        padding-bottom: 10px;
+        padding: 10px;
+        background-color: ${colors.P_COLOR_LIGHT};
         font-size: 16px;
+        color: ${colors.SECONDARY_TEXT}
     `
 
     const ReviewContainer = styled.div`
@@ -48,16 +55,13 @@ export const BottomAreaList = (props: BottomAreaListProps) => {
         list-style-type: none;
         overflow-y: scroll;
 
-        &::-webkit-scrollbar {
-            display: none;
-        }
     `
 
     return (
         <ReviewContainer>
             <Reusable.TopBar
                 onClick={props.topBarOnclick}
-                text={props.venue.name} />
+                text={props.venue.name + " reviews:"} />
             <ReviewList>
                 {mapReviewsToList()}
             </ReviewList>

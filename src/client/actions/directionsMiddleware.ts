@@ -45,6 +45,7 @@ const offsetMap = (map: google.maps.Map) => {
 
 export const directionsMiddleware = store => next => action => {
     const renderer: google.maps.DirectionsRenderer = store.getState().map.directionsRenderer
+    const colors = store.getState().colors
     const map: google.maps.Map = store.getState().map.mapRef
     switch (action.type) {
         case "MAP_LOADED":
@@ -58,7 +59,7 @@ export const directionsMiddleware = store => next => action => {
                 polylineOptions: {
                     strokeWeight: 4,
                     strokeOpacity: 1,
-                    strokeColor: '#B10DC9'
+                    strokeColor: colors.ACCENT
                 }
             });
 

@@ -1,16 +1,78 @@
 import { BaseReduxProps } from "../Interfaces"
 import * as React from "react"
-import { TOGGLE_BOTTOM_AREA } from "../actions/actions"
+import { BOTTOM_AREA_BIG } from "../actions/actions"
+import styled, { keyframes } from "styled-components"
+
 
 export interface InfoCardProps extends BaseReduxProps {
 
 }
 
+const fadeIn = keyframes`
+    0% { 
+        transform: scale(0.7);
+        opacity: 0.5; 
+    }
+
+    50% {
+        transform: scale(0.9);
+        opacity: 0.6; 
+    }
+    100% { 
+        transform: scale(1); 
+        opacity: 1;
+    }
+`
+
+const Card = styled.div`
+    color: white;
+    box-shadow: 5px 5px 5px #333;
+    width: 90%;
+    position: absolute;
+    top: 17%;
+    left: 5%;
+    cursor: pointer;
+
+    animation: ${fadeIn} .2s ease-in-out forwards;
+`
+
+const Rating: any = styled.div`
+    position: absolute;
+    box-shadow: 5px 5px 10px #333;
+    bottom: -10px;
+    right: -10px;
+    padding: 8px;
+    color: white;
+    border-radius: 50%;
+    background: ${(props: any) => props.rating};
+`
+
+const Title = styled.div`
+    text-align: center;
+    font-size: 22px;
+    font-weight: 400;
+    padding: 10px;
+    background-color: ${(props: any) => props.color};
+    color: white;
+`
+
+const Content = styled.div`
+    font-size: 16px;
+    background: white;
+    padding: 5px 5px 10px 5px;
+    text-align: center;
+    color: black;
+    font-weight: 400;
+`
+
 export const InfoCard = (props: InfoCardProps) => {
+
 
     const { store } = props
     const venue = store.getState().currentVenue
     const inputState = store.getState().homeInputState
+    const colors = store.getState().colors
+
     if (venue.name.length > 0 && inputState.active == false) {
         const { rating } = venue
         const pickRatingColor = () => {
@@ -25,45 +87,30 @@ export const InfoCard = (props: InfoCardProps) => {
             }
         }
 
-        const infoCardStyles = {
-            color: "white",
-            boxShadow: "5px 5px 5px #333",
-            width: "90%",
-            position: "absolute",
-            top: "17%",
-            left: "5%",
-        }
 
-        const ratingStyles = {
-            position: "absolute",
-            boxShadow: "5px 5px 10px #333",
-            bottom: "-10px",
-            right: "-10px",
-            padding: "8px",
-            color: "white",
-            borderRadius: "50%",
-            background: pickRatingColor()
-        }
+
 
         return (
-            <div
+            <Card
+                className="infoCard"
                 onClick={() => {
-                    store.dispatch(TOGGLE_BOTTOM_AREA())
+                    store.dispatch(BOTTOM_AREA_BIG())
                 }}
-                style={infoCardStyles}
             >
-                <div className="iwTitle">
+                <Title
+                    color={colors.P_COLOR_DARK}
+                >
                     {venue.name}
-                </div>
-                <div className="iwContent">
+                </Title>
+                <Content>
                     {venue.reviews[0].substr(0, 49)}...
-                </div>
-                <div
-                    style={ratingStyles}
+                </Content>
+                <Rating
+                    rating={pickRatingColor()}
                 >
                     {venue.rating.toFixed(1)}
-                </div>
-            </div>
+                </Rating>
+            </Card>
         )
     } else {
         return null

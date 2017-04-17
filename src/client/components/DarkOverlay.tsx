@@ -7,18 +7,19 @@ interface DOProps {
     store: any;
 }
 
-export const DarkOverlay = (props: DOProps) => {
-
-    const { store } = props
-    const Overlay: any = styled.div`
+const Overlay: any = styled.div`
         position: absolute;
         width: 100%;
         height: 100%;
-        z-index: ${(props: DOProps) => props.active ? "500" : "-1"};
+        z-index: 500;
         background-color: #333;
+        pointer-events: ${(props: DOProps) => props.active ? "all" : "none"};
         opacity: ${(props: DOProps) => props.active ? "0.5" : "0"};
         transition: all .5s linear;
     `
+export const DarkOverlay = (props: DOProps) => {
+
+    const { store } = props
 
     return (
         <Overlay

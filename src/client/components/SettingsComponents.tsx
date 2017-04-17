@@ -1,13 +1,17 @@
 import * as React from "react"
 import styled from "styled-components"
+import { store } from "../Store"
 
 export const TopBar = (props: { onClick: any, text: string }) => {
+
+    const colors = store.getState().colors
 
     const Bar = styled.div`
         width: 100%;
         height: 8%;
         min-height: 45px;
         background: #669EFF;
+        background: ${colors.P_COLOR_DARK};
         position: relative;
         cursor: pointer;
         display: flex;
@@ -31,6 +35,7 @@ export const TopBar = (props: { onClick: any, text: string }) => {
         font-size: 20px;
         cursor: pointer;
     `
+
     const Close = styled.span`
         border: none;
         position: relative;
@@ -39,11 +44,6 @@ export const TopBar = (props: { onClick: any, text: string }) => {
         height: 40px;
         margin-left: 5px;
         overflow: hidden;
-        &:hover {
-            &:before, &:after {
-            background: white;
-            }
-        }
 
         &:before, &:after {
             content: '';
@@ -53,14 +53,32 @@ export const TopBar = (props: { onClick: any, text: string }) => {
             top: 50%;
             left: 0;
             margin-top: -1px;
-            background: #000;
+            background: white;
         }
+
         &:before {
             transform: rotate(45deg);
+            transition: all .1s ease-in;
         }
+
+        &:hover:before {
+            background: white;
+            transform: rotate(180deg);
+            transition: all .1s ease-in;
+        }
+
         &:after {
             transform: rotate(-45deg);
+            transition: all .1s ease-in;
         }
+
+        &:hover:after {
+            background: white;
+            transform: rotate(90deg);
+            transition: all .1s ease-in;
+        }
+
+        transition: all .1s ease-in;
     `
 
     return (
@@ -73,12 +91,14 @@ export const TopBar = (props: { onClick: any, text: string }) => {
 }
 
 export const BottomButton = (props: { onClick: any, text: string }) => {
+    const colors = store.getState().colors
     const Button = styled.button`
         height: 10%;
         min-height: 45px;
         color: white;
         font-size: 20px;
         background-color: #B10DC9;
+        background: ${colors.ACCENT};
         width: 100%;
         border: none;
         cursor: pointer;

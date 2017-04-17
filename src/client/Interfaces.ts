@@ -99,6 +99,7 @@ export interface Colors {
     P_COLOR_LIGHT?: string;
     ACCENT?: string;
     PRIMARY_TEXT?: string;
+    MEDIUM_TEXT?: string;
     SECONDARY_TEXT?: string;
     ICONS?: string;
     DIVIDER?: string;

@@ -6,6 +6,7 @@ interface ColorPickerFormProps {
     onSubmit: (color: Colors) => void;
     placeholder: string;
     colorType: string;
+    label: string;
 }
 
 export class ColorPickerForm extends React.Component<ColorPickerFormProps, any> {
@@ -29,7 +30,7 @@ export class ColorPickerForm extends React.Component<ColorPickerFormProps, any> 
         const props = this.props
         return (
             <form onSubmit={this._onSubmit}>
-                <div>{this.props.placeholder}</div>
+                <div>{this.props.label}</div>
                 <input
                     type="text"
                     placeholder={props.placeholder}

@@ -1,6 +1,6 @@
 import * as React from "react"
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
-import { BaseReduxProps } from "../Interfaces"
+import { BaseReduxProps, Colors } from "../Interfaces"
 import { CLOSE_SETTINGS_PAGE, UPDATE_PROFILE_INFO } from "../actions/actions"
 import styled from "styled-components"
 import { FirebaseUserForm, Reusable } from "./Components"
@@ -18,6 +18,7 @@ export const AccountPage = (props: AccountProps) => {
     const storageRef = firebase.storage().ref();
     const currentUser = firebase.auth().currentUser
     const reduxUser = store.getState().userReducer
+    const colors: Colors = store.getState().colors
 
     const changeUserName = (e) => {
         e.stopPropagation()
@@ -94,6 +95,7 @@ export const AccountPage = (props: AccountProps) => {
             profilePicOnSelect={onImageSelect}
             profileEmail={reduxUser.email}
             profileName={reduxUser.userName}
+            colors={colors}
         />
     )
 

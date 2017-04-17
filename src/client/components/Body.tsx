@@ -154,10 +154,10 @@ export class Body extends React.Component<BodyProps, any> {
                         >
                             {renderOverlay()}
                         </ReactCSSTransitionGroup>
+                        <Hamburger
+                            store={store}
+                        />
                         <ContentContainer>
-                            <Hamburger
-                                store={store}
-                            />
                             <HomeInput
                                 style={{ marginTop: "100px" }}
                                 placeholder="What Would You Like?"
@@ -174,7 +174,6 @@ export class Body extends React.Component<BodyProps, any> {
                             </ReactCSSTransitionGroup>
                             <GPSButton store={store} />
                             <PreferencesContainer store={store} />
-
                         </ContentContainer>
                         <ColorPicker store={store} />
                     </div>

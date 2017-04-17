@@ -18,6 +18,7 @@ export const SettingsMenu = (props: BaseReduxProps) => {
 
 
     const menuState = state.settingsMenu
+    const colors = state.colors
     const getUserName: () => string = () => {
         if (currentUser.displayName && firebase.auth().currentUser.displayName.length > 0) {
             return currentUser.displayName
@@ -56,6 +57,10 @@ export const SettingsMenu = (props: BaseReduxProps) => {
         store.dispatch(LOG_OUT())
     }
 
+    const themeOnClick = () => {
+        store.dispatch({ type: "TOGGLE_THEME_OPTIONS" })
+    }
+
     return (
 
         <SettingsMenuComponents
@@ -63,8 +68,10 @@ export const SettingsMenu = (props: BaseReduxProps) => {
             userName={getUserName()}
             accountOnClick={accountClick}
             placesOnClick={placesClick}
+            themeOptionsOnClick={themeOnClick}
             logOutOnClick={logOut}
             bufferOnClick={closeMenu}
+            colors={colors}
         />
     )
 }

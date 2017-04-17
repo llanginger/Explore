@@ -6,49 +6,45 @@ interface BottomAreaButtonsProps {
     rightButtonOnClick: any;
 }
 
+
+
+const BaseButton = styled.button`
+    position: absolute;
+    font-size: 48px;
+    background: transparent;
+    padding: 5px;
+    border: none;
+    color: black;
+    cursor: pointer;
+    
+    &:focus {
+        outline: none;
+    }
+`
+
+const RightButton = styled(BaseButton) `
+    right: 10px;
+`
+
+const LeftButton = styled(BaseButton) `
+    left: 10px;
+`
+
 export const BottomAreaButtons = (props: BottomAreaButtonsProps) => {
-
-    const RightButton = styled.button`
-        position: absolute;
-        right: 10px;
-        font-size: 48px;
-        background: transparent;
-        padding: 5px;
-        border: none;
-        color: black;
-        
-        &:focus {
-            outline: none;
-        }
-    `
-
-    const LeftButton = styled.button`
-        position: absolute;
-        left: 10px;
-        font-size: 48px;
-        background: transparent;
-        padding: 5px;
-        border: none;
-        color: black;
-
-        &:focus {
-            outline: none;
-        }
-    `
 
     const RightIconSpan = styled.span`
         color: white;
-        filter: drop-shadow(6px 1px 2px black)
+        filter: drop-shadow(6px 1px 1px black)
     `
 
     const LeftIconSpan = styled.span`
         color: white;
-        filter: drop-shadow(-6px 1px 2px black)
+        filter: drop-shadow(-6px 1px 1px black)
     `
 
 
     return (
-        <div style={{ marginTop: "-51px" }}>
+        <div className="bottomButtons" style={{ marginTop: "-51px" }}>
             <LeftButton
                 onClick={props.leftButtonOnClick}
             >

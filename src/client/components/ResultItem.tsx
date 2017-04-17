@@ -10,6 +10,8 @@ interface ResultItemProps extends BaseReduxProps {
 
 export const ResultItem = (props: ResultItemProps) => {
 
+    const colors = props.store.getState().colors
+
     const photoUrl = () => {
         if (props.venue.photoSrc[0] === "No image here!") {
             return "./elements/photos/noPhotos.png"
@@ -18,7 +20,7 @@ export const ResultItem = (props: ResultItemProps) => {
         }
     }
 
-    const bgColor = () => {
+    const badgeColor = () => {
         if (props.venue.rating > 6.9) {
             return "#0F9960"
         } else if (props.venue.rating > 3.5) {
@@ -55,11 +57,12 @@ export const ResultItem = (props: ResultItemProps) => {
     `
 
     const ItemName = styled.span`
-        color: white;
+        color: ${colors.PRIMARY_TEXT};
         background: #0732a2;
+        background: ${colors.P_COLOR_DARK};
         padding: 4px 4px 8px 4px;
         position: absolute;
-        top: 12px;
+        top: 16px;
         left: 0;
         text-align: center;
         width: 100%;
@@ -67,7 +70,8 @@ export const ResultItem = (props: ResultItemProps) => {
 
     const ItemRating = styled.span`
         color: white;
-        background: ${bgColor()};
+        color: ${colors.PRIMARY_TEXT};
+        background: ${badgeColor()};
         position: absolute;
         padding: 7px;
         right: 10px;
