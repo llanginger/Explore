@@ -19,6 +19,7 @@ export const AccountPage = (props: AccountProps) => {
     const currentUser = firebase.auth().currentUser
     const reduxUser = store.getState().userReducer
     const colors: Colors = store.getState().colors
+    console.log("AccountPage updated");
 
     const changeUserName = (e) => {
         e.stopPropagation()
@@ -80,10 +81,13 @@ export const AccountPage = (props: AccountProps) => {
             }, function () {
                 // Upload completed successfully, now we can get the download URL
                 var downloadURL = uploadTask.snapshot.downloadURL;
-                user.updateProfile({ displayName: user.displayName, photoURL: downloadURL })
-                props.store.dispatch(UPDATE_PROFILE_INFO({ profilePic: downloadURL }))
-                console.log("Download url: ", downloadURL);
-                console.log("User info: ", user);
+                user.updateProfile({ displayName: user.displayName, photoURL: downloadURL }).then(() => {
+
+                    props.store.dispatch(UPDATE_PROFILE_INFO({ profilePic: user.photoURL }))
+                    console.log("Download url: ", downloadURL);
+                    console.log("User info: ", user.photoURL);
+                    console.log("Redux user: ", reduxUser);
+                })
             });
     }
 
