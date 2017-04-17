@@ -25,6 +25,7 @@ export const overlay: Reducer<overlay> = (state: overlay = initState, action) =>
         case "LETS_GO":
         case "SET_GPS_DATA":
         case "USE_GPS_POS":
+        case "LOG_OUT":
             return { showOverlay: false }
         default:
             return state;

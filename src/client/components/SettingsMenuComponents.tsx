@@ -23,7 +23,7 @@ export const SettingsMenuComponents = (props: MenuProps) => {
         height: 100%;
         display: flex;
         width: 100%;
-        z-index: 1000;
+        z-index: 11;
 
         @media(min-width: 700px) {
             width: 350px;

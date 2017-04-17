@@ -145,15 +145,8 @@ export class Body extends React.Component<BodyProps, any> {
                         >
                             {renderSettingsMenu()}
                         </ReactCSSTransitionGroup>
-                        <ReactCSSTransitionGroup
-                            transitionName="overlayFade"
-                            transitionEnterTimeout={300}
-                            transitionLeaveTimeout={300}
-                            transitionAppear={true}
-                            transitionAppearTimeout={1200}
-                        >
-                            {renderOverlay()}
-                        </ReactCSSTransitionGroup>
+
+                        <Overlay store={store} />
                         <Hamburger
                             store={store}
                         />

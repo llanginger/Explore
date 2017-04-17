@@ -26,6 +26,44 @@ import { FETCHED_VENUES, FETCHING_VENUES, FOCUS_INPUT, CLEAR_VENUES, SHOW_SETTIN
 import { ResultsMenu, PlacesAuto } from "./Components"
 import { createNewMarker } from "./createMarker"
 
+import styled, { keyframes } from "styled-components"
+
+const spin = keyframes`
+
+0% {
+    transform: rotate(0deg);
+}
+
+100% {
+    transform: rotate(360deg);
+}
+
+`
+
+const MySpinner = styled.div`
+    border: 16px solid #607D8B;
+    border-top: 16px solid white;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+
+    animation: ${spin} 2s linear infinite;
+
+`
+interface ICProps {
+    inputState: boolean;
+}
+
+const InputContainer = styled.div`
+    position: absolute;
+    top: ${(props: ICProps) => props.inputState ? "0px" : "9%"};
+    width: ${(props: ICProps) => props.inputState ? "100%" : "90%"};
+    left: ${(props: ICProps) => props.inputState ? "0px" : "5%"};
+    box-shadow: ${(props: ICProps) => props.inputState ? "" : "5px 5px 5px #333"};
+    transition: all .3s;
+    z-index: ${(props: ICProps) => props.inputState ? "11" : "0"};
+`
+
 export interface InputGroupState {
     disabled?: boolean;
     filterValue?: string;
@@ -172,21 +210,10 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
             }
         }
 
-        const HomeInputContainerStyles = {
-            position: "absolute",
-            top: inputState ? "0px" : "9%",
-            width: inputState ? "100%" : "90%",
-            left: inputState ? "0px" : "5%",
-            boxShadow: inputState ? "" : "5px 5px 5px #333",
-            transition: "all, .3s",
-            zIndex: inputState ? "700" : "0"
-        }
-
         const displaySpinner = () => {
             if (spinnerState === true) {
                 return (
-                    <Spinner
-                        intent={Intent.PRIMARY}
+                    <MySpinner
                         className={"centerAbsolute marginTop50P pt-large"}
                     />
                 )
@@ -198,9 +225,8 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
         const venueOrGps = () => {
             if (store.getState().homeInputState.isInGPSMode === true) {
                 return (
-                    <div
-                        className=""
-                        style={HomeInputContainerStyles}
+                    <InputContainer
+                        inputState={inputState}
                     >
                         <PlacesAuto
                             onPlaceSelected={(place) => {
@@ -210,14 +236,13 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
                                 store.dispatch(SET_GPS_DATA(place))
                             }}
                         />
-                    </div>
+                    </InputContainer>
                 )
             } else {
                 return (
 
-                    <div
-                        className=""
-                        style={HomeInputContainerStyles}
+                    <InputContainer
+                        inputState={inputState}
                     >
                         <InputGroup
                             className="pt-large testInput"
@@ -234,7 +259,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
                         />
                         <ResultsMenu store={store} />
                         {displaySpinner()}
-                    </div>
+                    </InputContainer>
                 )
             }
         }

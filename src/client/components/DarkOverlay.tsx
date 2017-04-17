@@ -11,7 +11,7 @@ const Overlay: any = styled.div`
         position: absolute;
         width: 100%;
         height: 100%;
-        z-index: 500;
+        z-index: 10;
         background-color: #333;
         pointer-events: ${(props: DOProps) => props.active ? "all" : "none"};
         opacity: ${(props: DOProps) => props.active ? "0.5" : "0"};

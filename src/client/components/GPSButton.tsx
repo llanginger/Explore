@@ -23,6 +23,7 @@ export const GPSButton = (props: BaseReduxProps) => {
         filter: drop-shadow(1px 1px 1px black);
         transition: transform .02s ease-in-out;
         cursor: pointer;
+        z-index: 5;
 
         &:active {
             outline: none;

@@ -121,7 +121,7 @@ export const Page = styled.div`
         justify-content: center;
         flex-direction: column;
         bottom: 0px;
-        z-index: 600;
+        z-index: 11;
         left: 0px;
         background-color: black;
         height: 100%;

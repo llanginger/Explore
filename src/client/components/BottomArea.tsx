@@ -5,7 +5,7 @@ import * as classNames from "classnames"
 import { Reusable } from "./Components"
 import { TOGGLE_BOTTOM_AREA, NEXT_VENUE, PREV_VENUE, SHOW_DIRECTIONS, BOTTOM_AREA_BIG, BOTTOM_AREA_SMALL } from "../actions/actions"
 import { Colors } from "./Utility/Colors"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import { BottomAreaList } from "./BottomAreaComponents/BottomAreaList"
 import { BottomAreaButtons } from "./BottomAreaComponents/BottomAreaButtons"
 import { BottomAreaImage } from "./BottomAreaComponents/BottomAreaImage"
@@ -26,25 +26,32 @@ interface CProps extends ContainerProps {
     color: Colors;
 }
 
-const Container = styled.div`
-        background: transparent;
-        position: absolute;
-        z-index: ${(props: CProps) => props.big ? "700" : "0"};
-        height: ${(props: CProps) => props.big ? "100%" : "20%"};
-        width: ${(props: CProps) => props.big ? "100%" : "90%"};
-        left: ${(props: CProps) => props.big ? "0%" : "5%"};
-        bottom: ${(props: CProps) => props.big ? "0px" : "-80px"};
-        border-radius: ${(props: CProps) => props.big ? "0px" : "10px 10px 0px 0px"};
-        box-shadow: ${(props: CProps) => props.big ? "none" : "5px 5px 7px #333"};
-        display: flex;
-        flex-direction: column;
-        transition: all .3s ease-in-out;
+const rise = keyframes`
+    0% { transform: translateY(90px); }
+    100% { transform: translateY(0px) ; }
+`
 
-        @media(min-width: 700px) and (min-height: 800px) {
-            height: ${(props: CProps) => props.big ? "100%" : "170px"};
-        }
-        
-    `
+const Container = styled.div`
+    background: transparent;
+    position: absolute;
+    z-index: ${(props: CProps) => props.big ? "11" : "6"};
+    height: ${(props: CProps) => props.big ? "100%" : "20%"};
+    width: ${(props: CProps) => props.big ? "100%" : "90%"};
+    left: ${(props: CProps) => props.big ? "0%" : "5%"};
+    bottom: ${(props: CProps) => props.big ? "0px" : "-80px"};
+    border-radius: ${(props: CProps) => props.big ? "0px" : "10px 10px 0px 0px"};
+    box-shadow: ${(props: CProps) => props.big ? "none" : "5px 5px 7px #333"};
+    display: flex;
+    flex-direction: column;
+    transition: all .3s ease-in-out;
+
+    @media(min-width: 700px) and (min-height: 800px) {
+        height: ${(props: CProps) => props.big ? "100%" : "170px"};
+    }
+
+    animation: ${rise} .3s ease-in-out forwards;
+    
+`
 
 export const BottomArea = (props: BaseReduxProps) => {
 

@@ -26,3 +26,14 @@ Work on standardizing animations.
 Bottomarea in particular needs to look like settings pages (already much better)
 
 
+----------------------------
+
+Orientation/screen size:
+
+Show "Please use in portrait mode" on tiny height
+
+----------------------------
+
+Refactoring:
+
+HomeInput: Move component generators out of render method
