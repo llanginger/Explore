@@ -28,6 +28,9 @@ export const AccountPageComponents = (props: AccountComponentProps) => {
         justify-content: space-around;
         overflowY: scroll;
 
+        @media(max-height: 650px) {
+            display: block;
+        }
         @media(min-height: 800px) and (min-width: 700px) {
             padding: 10px;
         }
@@ -44,9 +47,6 @@ export const AccountPageComponents = (props: AccountComponentProps) => {
         padding: 15px;
         box-sizing: border-box;
 
-        @media(min-height: 800px) and (min-width: 700px) {
-            padding: 30px 15px;
-        }
     `
 
     const InputItem = styled(Item) `

@@ -22,6 +22,7 @@ const Input = styled.input`
     padding: 10px;
     border: ${(props: BProps) => props.isGreen ? "2px #2BC016 solid" : "2px #669EFF solid"} ;
     border-right: none;
+    border-radius: 0;
 
     &:focus {
         outline: none;
@@ -41,6 +42,7 @@ const Button = styled.button`
     background: ${(props: BProps) => props.isGreen ? "#2BC016" : "#669EFF"};
     border: ${(props: BProps) => props.isGreen ? "2px #2BC016 solid" : "2px #669EFF solid"} ;
     cursor: pointer;
+    font-size: 16px;
 
     &:focus {
         outline: none;

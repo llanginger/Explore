@@ -1,5 +1,6 @@
 import * as React from "react"
 import styled from "styled-components"
+import * as P from "polished"
 import { store } from "../Store"
 
 export const TopBar = (props: { onClick: any, text: string }) => {
@@ -10,7 +11,6 @@ export const TopBar = (props: { onClick: any, text: string }) => {
         width: 100%;
         height: 8%;
         min-height: 45px;
-        background: #669EFF;
         background: ${colors.P_COLOR_DARK};
         position: relative;
         cursor: pointer;

@@ -62,6 +62,7 @@ const InputSubmit = styled.input`
     background-color: white;
     color: black;
     transition: all .02s ease-in-out;
+    -webkit-appearance: none;
 
     &:hover {
         transform: translateY(-1px);
@@ -209,7 +210,7 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
                         type="submit"
                         style={{ marginLeft: "2%" }}
                         onClick={this._signUp}
-                        value="Create New Account"
+                        value="New Account"
                     />
                 </Form>
             </Page>
