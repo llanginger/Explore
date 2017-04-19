@@ -27,6 +27,8 @@ const Page = styled.div`
     color: white;
     font-size: 20px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
 `
 
 const Form = styled.form`
@@ -34,6 +36,20 @@ const Form = styled.form`
 
     @media(min-width: 700px) {
         width: 500px;
+    }
+`
+
+const Logo = styled.div`
+    text-align: center;
+    width: 80%;
+
+    @media(min-width: 700px) {
+        width: 500px;
+    }
+
+    & > p {
+        font-size: 50px;
+        text-shadow: 2px 2px 2px #E040FB;
     }
 `
 
@@ -305,6 +321,9 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 className="logginPage"
                 color={colors}
             >
+                <Logo>
+                    <p>GO EXPLORE</p>
+                </Logo>
                 {this._whichView()}
             </Page>
         )
