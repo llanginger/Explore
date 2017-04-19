@@ -236,7 +236,6 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                     onSubmit={this._logIn}
                     className="loginContainer"
                 >
-                    <p>Log In here</p>
                     <Input
                         type="text"
                         placeholder="Email Address"
@@ -266,7 +265,6 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                     onSubmit={this._logIn}
                     className="loginContainer"
                 >
-                    <p>Log In here</p>
                     <Input
                         type="text"
                         placeholder="Email Address"
