@@ -13,7 +13,6 @@ export const TopBar = (props: { onClick: any, text: string }) => {
         min-height: 45px;
         background: ${colors.P_COLOR_DARK};
         position: relative;
-        cursor: pointer;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -37,6 +36,7 @@ export const TopBar = (props: { onClick: any, text: string }) => {
     `
 
     const Close = styled.span`
+        cursor: pointer;
         border: none;
         position: relative;
         display: inline-block;
@@ -63,7 +63,7 @@ export const TopBar = (props: { onClick: any, text: string }) => {
 
         &:hover:before {
             background: white;
-            transform: rotate(180deg);
+            transform: rotate(225deg);
             transition: all .1s ease-in;
         }
 
@@ -74,7 +74,7 @@ export const TopBar = (props: { onClick: any, text: string }) => {
 
         &:hover:after {
             background: white;
-            transform: rotate(90deg);
+            transform: rotate(135deg);
             transition: all .1s ease-in;
         }
 

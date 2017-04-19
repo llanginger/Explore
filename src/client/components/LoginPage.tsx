@@ -55,7 +55,7 @@ const Input = styled.input`
 const InputSubmit = styled.input`
     padding: 7px;
     box-sizing: border-box;
-    width: 48%;
+    width: 100%;
     border: none;
     box-shadow: 3px 3px 3px #333;
     margin-bottom: 10px;
@@ -78,16 +78,31 @@ const InputSubmit = styled.input`
 
 export interface LoginPageProps extends BaseReduxProps { }
 
-export class LoginPage extends React.Component<LoginPageProps, any> {
+interface LoginPageState {
+    logIn: boolean;
+    newAccount: boolean;
+}
+
+export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
     private email: any;
     private password: any;
+    private passwordCheck: any;
     constructor(props) {
         super(props)
 
         this._logIn = this._logIn.bind(this)
         this._logOut = this._logOut.bind(this)
         this._signUp = this._signUp.bind(this)
+        this._whichView = this._whichView.bind(this)
+        this._showLogIn = this._showLogIn.bind(this)
+        this._showNewAccount = this._showNewAccount.bind(this)
+        this._showHome = this._showHome.bind(this)
+
+        this.state = {
+            logIn: false,
+            newAccount: false,
+        }
     }
 
 
@@ -105,15 +120,22 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
     }
 
     _signUp(e) {
+        e.preventDefault()
         const email = this.email.value;
         const pass = this.password.value;
-        const promise = firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
-            firebase.database().ref("users/" + firebase.auth().currentUser.uid).set({
-                visitedVenues: {}
-            })
-        });
-        promise.catch(e => alert(e.message))
-        e.preventDefault()
+        const passCheck = this.passwordCheck.value
+        if (pass === passCheck) {
+            const promise = firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
+                firebase.database().ref("users/" + firebase.auth().currentUser.uid).set({
+                    visitedVenues: {}
+                })
+            });
+            promise.catch(e => alert(e.message))
+        } else {
+            alert("Oops, your passwords did not match! Please try again")
+            this.password.value = ""
+            this.passwordCheck.value = ""
+        }
     }
 
     componentDidMount() {
@@ -176,14 +198,40 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
         })
     }
 
+    _showLogIn() {
+        this.setState({ logIn: true, newAccount: false })
+    }
 
-    render() {
-        const colors = this.props.store.getState().colors
-        return (
-            <Page
-                className="logginPage"
-                color={colors}
-            >
+    _showNewAccount() {
+        this.setState({ newAccount: true, logIn: false })
+    }
+
+    _showHome() {
+        this.setState({ logIn: false, newAccount: false })
+    }
+
+    _whichView() {
+        const state = this.state
+        if ((state.logIn === false && state.newAccount === false) || (state.logIn === true && state.newAccount === true)) {
+            return (
+                <Form
+                    onSubmit={this._showLogIn}
+                    className="loginContainer"
+                >
+                    <InputSubmit
+                        type="submit"
+                        onClick={this._showLogIn}
+                        value="Log In"
+                    />
+                    <InputSubmit
+                        type="submit"
+                        onClick={this._showNewAccount}
+                        value="New Account"
+                    />
+                </Form>
+            )
+        } else if (state.logIn === true) {
+            return (
                 <Form
                     onSubmit={this._logIn}
                     className="loginContainer"
@@ -202,19 +250,65 @@ export class LoginPage extends React.Component<LoginPageProps, any> {
                     />
                     <InputSubmit
                         type="submit"
-                        style={{ marginRight: "2%" }}
                         onClick={this._logIn}
                         value="Log In"
                     />
                     <InputSubmit
                         type="submit"
-                        style={{ marginLeft: "2%" }}
+                        onClick={this._showHome}
+                        value="Back"
+                    />
+                </Form>
+            )
+        } else if (state.newAccount === true) {
+            return (
+                <Form
+                    onSubmit={this._logIn}
+                    className="loginContainer"
+                >
+                    <p>Log In here</p>
+                    <Input
+                        type="text"
+                        placeholder="Email Address"
+                        innerRef={(input) => this.email = input}
+                    />
+                    <Input
+                        type="password"
+                        placeholder="Password"
+                        innerRef={(input) => this.password = input}
+                        onSubmit={this._signUp}
+                    />
+                    <Input
+                        type="password"
+                        placeholder="Enter Password Again"
+                        innerRef={(input) => this.passwordCheck = input}
+                        onSubmit={this._signUp}
+                    />
+                    <InputSubmit
+                        type="submit"
                         onClick={this._signUp}
                         value="New Account"
                     />
+                    <InputSubmit
+                        type="submit"
+                        onClick={this._showHome}
+                        value="Back"
+                    />
                 </Form>
+            )
+        }
+    }
+
+
+    render() {
+        const colors = this.props.store.getState().colors
+        return (
+            <Page
+                className="logginPage"
+                color={colors}
+            >
+                {this._whichView()}
             </Page>
         )
     }
 }
-

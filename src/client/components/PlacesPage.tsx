@@ -71,7 +71,7 @@ export const PlacesPage = (props: PlacesProps) => {
         color: ${colors.P_COLOR_LIGHT};
         text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
         &:hover {
-            color: pink;
+            color: #F44336;
             text-shadow: none;
         }
     `

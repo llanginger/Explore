@@ -140,7 +140,7 @@ export const SettingsMenuComponents = (props: MenuProps) => {
                     </MenuItem>
                     <MenuItem onClick={props.themeOptionsOnClick}>
                         <MenuIcon className="pt-icon-standard pt-icon-cog" />
-                        Theme Opts
+                        Theme Opts (dev tool)
                     </MenuItem>
                 </MenuList>
             </Menu>
