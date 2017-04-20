@@ -53,6 +53,7 @@ export const FavoritesPage = (props: FavoritesPageProps) => {
 
     const List = styled(Reusable.MainList) `
         padding: 0px;
+        background: ${colors.P_COLOR_LIGHT};
 
         :last-child {
             margin-bottom: 0px;

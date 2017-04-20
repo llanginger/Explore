@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 import { BaseReduxProps, Venue, Colors } from "../Interfaces"
-import { CLOSE_SETTINGS_PAGE, CLEAR_VISITED_VENUES, ADD_TO_FAVORITES } from "../actions/actions"
+import { CLOSE_SETTINGS_PAGE, CLEAR_VISITED_VENUES, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES } from "../actions/actions"
 import * as firebase from "firebase"
 import styled from "styled-components"
 import * as groupArray from "group-array"
@@ -90,13 +90,20 @@ export const PlacesPage = (props: PlacesProps) => {
     console.log("Unsorted venues: ", venues);
     console.log("Sorted venues: ", sortedVenues);
 
-    _.each(sortedVenues, (value, key) => {
-        console.log("underscore value: ", value)
-        console.log("underscore key: ", key)
-    })
+    // _.each(sortedVenues, (value, key) => {
+    //     console.log("underscore value: ", value)
+    //     console.log("underscore key: ", key)
+    // })
 
     const favVenue = (venue: Venue) => {
-        return () => store.dispatch(ADD_TO_FAVORITES(venue))
+        if (favoriteIds.indexOf(venue.id) !== -1) {
+            return () => {
+                console.log("Removing: ", venue);
+                store.dispatch(REMOVE_FROM_FAVORITES(venue))
+            }
+        } else {
+            return () => store.dispatch(ADD_TO_FAVORITES(venue))
+        }
     }
 
 

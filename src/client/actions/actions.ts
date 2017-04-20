@@ -255,6 +255,16 @@ export const ADD_TO_FAVORITES: (venue: Venue) => Action = (venue: Venue) => {
     }
 }
 
+export const REMOVE_FROM_FAVORITES: (venue: Venue) => Action = (venue: Venue) => {
+    return {
+        type: "REMOVE_FROM_FAVORITES",
+        payload: {
+            venue
+        }
+    }
+}
+
+
 export const SHOW_FAVORITE: (venue: Venue) => Action = (venue: Venue) => {
     return {
         type: "SHOW_FAVORITE",

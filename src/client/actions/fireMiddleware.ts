@@ -27,6 +27,8 @@ export const fireFavoritesMiddleware = store => next => action => {
 
     switch (action.type) {
         case "ADD_TO_FAVORITES":
+        case "OVERLAY_CLICKED":
+        case "CLOSE_SETTINGS_PAGE":
             console.log("Favorite action: ", action);
             favDbRef.child("favoriteVenues").set(favorites.favoriteVenues)
             favDbRef.child("favoriteIds").set(favorites.favoriteIds)

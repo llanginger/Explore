@@ -30,6 +30,22 @@ export const favorites = (state: favorites = initState, action) => {
                     ],
                 }
             }
+        case "REMOVE_FROM_FAVORITES":
+
+            const favVenues = state.favoriteVenues.favoriteVenues.filter((venue) => { return venue.id !== action.payload.venue.id })
+            const favIds = state.favoriteVenues.favoriteIds.filter((id) => { return id !== action.payload.venue.id })
+
+            const newState = {
+                ...state,
+                favoriteVenues: {
+                    favoriteVenues: favVenues,
+                    favoriteIds: favIds
+                }
+            }
+
+            return newState
+
+
         case "LOG_IN":
             return {
                 ...state,
