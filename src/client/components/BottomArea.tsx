@@ -31,7 +31,7 @@ const rise = keyframes`
     100% { transform: translateY(0px) ; }
 `
 
-const Container = styled.div`
+const Container: any = styled.div`
     background: transparent;
     position: absolute;
     z-index: ${(props: CProps) => props.big ? "11" : "6"};

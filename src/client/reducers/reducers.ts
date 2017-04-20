@@ -15,6 +15,7 @@ import { map } from "./mapReducer"
 import { userReducer } from "./userReducer"
 import { overlay } from "./overlay"
 import { colors } from "./colors"
+import { favorites } from "./favorites"
 
 export {
     bottomArea,
@@ -26,6 +27,7 @@ export {
     gps,
     map,
     overlay,
+    favorites,
     initState,
     loggedIn,
     settingsMenu,

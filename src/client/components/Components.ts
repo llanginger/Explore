@@ -19,6 +19,7 @@ import { PlacesAuto } from "./PlacesAuto"
 import { GPSButton } from "./GPSButton"
 import { DarkOverlay } from "./DarkOverlay"
 import { Spinner } from "./Spinner"
+import { FavoritesPage } from "./FavoritesPage"
 import * as Reusable from "./SettingsComponents"
 
 export {
@@ -31,6 +32,7 @@ export {
     FirebaseUserForm,
     Hamburger,
     GPSButton,
+    FavoritesPage,
     HomeInput,
     LoginPage,
     InfoCard,

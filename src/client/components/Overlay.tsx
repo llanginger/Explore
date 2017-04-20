@@ -5,24 +5,11 @@ import styled, { keyframes } from "styled-components";
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group"
 
 const fadeIn = keyframes`
-    0% {
-        opacity: 1;
-    }
-
-    33% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0.5
-    }
+    0% { opacity: 1; }
+    25% { opacity: 1; }
+    100% { opacity: 0; }
 `
 
-const fadeOut = keyframes`
-    0% { opacity: 0.5 }
-    66% { opacity: 0 }
-    100% { opacity: 0 } 
-`
 
 interface OProps {
     show: boolean
@@ -41,7 +28,7 @@ const Over: any = styled.div`
     justify-content: center;
     pointer-events: ${(props: OProps) => props.show ? "all" : "none"};
     
-    animation: ${(props: OProps) => props.show ? fadeIn : fadeOut} 3s linear forwards;
+    animation: ${fadeIn} 4s linear forwards;
 `
 
 export interface OverlayProps extends BaseReduxProps {

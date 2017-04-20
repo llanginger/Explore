@@ -9,6 +9,7 @@ interface MenuProps {
     userName: string;
     accountOnClick: any;
     placesOnClick: any;
+    favoritesOnClick: any;
     logOutOnClick: any;
     themeOptionsOnClick: any;
     bufferOnClick: any;
@@ -133,6 +134,10 @@ export const SettingsMenuComponents = (props: MenuProps) => {
                     <MenuItem onClick={props.placesOnClick}>
                         <MenuIcon className="pt-icon-standard pt-icon-path-search" />
                         Places You've Been
+                    </MenuItem>
+                    <MenuItem onClick={props.favoritesOnClick}>
+                        <MenuIcon className="pt-icon-standard pt-icon-heart" />
+                        Favorites
                     </MenuItem>
                     <MenuItem onClick={props.logOutOnClick}>
                         <MenuIcon className="pt-icon-standard pt-icon-social-media" />

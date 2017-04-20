@@ -101,9 +101,9 @@ interface LoginPageState {
 
 export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
-    private email: any;
-    private password: any;
-    private passwordCheck: any;
+    private email: HTMLInputElement;
+    private password: HTMLInputElement;
+    private passwordCheck: HTMLInputElement;
     constructor(props) {
         super(props)
 
@@ -123,8 +123,8 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
 
     _logIn(e) {
-        const email = this.email.value;
-        const pass = this.password.value;
+        const email = this.email.value.trim();
+        const pass = this.password.value.trim();
         const promise = firebase.auth().signInWithEmailAndPassword(email, pass);
         promise.catch(e => alert(e.message))
         e.preventDefault()
@@ -137,9 +137,9 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
     _signUp(e) {
         e.preventDefault()
-        const email = this.email.value;
-        const pass = this.password.value;
-        const passCheck = this.passwordCheck.value
+        const email = this.email.value.trim();
+        const pass = this.password.value.trim();
+        const passCheck = this.passwordCheck.value.trim()
         if (pass === passCheck) {
             const promise = firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
                 firebase.database().ref("users/" + firebase.auth().currentUser.uid).set({
@@ -169,6 +169,12 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                                 }],
                                 visitedIds: ["123"]
                             },
+                            favoriteVenues: {
+                                favoriteVenues: [{
+                                    placeholder: "placeholder"
+                                }],
+                                favoriteIds: ["123"]
+                            },
                             location: {
                                 formattedAddress: "",
                                 geometry: {
@@ -184,14 +190,64 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                     dbRef.once("value").then((snap) => {
                         const initFireState = snap.val()
                         console.log("Init fire db state: ", initFireState);
+                        const removePlaceholder = (venues) => {
+
+                            if (venues[0].hasOwnProperty("placeholder")) {
+                                console.log("Has prop", venues[0]);
+                                venues.shift()
+                                return venues
+                            } else {
+                                return venues
+                            }
+                        }
+
+                        const removePlaceholderId = (ids: string[]) => {
+                            if (ids[0].length === 3) {
+                                ids.shift()
+                                return ids
+                            } else {
+                                return ids
+                            }
+                        }
 
                         let initVenues = {
                             visitedIds: [],
                             visitedVenues: []
                         }
-                        if (initFireState.visitedVenues && initFireState.visitedVenues.visitedIds) {
-                            initVenues = initFireState.visitedVenues
+
+                        if (
+                            initFireState.visitedVenues &&
+                            initFireState.visitedVenues.visitedIds
+                        ) {
+                            let visitedVenues = [...initFireState.visitedVenues.visitedVenues]
+                            let visitedIds = [...initFireState.visitedVenues.visitedIds]
+
+                            initVenues = {
+                                visitedIds: removePlaceholderId(visitedIds),
+                                visitedVenues: removePlaceholder(visitedVenues)
+                            }
                         }
+
+                        let initFavorites = {
+                            favoriteIds: [],
+                            favoriteVenues: []
+                        }
+
+                        if (
+                            initFireState.favorites &&
+                            initFireState.favorites.favoriteIds
+                        ) {
+                            let favoriteVenues = [...initFireState.favorites.favoriteVenues]
+                            let favoriteIds = [...initFireState.favorites.favoriteIds]
+
+                            initFavorites = {
+                                favoriteIds: removePlaceholderId(favoriteIds),
+                                favoriteVenues: removePlaceholder(favoriteVenues)
+                            }
+                            console.log("Init favorites: ", initFavorites);
+                        }
+
+
                         const loginObj = {
                             profileInfo: {
                                 email: user.email,
@@ -200,6 +256,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                             },
                             dbInfo: {
                                 visitedVenues: initVenues,
+                                favoriteVenues: initFavorites,
                                 location: initFireState.location
                             }
                         }

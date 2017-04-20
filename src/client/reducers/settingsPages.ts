@@ -15,6 +15,7 @@ export const settingsPages: Reducer<settingsPages> = (state: settingsPages = {
                 case "account":
                 case "places":
                 case "location":
+                case "favorites":
                     return { page: action.page }
                 default:
                     return state;

@@ -1,6 +1,6 @@
 import { Venue, QueryInfo, User, GooglePlaces, Colors } from "../Interfaces"
 import { Action } from "redux"
-export { fireMiddleware, syncLocationInfo } from "./fireMiddleware"
+export { fireVenueMiddleware, syncLocationInfo, fireFavoritesMiddleware } from "./fireMiddleware"
 export { markerMiddleware } from "./markerMiddleware"
 export { naviMiddleware } from "./naviMiddleware"
 export { directionsMiddleware } from "./directionsMiddleware"
@@ -243,5 +243,14 @@ export const COLOR_UPDATE: (color: Colors) => Action = (color: Colors) => {
 export const UPLOADING_PROFILE_PIC: () => Action = () => {
     return {
         type: "UPLOADING_PROFILE_PIC"
+    }
+}
+
+export const ADD_TO_FAVORITES: (venue: Venue) => Action = (venue: Venue) => {
+    return {
+        type: "ADD_TO_FAVORITES",
+        payload: {
+            venue
+        }
     }
 }

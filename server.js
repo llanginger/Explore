@@ -167,7 +167,7 @@ const createAsyncPhotoFunction = venue => {
             let photoAlbum = [];
 
             for (const photo of photos) {
-                photoAlbum.push(photo.prefix + "300x200" + photo.suffix);
+                photoAlbum.push(photo.prefix + "original" + photo.suffix);
             }
 
             if (photoAlbum.length > 0) {

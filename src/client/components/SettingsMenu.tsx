@@ -52,6 +52,10 @@ export const SettingsMenu = (props: BaseReduxProps) => {
         store.dispatch(SHOW_SETTINGS_PAGE("account"))
     }
 
+    const favoritesClick = (page: string) => {
+        store.dispatch(SHOW_SETTINGS_PAGE("favorites"))
+    }
+
     const logOut = () => {
         firebase.auth().signOut()
         store.dispatch(LOG_OUT())
@@ -68,6 +72,7 @@ export const SettingsMenu = (props: BaseReduxProps) => {
             userName={getUserName()}
             accountOnClick={accountClick}
             placesOnClick={placesClick}
+            favoritesOnClick={favoritesClick}
             themeOptionsOnClick={themeOnClick}
             logOutOnClick={logOut}
             bufferOnClick={closeMenu}
