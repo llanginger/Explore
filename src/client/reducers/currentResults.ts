@@ -2,7 +2,7 @@ import { Reducer } from "redux"
 import { Venue, QueryInfo } from "../Interfaces"
 
 export interface currentResults {
-    queryInfo: {};
+    queryInfo?: {};
     venues: Venue[]
 }
 
@@ -52,6 +52,14 @@ export const currentResults: Reducer<currentResults> = (state: currentResults = 
                 }
             })
             return { ...state, venues: prevSeenState }
+        case "SHOW_FAVORITE":
+            return {
+                ...state,
+                venues: [
+                    ...state.venues,
+                    action.venue
+                ]
+            }
         case "FETCHED_VENUES":
             // -- Change this to filter against visited venues list and simply not populate currentvenues with any already-seen venues
 

@@ -254,3 +254,16 @@ export const ADD_TO_FAVORITES: (venue: Venue) => Action = (venue: Venue) => {
         }
     }
 }
+
+export const SHOW_FAVORITE: (venue: Venue) => Action = (venue: Venue) => {
+    return {
+        type: "SHOW_FAVORITE",
+        venue
+    }
+}
+
+export const CLEAR_FAVORITES: () => Action = () => {
+    return {
+        type: "CLEAR_FAVORITES"
+    }
+}

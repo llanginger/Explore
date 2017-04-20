@@ -1,7 +1,7 @@
 import { Venue } from "../Interfaces"
 
 
-export const createNewMarker = (venue: Venue, map) => {
+export const createNewMarker = (venue: Venue, map: google.maps.Map) => {
 
     const pointval = new google.maps.LatLng(
         parseFloat(venue.location.lat.toString()),

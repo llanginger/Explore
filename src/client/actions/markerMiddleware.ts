@@ -2,16 +2,18 @@ import { Venue } from "../Interfaces"
 import { newUserMarker } from "../components/Utility/createUserMarker"
 
 export const markerMiddleware = store => next => action => {
-    const currentVenue = store.getState().currentVenue
-    const mapRef = store.getState().map.mapRef
+    const currentVenue: Venue = store.getState().currentVenue
+    const mapRef: google.maps.Map = store.getState().map.mapRef
     const userReducer = store.getState().userReducer
     console.log("MapRef from markermiddleware: ", mapRef);
     switch (action.type) {
         case "NEXT_VENUE":
         case "PREV_VENUE":
         case "LETS_GO":
+        case "SHOW_FAVORITE":
 
-            if (action.type !== "LETS_GO") {
+            // Split these into their own switch statements
+            if (currentVenue.marker !== undefined) {
                 currentVenue.marker.setMap(null)
             }
 

@@ -38,6 +38,8 @@ export const favorites = (state: favorites = initState, action) => {
                     favoriteIds: action.userInfo.dbInfo.favoriteVenues.favoriteIds
                 }
             }
+        case "CLEAR_FAVORITES":
+            return { ...initState }
         default:
             return state;
     }

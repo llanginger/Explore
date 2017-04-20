@@ -117,6 +117,7 @@ export interface Venue {
     visited?: boolean;
     seen?: boolean;
     marker?: any;
+    favorite?: boolean;
 }
 
 export interface BaseReduxProps {

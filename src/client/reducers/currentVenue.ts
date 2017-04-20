@@ -25,6 +25,7 @@ export const currentVenue: Reducer<currentVenue> = (state: currentVenue = initSt
         case "PREV_VENUE":
         case "NEXT_VENUE":
         case "LETS_GO":
+        case "SHOW_FAVORITE":
             // let currentVenue: Venue = { ...action.venue, seen: true }
             // currentVenue.marker.setMap(action.mapRef)
             // return { ...currentVenue }

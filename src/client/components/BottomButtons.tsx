@@ -110,7 +110,7 @@ export const BottomButtons = (props: BaseReduxProps) => {
     const handleNext = () => {
         store.dispatch(NEXT_VENUE(getNextVenue()))
     }
-    if (venues.length > 0 && inputState.active == false) {
+    if (venues.length > 1 && inputState.active == false) {
 
         return (
             <Container>

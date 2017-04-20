@@ -26,7 +26,7 @@ const Over: any = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    pointer-events: ${(props: OProps) => props.show ? "all" : "none"};
+    pointer-events: none;
     
     animation: ${fadeIn} 4s linear forwards;
 `

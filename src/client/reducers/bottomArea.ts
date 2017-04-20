@@ -24,6 +24,7 @@ export const bottomArea: Reducer<bottomArea> = (state: bottomArea = initState, a
         case "FETCHING_VENUES":
             return { ...state, show: false }
         case "LETS_GO":
+        case "SHOW_FAVORITE":
             return { ...state, show: true }
         case "LOG_OUT":
             return { ...initState }

@@ -22,6 +22,7 @@ export const settingsPages: Reducer<settingsPages> = (state: settingsPages = {
             }
         case "CLOSE_SETTINGS_PAGE":
         case "OVERLAY_CLICKED":
+        case "SHOW_FAVORITE":
         case "LOG_OUT":
             return { page: "closed" }
         default:

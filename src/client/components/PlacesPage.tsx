@@ -84,6 +84,7 @@ interface SortedVenues {
 export const PlacesPage = (props: PlacesProps) => {
     const { store } = props
     const venues = store.getState().visitedVenues.visitedVenues
+    const favoriteIds = store.getState().favorites.favoriteVenues.favoriteIds
     const colors = store.getState().colors
     const sortedVenues: SortedVenues = groupArray(venues, "categories.primary.name")
     console.log("Unsorted venues: ", venues);
@@ -124,6 +125,14 @@ export const PlacesPage = (props: PlacesProps) => {
         return renderArray
     }
 
+    const isFavorite = (id: string) => {
+        if (favoriteIds.indexOf(id) !== -1) {
+            return true
+        } else {
+            return false
+        }
+    }
+
     const mapVisitedVenues = (venueList: Venue[]) => {
         return venueList.map((venue, i) => {
             return (
@@ -136,7 +145,7 @@ export const PlacesPage = (props: PlacesProps) => {
                         className="pt-icon-large pt-icon-heart"
                         color={colors}
                         onClick={favVenue(venue)}
-                        favorite={true}
+                        favorite={isFavorite(venue.id)}
                     />
                 </Item>
             )
