@@ -21,6 +21,7 @@ const Item: any = styled.li`
     cursor: pointer;    
 `
 
+
 const Image: any = styled.div`
     width: 100%;
     height: 100%;
@@ -31,6 +32,12 @@ const Image: any = styled.div`
     background-position: center;
 `
 
+const Placeholder: any = styled.div`
+    width: 100%;
+    height: 200px;
+    position: relative;
+    background: ${(props: FPProps) => props.color.P_COLOR};
+`
 
 interface FavoritesPageProps extends BaseReduxProps {
     onClick: any;
@@ -94,7 +101,13 @@ export const FavoritesPage = (props: FavoritesPageProps) => {
                 )
             })
         } else {
-            return <p>Go Favorite Some Places!</p>
+            return (
+                <Placeholder
+                    color={colors}
+                >
+                    <ItemName>Go Favorite Some Places!</ItemName>
+                </Placeholder>
+            )
         }
     }
 
