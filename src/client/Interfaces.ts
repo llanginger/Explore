@@ -127,3 +127,32 @@ export interface BaseReduxProps {
 export interface PrefsPage extends BaseReduxProps {
     onClick: any;
 }
+
+export interface ProfileInfo {
+    email?: string;
+    userName?: string;
+    profilePic?: string;
+}
+
+export interface DBInfo {
+    visitedVenues?: Venue[];
+    location?: {}
+}
+
+export interface Payload {
+    venue?: Venue;
+    oldVenue?: Venue;
+    venues?: Venue[];
+    QueryInfo?: QueryInfo;
+    visitedVenues?: Venue[];
+    page?: string;
+    id?: string;
+    mapRef?: google.maps.Map;
+    profileInfo?: ProfileInfo;
+    dbInfo?: DBInfo;
+    marker?: google.maps.Marker
+    startEnd?: {}; // <-- Investigate
+    color?: Colors;
+}
+
+// Make smaller bespoke interfaces?

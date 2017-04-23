@@ -88,23 +88,7 @@ export const BottomArea = (props: BaseReduxProps) => {
     const bottomButtonClick = () => {
         store.dispatch(SHOW_DIRECTIONS(directionsObj()))
     }
-    const renderList = () => {
 
-
-        if (big === true) {
-            return (
-                <BottomAreaList
-                    venue={venue}
-                    topBarOnclick={bottomAreaSize}
-                    bottomButtonOnClick={bottomButtonClick}
-                    bottomButtonText="Take Me Here!"
-                    colors={colors}
-                />
-            )
-        } else {
-            return null
-        }
-    }
 
     const getNextVenue = () => {
         for (let venue of venues) {
@@ -180,6 +164,7 @@ export const BottomArea = (props: BaseReduxProps) => {
                 bottomButtonOnClick={bottomButtonClick}
                 bottomButtonText="Take Me Here!"
                 colors={colors}
+                store={store}
             />
         </Container>
 

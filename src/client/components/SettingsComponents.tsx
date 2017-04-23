@@ -3,7 +3,31 @@ import styled from "styled-components"
 import * as P from "polished"
 import { store } from "../Store"
 
-export const TopBar = (props: { onClick: any, text: string }) => {
+interface TopBarProps {
+    onClick: any;
+    text: string;
+    rightElement?: any
+}
+
+export const RightElem = styled.span`
+    cursor: pointer;
+    border: none;
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        text-shadow: none;
+        color: #F44336;
+    }
+`
+
+export const TopBar = (props: TopBarProps) => {
 
     const colors = store.getState().colors
 
@@ -34,6 +58,8 @@ export const TopBar = (props: { onClick: any, text: string }) => {
         font-size: 20px;
         cursor: pointer;
     `
+
+
 
     const Close = styled.span`
         cursor: pointer;
@@ -81,11 +107,19 @@ export const TopBar = (props: { onClick: any, text: string }) => {
         transition: all .1s ease-in;
     `
 
+    const showRightElem = () => {
+        if (props.rightElement) {
+            return props.rightElement
+        } else {
+            return <Spacer />
+        }
+    }
+
     return (
         <Bar>
             <Close onClick={props.onClick} />
             <Text>{props.text}</Text>
-            <Spacer />
+            {showRightElem()}
         </Bar>
     )
 }

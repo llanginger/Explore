@@ -190,8 +190,8 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                     dbRef.once("value").then((snap) => {
                         const initFireState = snap.val()
                         console.log("Init fire db state: ", initFireState);
-                        const removePlaceholder = (venues) => {
 
+                        const removePlaceholder = (venues) => {
                             if (venues[0].hasOwnProperty("placeholder")) {
                                 console.log("Has prop", venues[0]);
                                 venues.shift()
