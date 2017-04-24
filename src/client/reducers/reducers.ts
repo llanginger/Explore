@@ -16,12 +16,14 @@ import { userReducer } from "./userReducer"
 import { overlay } from "./overlay"
 import { colors } from "./colors"
 import { favorites } from "./favorites"
+import { fetchingVenues } from "./fetchingVenues"
 
 export {
     bottomArea,
     currentResults,
     currentVenue,
     fourSquareResults,
+    fetchingVenues,
     homeInputState,
     colors,
     gps,

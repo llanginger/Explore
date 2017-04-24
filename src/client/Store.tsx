@@ -3,11 +3,20 @@ import { Venue } from "./Interfaces"
 import { default as thunk } from "redux-thunk";
 import * as logger from "redux-logger"
 import { DevTools } from "./components/Devtools"
-import { fireVenueMiddleware, fireFavoritesMiddleware, markerMiddleware, syncLocationInfo, naviMiddleware, directionsMiddleware } from "./actions/actions"
+import {
+    fireVenueMiddleware,
+    fireFavoritesMiddleware,
+    markerMiddleware,
+    syncLocationInfo,
+    naviMiddleware,
+    directionsMiddleware,
+    fetchingMiddleware
+} from "./actions/actions"
 import {
     currentResults,
     currentVenue,
     fourSquareResults,
+    fetchingVenues,
     homeInputState,
     initState,
     seenVenues,
@@ -34,6 +43,7 @@ export interface Reducers {
     seenVenues: string[];
     settingsMenu: settingsMenu;
     fourSquareResults: fourSquareResults;
+    fetchingVenues: fetchingVenues;
     currentResults: currentResults;
     homeInputState: homeInputState;
     visitedVenues: visitedVenues;
@@ -57,6 +67,7 @@ export const Reducers = combineReducers<Reducers>({
     seenVenues,
     settingsMenu,
     fourSquareResults,
+    fetchingVenues,
     overlay,
     currentResults,
     homeInputState,
@@ -70,7 +81,17 @@ export const Reducers = combineReducers<Reducers>({
 })
 
 const enhancer = compose(
-    applyMiddleware(thunk, fireVenueMiddleware, fireFavoritesMiddleware, markerMiddleware, syncLocationInfo, naviMiddleware, directionsMiddleware, logger()),
+    applyMiddleware(
+        thunk,
+        fireVenueMiddleware,
+        fireFavoritesMiddleware,
+        markerMiddleware,
+        syncLocationInfo,
+        naviMiddleware,
+        // fetchingMiddleware,
+        directionsMiddleware,
+        logger()
+    ),
     DevTools.instrument()
 )
 

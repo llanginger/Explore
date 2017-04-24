@@ -13,12 +13,13 @@ interface IProps extends BottomAreaImageProps { }
 export const BottomAreaImage = (props: BottomAreaImageProps) => {
 
     const VenueImage = styled.div`
-        height: 200px;
+        height: ${(props: IProps) => props.big ? "300px" : "200px"};
         width: 100%;
         border-radius: ${(props: IProps) => props.big ? "0px" : "10px 10px 0px 0px"};
         transition: all .5s linear;
         background-image: url('${(props: IProps) => props.image}');
         background-repeat: no-repeat;
+        background-position: center; 
         background-size: cover;
         display: flex;
         align-items: center;

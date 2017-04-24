@@ -4,6 +4,7 @@ export { fireVenueMiddleware, syncLocationInfo, fireFavoritesMiddleware } from "
 export { markerMiddleware } from "./markerMiddleware"
 export { naviMiddleware } from "./naviMiddleware"
 export { directionsMiddleware } from "./directionsMiddleware"
+export { fetchingMiddleware } from "./fetchingMiddleware"
 
 export interface SimpleAction {
     type: string;
@@ -134,7 +135,10 @@ export const LOG_IN: (userInfo: {
     userName?: string,
     profilePic?: string
 }) => {
-        return { type: "LOG_IN", userInfo }
+        return {
+            type: "LOG_IN",
+            userInfo
+        }
     }
 
 export const LOG_OUT: () => Action = () => {
@@ -167,6 +171,7 @@ export const UPDATE_PROFILE_INFO: (userInfo: { email?: string, userName?: string
     }
 }
 
+// Refactor profile pic into profileInfo.profilePic
 export const UPDATE_PROFILE_PIC: (profilePic: string) => Action = (profilePic: string) => {
     return {
         type: "UPDATE_PROFILE_PIC",
