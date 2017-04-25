@@ -11,7 +11,7 @@ import {
     naviMiddleware,
     directionsMiddleware,
     fetchingMiddleware
-} from "./actions/actions"
+} from "./middleware/middleware"
 import {
     currentResults,
     currentVenue,

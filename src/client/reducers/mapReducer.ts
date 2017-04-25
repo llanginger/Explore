@@ -1,4 +1,5 @@
 import { Reducer } from "redux"
+import { PAction } from "../Interfaces"
 export interface map {
     mapRef: google.maps.Map | string;
     directionsRenderer: google.maps.DirectionsRenderer | string;
@@ -10,12 +11,14 @@ const initState: map = {
     directionsRenderer: "",
     directionsService: ""
 }
-export const map: Reducer<map> = (state: map = initState, action) => {
+export const map: Reducer<map> = (state: map = initState, action: PAction) => {
     switch (action.type) {
         case "MAP_LOADED":
             return {
                 ...state,
-                ...action.payload
+                mapRef: action.payload.mapOpts.mapRef,
+                directionsRenderer: action.payload.mapOpts.directionsRenderer,
+                directionsService: action.payload.mapOpts.directionsService
             }
         default:
             return state;

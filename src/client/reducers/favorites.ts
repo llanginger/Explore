@@ -1,4 +1,5 @@
-import { Venue } from "../Interfaces"
+import { Venue, PAction } from "../Interfaces"
+
 
 export interface favorites {
     favoriteVenues: {
@@ -14,7 +15,7 @@ const initState: favorites = {
     }
 }
 
-export const favorites = (state: favorites = initState, action) => {
+export const favorites = (state: favorites = initState, action: PAction) => {
     switch (action.type) {
         case "ADD_TO_FAVORITES":
             return {
@@ -22,11 +23,11 @@ export const favorites = (state: favorites = initState, action) => {
                 favoriteVenues: {
                     favoriteVenues: [
                         ...state.favoriteVenues.favoriteVenues,
-                        ...action.payload.venue
+                        action.payload.venue
                     ],
                     favoriteIds: [
                         ...state.favoriteVenues.favoriteIds,
-                        ...action.payload.venue.id
+                        action.payload.venue.id
                     ],
                 }
             }
@@ -50,8 +51,8 @@ export const favorites = (state: favorites = initState, action) => {
             return {
                 ...state,
                 favoriteVenues: {
-                    favoriteVenues: action.userInfo.dbInfo.favoriteVenues.favoriteVenues,
-                    favoriteIds: action.userInfo.dbInfo.favoriteVenues.favoriteIds
+                    favoriteVenues: action.payload.dbInfo.favoriteVenues.favoriteVenues,
+                    favoriteIds: action.payload.dbInfo.favoriteVenues.favoriteIds
                 }
             }
         case "CLEAR_FAVORITES":

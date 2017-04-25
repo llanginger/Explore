@@ -1,4 +1,5 @@
 import { Reducer } from "redux"
+import { PAction } from "../Interfaces"
 export interface homeInputState {
     active: boolean;
     isInGPSMode: boolean
@@ -9,7 +10,7 @@ const initState: homeInputState = {
     isInGPSMode: false,
 }
 
-export const homeInputState: Reducer<homeInputState> = (state: homeInputState = initState, action) => {
+export const homeInputState: Reducer<homeInputState> = (state: homeInputState = initState, action: PAction) => {
     switch (action.type) {
         case "FOCUS_INPUT":
         case "CLEAR_VENUES":

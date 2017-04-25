@@ -1,11 +1,8 @@
 import { Reducer } from "redux"
+import { User, PAction } from "../Interfaces"
 export interface loggedIn {
     loggedIn: boolean;
-    user: {
-        email?: string;
-        userName?: string;
-        profilePic: string;
-    }
+    user: User
 }
 
 const initState = {
@@ -17,7 +14,7 @@ const initState = {
     }
 }
 
-export const loggedIn: Reducer<loggedIn> = (state: loggedIn = initState, action) => {
+export const loggedIn: Reducer<loggedIn> = (state: loggedIn = initState, action: PAction) => {
     switch (action.type) {
         case "LOG_IN":
             return {
@@ -25,7 +22,7 @@ export const loggedIn: Reducer<loggedIn> = (state: loggedIn = initState, action)
                 loggedIn: true,
                 user: {
                     ...state.user,
-                    ...action.userInfo.profileInfo
+                    ...action.payload.profileInfo
                 }
             }
         case "LOG_OUT":
@@ -35,7 +32,7 @@ export const loggedIn: Reducer<loggedIn> = (state: loggedIn = initState, action)
                 ...state,
                 user: {
                     ...state.user,
-                    ...action.userInfo
+                    ...action.payload.profileInfo
                 }
             }
         default:

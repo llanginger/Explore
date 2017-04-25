@@ -1,4 +1,5 @@
 import { Reducer } from "redux"
+import { PAction } from "../Interfaces"
 
 export interface spinner {
     searchResultsSpinner: boolean;
@@ -22,7 +23,7 @@ export const spinner: Reducer<spinner> = (state: spinner = initState, action) =>
                 ...state,
                 searchResultsSpinner: false
             };
-        case "UPLOADING_IMAGE":
+        case "UPLOADING_PROFILE_PIC":
             return {
                 ...state,
                 imageUploadSpinner: true

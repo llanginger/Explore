@@ -1,5 +1,5 @@
 import { Reducer, Action } from "redux"
-import { Colors } from "../Interfaces"
+import { Colors, PAction } from "../Interfaces"
 
 export interface colors extends Colors { }
 
@@ -16,7 +16,7 @@ const initState: colors = {
 }
 
 
-export const colors: Reducer<colors> = (state: colors = initState, action) => {
+export const colors: Reducer<colors> = (state: colors = initState, action: PAction) => {
     switch (action.type) {
         case "COLOR_UPDATE":
             return { ...state, ...action.payload.color }

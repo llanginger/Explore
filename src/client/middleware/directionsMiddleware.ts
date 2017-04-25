@@ -1,6 +1,8 @@
+import { PAction } from "../Interfaces"
+
 let routeBounds: any = false;
 
-const service = new google.maps.DirectionsService
+const service: google.maps.DirectionsService = new google.maps.DirectionsService
 
 const calcRoute = (renderer: google.maps.DirectionsRenderer, map: google.maps.Map, start, end) => {
     const request: google.maps.DirectionsRequest = {
@@ -43,14 +45,14 @@ const offsetMap = (map: google.maps.Map) => {
 }
 
 
-export const directionsMiddleware = store => next => action => {
+export const directionsMiddleware = store => next => (action: PAction) => {
     const renderer: google.maps.DirectionsRenderer = store.getState().map.directionsRenderer
     const colors = store.getState().colors
     const map: google.maps.Map = store.getState().map.mapRef
     switch (action.type) {
         case "MAP_LOADED":
 
-            const mapRef = action.payload.mapRef
+            const mapRef = action.payload.mapOpts.mapRef
             const directionsRenderer = new google.maps.DirectionsRenderer({
                 map: mapRef
             })
@@ -63,7 +65,16 @@ export const directionsMiddleware = store => next => action => {
                 }
             });
 
-            const newAction = { ...action, payload: { ...action.payload, directionsRenderer } }
+            const newAction: PAction = {
+                ...action,
+                payload: {
+                    ...action.payload,
+                    mapOpts: {
+                        ...action.payload.mapOpts,
+                        directionsRenderer
+                    }
+                }
+            }
             console.log("New Directions action: ", newAction);
 
             return next(newAction)
@@ -71,7 +82,7 @@ export const directionsMiddleware = store => next => action => {
         case "SHOW_DIRECTIONS":
             renderer.setDirections({ routes: [] });
             routeBounds = false;
-            const { start, end } = action.startEnd
+            const { start, end } = action.payload.startEnd
             calcRoute(renderer, map, start, end)
             return next(action)
         case "NEXT_VENUE":

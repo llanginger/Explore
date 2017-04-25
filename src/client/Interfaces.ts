@@ -36,12 +36,13 @@ export interface Category {
     primary?: boolean
 }
 
+export interface Geometry {
+    lat: number;
+    lng: number;
+}
 export interface GPS {
     formattedAddress?: string;
-    geometry: {
-        lat: number;
-        lng: number;
-    }; // tease this out
+    geometry: Geometry;
     name?: string;
     photos?: any[]; // tease this out
     types?: string[];
@@ -53,9 +54,9 @@ export interface Categories {
     secondary?: Category[]
 }
 export interface User {
-    email: string;
-    userName: string;
-    profilePic: string;
+    email?: string;
+    userName?: string;
+    profilePic?: string;
 }
 
 export interface Contact {
@@ -132,27 +133,56 @@ export interface ProfileInfo {
     email?: string;
     userName?: string;
     profilePic?: string;
+    positionMarker?: google.maps.Marker | any;
+    hasGps?: boolean;
+    gpsCoords?: Geometry;
+    showDirections?: {
+        start: {};
+        end: {};
+    }
 }
 
-export interface DBInfo {
-    visitedVenues?: Venue[];
+export interface DBInfo { //Clean this up?
+    visitedVenues?: {
+        visitedVenues?: Venue[];
+        visitedIds?: string[];
+    }
     location?: {}
+    favoriteVenues?: {
+        favoriteVenues?: Venue[];
+        favoriteIds?: string[]
+    }
+}
+
+export interface MapOpts {
+    mapRef?: google.maps.Map;
+    directionsRenderer?: google.maps.DirectionsRenderer | any;
+    directionsService?: google.maps.DirectionsService | any;
 }
 
 export interface Payload {
     venue?: Venue;
     oldVenue?: Venue;
     venues?: Venue[];
-    QueryInfo?: QueryInfo;
+    queryInfo?: QueryInfo;
     visitedVenues?: Venue[];
     page?: string;
     id?: string;
-    mapRef?: google.maps.Map;
+    gpsData?: Geometry;
+    mapOpts?: MapOpts;
     profileInfo?: ProfileInfo;
     dbInfo?: DBInfo;
-    marker?: google.maps.Marker
-    startEnd?: {}; // <-- Investigate
+    marker?: google.maps.Marker | any;
+    markerPos?: google.maps.LatLng | any;
+    startEnd?: {
+        start: any;
+        end: any
+    }; // <-- Investigate
     color?: Colors;
 }
 
+export interface PAction {
+    type: string;
+    payload?: Payload;
+}
 // Make smaller bespoke interfaces?

@@ -1,5 +1,5 @@
 import { expect } from "chai"
-import { Venue, VenueResponse, QueryInfo, User } from "../../Interfaces"
+import { Venue, VenueResponse, QueryInfo, User, PAction } from "../../Interfaces"
 import * as r from "../reducers"
 import * as a from "../../actions/actions"
 
@@ -11,6 +11,7 @@ const dummyVenueOne: Venue = {
     photoSrc: [],
     reviews: [],
     rating: null,
+    marker: {},
     categories: [],
     seen: true,
     visited: true
@@ -24,6 +25,7 @@ const dummyVenueTwo: Venue = {
     photoSrc: [],
     reviews: [],
     rating: null,
+    marker: {},
     categories: [],
     seen: false,
     visited: true
@@ -34,17 +36,24 @@ const dummyVenueTwo: Venue = {
 describe("LoggedIn", () => {
     const initState: r.loggedIn = {
         loggedIn: false,
-        user: {}
+        user: {
+            email: "",
+            userName: "",
+            profilePic: "https://pbs.twimg.com/profile_images/2192831080/cartoon-headshot.png"
+        }
     }
 
     const newUser: User = {
-        email: "llanginger@gmail.com"
+        email: "llanginger@gmail.com",
+        userName: "Leo Langinger",
+        profilePic: "leo's Profile Pic"
     }
+
 
     const newState = { ...initState, loggedIn: true, user: newUser }
 
     it("Should return false on default", () => {
-        const result = r.loggedIn(initState, {})
+        const result = r.loggedIn(initState, { type: "" })
         expect(result).to.deep.eq(initState)
     })
 
@@ -64,15 +73,38 @@ describe("LoggedIn", () => {
 // --- Spinner --- //
 
 describe("Spinner", () => {
-    const initState = false
+    const initState: r.spinner = {
+        searchResultsSpinner: false,
+        imageUploadSpinner: false
+    }
+
+    const searchTrue: r.spinner = {
+        ...initState,
+        searchResultsSpinner: true
+    }
+
+    const imageTrue: r.spinner = {
+        ...initState,
+        imageUploadSpinner: true
+    }
     it("should return false", () => {
-        const result = r.spinner(initState, {});
-        expect(result).to.deep.equal(false)
+        const result: r.spinner = r.spinner(initState, { type: "" });
+        expect(result).to.deep.equal(initState)
     })
 
-    it("should return true", () => {
+    it("Search should return true", () => {
         const result = r.spinner(initState, a.FETCHING_VENUES());
-        expect(result).to.deep.equal(true)
+        expect(result).to.deep.equal(searchTrue)
+    })
+
+    it("Image should return false", () => {
+        const result = r.spinner(initState, a.UPDATE_PROFILE_PIC(""));
+        expect(result).to.deep.equal(initState)
+    })
+
+    it("Image should return true", () => {
+        const result = r.spinner(initState, a.UPLOADING_PROFILE_PIC());
+        expect(result).to.deep.equal(imageTrue)
     })
 })
 
@@ -87,7 +119,8 @@ describe("Current Venue", () => {
         photoSrc: [],
         reviews: [],
         rating: null,
-        categories: []
+        categories: [],
+        marker: undefined
     }
     const newState: Venue = {
         ...initState,
@@ -96,25 +129,19 @@ describe("Current Venue", () => {
     }
 
     it("Should return empty", () => {
-        const result = r.currentVenue(initState, {})
+        const result = r.currentVenue(initState, { type: "" })
         expect(result).to.deep.eq(initState)
     })
 
     it("Should return new state on NEXT_VENUE", () => {
 
-        const result = r.currentVenue(initState, {
-            type: "NEXT_VENUE",
-            venue: newState
-        })
+        const result = r.currentVenue(initState, a.NEXT_VENUE(newState))
         expect(result).to.deep.eq({ ...newState, seen: true })
     })
 
     it("Should return new state on LETS_GO", () => {
 
-        const result = r.currentVenue(initState, {
-            type: "LETS_GO",
-            venue: newState
-        })
+        const result = r.currentVenue(initState, a.LETS_GO(newState))
         expect(result).to.deep.eq({ ...newState, seen: true })
     })
 
@@ -127,9 +154,7 @@ describe("Current Venue", () => {
     // })
 
     it("Should return empty on Clear venues call", () => {
-        const result = r.currentVenue(newState, {
-            type: "CLEAR_VENUES"
-        })
+        const result = r.currentVenue(newState, a.CLEAR_VENUES())
         expect(result).to.deep.eq(initState)
     })
 
@@ -139,30 +164,24 @@ describe("Current Venue", () => {
 
 describe("SeenVenues", () => {
     it("should return empty on default", () => {
-        const result: r.seenVenues = r.seenVenues([], {})
+        const result: r.seenVenues = r.seenVenues([], { type: "" })
 
         expect(result).to.deep.eq([])
     })
 
     it("should return 1 id", () => {
-        const newAction = {
-            type: "NEXT_VENUE",
-            id: "123"
-        }
-        const result: r.seenVenues = r.seenVenues([], newAction)
-        const stateAfter: r.seenVenues = ["123"]
+
+        const result: r.seenVenues = r.seenVenues([], a.NEXT_VENUE(dummyVenueOne))
+        const stateAfter: r.seenVenues = [dummyVenueOne.id]
 
         expect(result).to.deep.eq(stateAfter)
     })
 
     it("should return 2 ids", () => {
-        const initState = ["123"]
-        const newAction = {
-            type: "NEXT_VENUE",
-            id: "234"
-        }
-        const result: r.seenVenues = r.seenVenues(initState, newAction)
-        const stateAfter: r.seenVenues = ["123", "234"]
+        const initState = [dummyVenueOne.id]
+
+        const result: r.seenVenues = r.seenVenues(initState, a.NEXT_VENUE(dummyVenueTwo))
+        const stateAfter: r.seenVenues = [dummyVenueOne.id, dummyVenueTwo.id]
 
         expect(result).to.deep.eq(stateAfter)
     })
@@ -175,17 +194,17 @@ describe("Settings Menu", () => {
     const openState = { open: true }
 
     it("Should return default (false)", () => {
-        const result = r.settingsMenu(initState, {})
+        const result = r.settingsMenu(initState, { type: "" })
         expect(result).to.deep.eq(initState)
     })
 
     it("Should return true", () => {
-        const result = r.settingsMenu(initState, { type: "OPEN_MENU" })
+        const result = r.settingsMenu(initState, a.OPEN_MENU())
         expect(result).to.deep.eq(openState)
     })
 
     it("Should return false", () => {
-        const result = r.settingsMenu(openState, { type: "CLOSE_MENU" })
+        const result = r.settingsMenu(openState, a.CLOSE_MENU())
         expect(result).to.deep.eq(initState)
     })
 })
@@ -202,23 +221,17 @@ describe("Settings Pages", () => {
     }
 
     it("Should return all closed (default)", () => {
-        const result = r.settingsPages(initState, {})
+        const result = r.settingsPages(initState, { type: "" })
         expect(result).to.deep.eq(initState)
     })
 
     it("Should return prefs open", () => {
-        const result = r.settingsPages(initState, {
-            type: "SHOW_SETTINGS_PAGE",
-            page: "preferences"
-        })
+        const result = r.settingsPages(initState, a.SHOW_SETTINGS_PAGE("preferences"))
         expect(result).to.deep.eq(prefsOpen)
     })
 
     it("Should return default if wrong name", () => {
-        const result = r.settingsPages(initState, {
-            type: "SHOW_SETTINGS_PAGE",
-            page: "gobbledegook"
-        })
+        const result = r.settingsPages(initState, a.SHOW_SETTINGS_PAGE("lulz"))
         expect(result).to.deep.eq(initState)
     })
 })
@@ -227,63 +240,63 @@ describe("Settings Pages", () => {
 
 describe("Init State", () => {
 
-    const s = {
-        initState: {
-            showMainInputHelp: true,
-            showOverlay: true
-        },
-        mainInputFalse: {
-            showMainInputHelp: false,
-            showOverlay: true
-        },
-        overlayFalse: {
-            showMainInputHelp: true,
-            showOverlay: false
-        }
+    const initState: r.initState = {
+        showMainInputHelp: true,
+        showOverlay: true,
+        showThemeOptions: false
     }
+
+    const mainInputFalse: r.initState = {
+        showMainInputHelp: false,
+        showOverlay: true,
+        showThemeOptions: false
+    }
+
+    const overlayFalse: r.initState = {
+        showMainInputHelp: true,
+        showOverlay: false,
+        showThemeOptions: false
+    }
+
     it("Should return all true (default)", () => {
-        const result = r.initState(s.initState, {})
-        expect(result).to.deep.eq(s.initState)
+        const result = r.initState(initState, { type: "" })
+        expect(result).to.deep.eq(initState)
     })
 
     it("Should return Main Input false", () => {
-        const result = r.initState(s.initState, { type: "DISMISS_MAIN_INPUT_HELP" })
-        expect(result).to.deep.eq(s.mainInputFalse)
+        const result = r.initState(initState, a.DISMISS_MAIN_INPUT_HELP())
+        expect(result).to.deep.eq(mainInputFalse)
     })
 
     it("Should return Main Input false", () => {
-        const result = r.initState(s.initState, { type: "FETCHED_VENUES" })
-        expect(result).to.deep.eq(s.overlayFalse)
+        const result = r.initState(initState, a.FETCHED_VENUES())
+        expect(result).to.deep.eq(overlayFalse)
     })
 })
 
 // --- Foursquare Results --- //
 
 describe("FourSquare Results", () => {
-    const initState: VenueResponse[] = [{ queryInfo: {}, venues: [] }]
-    const dummyState: VenueResponse[] = [{ queryInfo: {}, venues: [dummyVenueOne] }]
-    const fetchingValuesState: VenueResponse[] = [...initState]
+    const initState: r.fourSquareResults[] = [{ queryInfo: {}, venues: [] }]
+    const dummyState: r.fourSquareResults[] = [{ queryInfo: {}, venues: [dummyVenueOne] }]
+    const fetchingValuesState: r.fourSquareResults[] = [...initState]
 
     it("Should return initState on default", () => {
-        const result = r.fourSquareResults(initState, {})
+        const result = r.fourSquareResults(initState, { type: "" })
         expect(result).to.deep.eq(initState)
     })
 
     it("Should return initState on fetching venues", () => {
-        const result = r.fourSquareResults(initState, { type: "FETCHING_VENUES" })
+        const result = r.fourSquareResults(initState, a.FETCHING_VENUES())
         expect(result).to.deep.eq(fetchingValuesState)
     })
 
     it("Should return new venue", () => {
-        const dummyPayloadOne: VenueResponse = {
+        const dummyPayloadOne: r.fourSquareResults = {
             queryInfo: {},
             venues: [dummyVenueOne]
         }
-        const result = r.fourSquareResults(initState, {
-            type: "FETCHED_VENUES",
-            queryInfo: dummyPayloadOne.queryInfo,
-            venues: dummyPayloadOne.venues
-        })
+        const result = r.fourSquareResults(initState, a.FETCHED_VENUES(dummyPayloadOne.venues, [], dummyPayloadOne.queryInfo))
         expect(result).to.deep.eq([...initState, dummyPayloadOne])
     })
 })
@@ -305,17 +318,6 @@ describe("Current Results", () => {
         visited: false
     }
 
-
-    interface CRAction {
-        type?: string;
-        queryInfo?: QueryInfo;
-        venues?: Venue[];
-        venue?: Venue;
-        oldVenue?: Venue;
-        visitedVenues?: string[];
-        id?: string;
-    }
-
     const initState: VenueResponse = {
         queryInfo: {},
         venues: []
@@ -329,23 +331,17 @@ describe("Current Results", () => {
     }
 
     it("Should return empty", () => {
-        const result = r.currentResults(initState, {})
+        const result = r.currentResults(initState, { type: "" })
         expect(result).to.deep.eq(initState)
     })
 
     it("should return empty after FETCHING_VENUES called", () => {
-        const result = r.currentResults(dummyState, { type: "FETCHING_VENUES" })
+        const result = r.currentResults(dummyState, a.FETCHING_VENUES())
         expect(result).to.deep.eq(initState)
     })
 
     it("Should return venues", () => {
-        const action: CRAction = {
-            type: "FETCHED_VENUES",
-            queryInfo: {},
-            venues: [
-                dummyVenueOne
-            ]
-        }
+
         const stateAfter: VenueResponse = {
             queryInfo: {},
             venues: [
@@ -408,25 +404,22 @@ describe("Current Results", () => {
 
 describe("Visited Venues", () => {
 
-    interface VVAction {
-        type: string;
-        id?: string;
-        venue?: Venue;
-    }
     const initState: r.visitedVenues = {
         visitedIds: [],
         visitedVenues: []
     }
 
 
-    const emptyAction: VVAction = {
+    const emptyAction: PAction = {
         type: ""
     }
 
-    const visitedAction: VVAction = {
+    const visitedAction: PAction = {
         type: "VISITED_VENUE",
-        id: dummyVenueOne.id,
-        venue: dummyVenueOne
+        payload: {
+            id: dummyVenueOne.id,
+            venue: dummyVenueOne
+        }
     }
     it("Should return default on empty action", () => {
         const result = r.visitedVenues(initState, emptyAction)

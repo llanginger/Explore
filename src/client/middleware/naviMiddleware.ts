@@ -1,8 +1,9 @@
-import { MOVED_MARKER } from "./actions"
+import { MOVED_MARKER } from "../actions/actions"
 import { Colors } from "../components/Utility/Colors"
+import { PAction } from "../Interfaces"
 import { newUserMarker } from "../components/Utility/createUserMarker"
 
-export const naviMiddleware = store => next => action => {
+export const naviMiddleware = store => next => (action: PAction) => {
 
     const createUserMarker = (position) => {
 
@@ -13,14 +14,14 @@ export const naviMiddleware = store => next => action => {
             parseFloat(lng.toString())
         )
 
-        const mapRef: google.maps.Map = action.payload.mapRef
-        const marker: google.maps.Marker = newUserMarker(pointval, action.payload.mapRef)
+        const mapRef: google.maps.Map = action.payload.mapOpts.mapRef
+        const marker: google.maps.Marker = newUserMarker(pointval, action.payload.mapOpts.mapRef)
 
         console.log("marker from nav middleware: ", marker);
 
         store.dispatch({
             type: "USER_MARKER_CREATED",
-            userInfo: {
+            payload: {
                 profileInfo: {
                     positionMarker: marker,
                     gpsCoords: {

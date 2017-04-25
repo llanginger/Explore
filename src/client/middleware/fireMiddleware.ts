@@ -1,7 +1,7 @@
 import * as firebase from "firebase"
-import { GPS } from "../Interfaces"
+import { GPS, PAction } from "../Interfaces"
 
-export const fireVenueMiddleware = store => next => action => {
+export const fireVenueMiddleware = store => next => (action: PAction) => {
     const user = firebase.auth().currentUser
     const venueDbRef = firebase.database().ref("users/" + user.uid + "/visitedVenues/")
     const venues = store.getState().visitedVenues

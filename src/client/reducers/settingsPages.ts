@@ -1,5 +1,5 @@
 import { Reducer } from "redux"
-import { openClose } from "../Interfaces"
+import { openClose, PAction } from "../Interfaces"
 
 export interface settingsPages {
     page: string;
@@ -7,16 +7,16 @@ export interface settingsPages {
 
 export const settingsPages: Reducer<settingsPages> = (state: settingsPages = {
     page: "closed"
-}, action) => {
+}, action: PAction) => {
     switch (action.type) {
         case "SHOW_SETTINGS_PAGE":
-            switch (action.page) {
+            switch (action.payload.page) {
                 case "preferences":
                 case "account":
                 case "places":
                 case "location":
                 case "favorites":
-                    return { page: action.page }
+                    return { page: action.payload.page }
                 default:
                     return state;
             }
