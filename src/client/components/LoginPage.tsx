@@ -261,7 +261,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                             }
                         }
                         console.log("LoginObj: ", loginObj);
-                        this.props.store.dispatch(LOG_IN(loginObj))
+                        this.props.store.dispatch(LOG_IN(loginObj.profileInfo, loginObj.dbInfo))
                     })
                 })
 

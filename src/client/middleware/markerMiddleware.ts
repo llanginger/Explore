@@ -1,4 +1,4 @@
-import { Venue } from "../Interfaces"
+import { Venue, PAction } from "../Interfaces"
 import { newUserMarker } from "../components/Utility/createUserMarker"
 
 export const markerMiddleware = store => next => action => {
@@ -17,7 +17,8 @@ export const markerMiddleware = store => next => action => {
                 currentVenue.marker.setMap(null)
             }
 
-            const newVenue: Venue = { ...action.venue }
+            const newVenue: Venue = { ...action.payload.venue }
+            console.log("New venue from marker middleware: ", newVenue);
             newVenue.marker.setMap(mapRef)
             mapRef.panTo(newVenue.marker.getPosition())
             action = { ...action, venue: newVenue }
@@ -30,21 +31,21 @@ export const markerMiddleware = store => next => action => {
             return next(action)
         case "SYNC_FIREBASE":
             console.log("Mapref: ", mapRef);
-            mapRef.setCenter({ lat: action.gpsData.geometry.lat, lng: action.gpsData.geometry.lng })
+            mapRef.setCenter({ lat: action.payload.gpsData.lat, lng: action.payload.gpsData.lng })
             return next(action)
         case "FOCUS_USER_MARKER":
-            console.log("Marker: ", action.marker);
-            mapRef.panTo(action.marker)
+            console.log("Marker: ", action.payload.marker);
+            mapRef.panTo(action.payload.marker)
             return next(action);
         case "SET_GPS_DATA":
             if (userReducer.positionMarker) {
                 console.log("Positionmarker found");
                 const userMarker: google.maps.Marker = userReducer.positionMarker
-                const newCoords = action.gpsData.geometry
+                const newCoords = action.payload.gpsData
                 userMarker.setPosition(newCoords)
             } else {
                 console.log("No PositionMarker");
-                const marker = newUserMarker(action.gpsData.geometry, mapRef)
+                const marker = newUserMarker(action.payload.gpsData, mapRef)
                 store.dispatch({
                     type: "USER_MARKER_CREATED",
                     userInfo: {

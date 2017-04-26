@@ -2,13 +2,12 @@ import { expect } from "chai"
 import * as React from "react"
 import * as ReactDOM from "react-dom"
 import { createStore, applyMiddleware, Store, compose } from "redux"
-import { default as thunk } from "redux-thunk";
-import { Reducers } from "../../Store"
+import { testStore } from "../../Store"
 import * as i from "../../Interfaces"
 import { dummyData } from "./dummyData"
 import * as a from "../../actions/actions"
 
-let store: Store<Reducers> = createStore(Reducers)
+
 
 describe("Test store", () => {
 
@@ -19,7 +18,7 @@ describe("Test store", () => {
                 show: boolean;
                 big: boolean;
             }
-            const bottomArea: bottomArea = store.getState().bottomArea
+            const bottomArea: bottomArea = testStore.getState().bottomArea
             const defaultState: bottomArea = { show: false, big: false }
             expect(bottomArea).to.deep.eq(defaultState)
         })
@@ -30,7 +29,7 @@ describe("Test store", () => {
             queryInfo: i.QueryInfo;
             venues: i.Venue[]
         }
-        const currentResults = store.getState().currentResults
+        const currentResults = testStore.getState().currentResults
         const defaultState: currentResults = { queryInfo: {}, venues: [] }
 
         it("Should retrieve currentResults", () => {
@@ -38,8 +37,8 @@ describe("Test store", () => {
         })
 
         describe("Using dummyData", () => {
-            store.dispatch(a.FETCHED_VENUES(dummyData, [], {}))
-            const result = store.getState().currentResults
+            testStore.dispatch(a.FETCHED_VENUES(dummyData, [], {}))
+            const result = testStore.getState().currentResults
 
             it("Should return dummyData", () => {
                 expect(result.venues).to.deep.eq(dummyData)
@@ -55,8 +54,8 @@ describe("Test store", () => {
                 }
 
                 const newVenue = getNewVenue()
-                store.dispatch(a.NEXT_VENUE(newVenue))
-                const currentVenue = store.getState().currentVenue
+                testStore.dispatch(a.NEXT_VENUE(newVenue))
+                const currentVenue = testStore.getState().currentVenue
                 expect(currentVenue).to.deep.eq({ ...newVenue, seen: true })
             })
         })

@@ -1,4 +1,6 @@
-export const fetchingMiddleware = () => store => next => action => {
+import { PAction } from "../Interfaces"
+
+export const fetchingMiddleware = () => store => next => (action: PAction) => {
     const fetching = store.getState().fetchingVenues.fetching
     console.log("Fetching?: ", fetching);
     if (fetching === true) {

@@ -1,4 +1,5 @@
 import { Reducer } from "redux"
+import { PAction } from "../Interfaces"
 
 export interface overlay {
     showOverlay: boolean;
@@ -8,7 +9,7 @@ const initState: overlay = {
     showOverlay: false
 }
 
-export const overlay: Reducer<overlay> = (state: overlay = initState, action) => {
+export const overlay: Reducer<overlay> = (state: overlay = initState, action: PAction) => {
     switch (action.type) {
         case "OPEN_MENU":
         case "SHOW_SETTINGS_PAGE":

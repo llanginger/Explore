@@ -1,6 +1,6 @@
 import * as a from "../actions"
 import { expect } from "chai"
-import { Venue, User } from "../../Interfaces"
+import { Venue, User, PAction } from "../../Interfaces"
 
 interface SimpleAction {
     type: string
@@ -32,7 +32,7 @@ interface VISITED_VENUE extends SimpleAction {
 describe("Fetching Venues", () => {
     it("Should return simple action", () => {
         const result = a.FETCHING_VENUES()
-        const expected = { type: "FETCHING_VENUES" }
+        const expected: PAction = { type: "FETCHING_VENUES" }
 
         expect(result).to.deep.eq(expected)
     })
@@ -43,15 +43,22 @@ describe("FETCHED_VENUES", () => {
     const noData = { venues: [], visitedVenues: [], queryInfo: {} }
 
     it("Should return FETCHED_VENUES with payload", () => {
-        const result = a.FETCHED_VENUES([], [], {})
-        expect(result).to.deep.eq({ type: "FETCHED_VENUES", venues: noData.venues, visitedVenues: noData.visitedVenues, queryInfo: noData.queryInfo })
+        const result: PAction = a.FETCHED_VENUES([], [], {})
+        expect(result).to.deep.eq({
+            type: "FETCHED_VENUES",
+            payload: {
+                venues: noData.venues,
+                visitedVenues: noData.visitedVenues,
+                queryInfo: noData.queryInfo
+            }
+        })
     })
 })
 
 describe("TOGGLE_BOTTOM_AREA", () => {
     it("Should return simple action", () => {
-        const result = a.TOGGLE_BOTTOM_AREA()
-        const expected: SimpleAction = { type: "TOGGLE_BOTTOM_AREA" }
+        const result: PAction = a.TOGGLE_BOTTOM_AREA()
+        const expected: PAction = { type: "TOGGLE_BOTTOM_AREA" }
 
         expect(result).to.deep.eq(expected)
     })
@@ -60,7 +67,12 @@ describe("TOGGLE_BOTTOM_AREA", () => {
 describe("NEXT_VENUE", () => {
     it("Should return simple action", () => {
         const result = a.NEXT_VENUE({})
-        const expected: VenuePayload = { type: "NEXT_VENUE", venue: {} }
+        const expected: PAction = {
+            type: "NEXT_VENUE",
+            payload: {
+                venue: {}
+            }
+        }
 
         expect(result).to.deep.eq(expected)
     })
@@ -69,7 +81,13 @@ describe("NEXT_VENUE", () => {
 describe("PREV_VENUE", () => {
     it("Should return simple action", () => {
         const result = a.PREV_VENUE({}, {})
-        const expected: OldVenuePayload = { type: "PREV_VENUE", venue: {}, oldVenue: {} }
+        const expected: PAction = {
+            type: "PREV_VENUE",
+            payload: {
+                venue: {},
+                oldVenue: {}
+            }
+        }
 
         expect(result).to.deep.eq(expected)
     })
@@ -78,7 +96,7 @@ describe("PREV_VENUE", () => {
 describe("OPEN_MENU", () => {
     it("Should return simple action", () => {
         const result = a.OPEN_MENU()
-        const expected: SimpleAction = { type: "OPEN_MENU" }
+        const expected: PAction = { type: "OPEN_MENU" }
 
         expect(result).to.deep.eq(expected)
     })
@@ -87,7 +105,7 @@ describe("OPEN_MENU", () => {
 describe("CLOSE_MENU", () => {
     it("Should return simple action", () => {
         const result = a.CLOSE_MENU()
-        const expected: SimpleAction = { type: "CLOSE_MENU" }
+        const expected: PAction = { type: "CLOSE_MENU" }
 
         expect(result).to.deep.eq(expected)
     })
@@ -96,7 +114,7 @@ describe("CLOSE_MENU", () => {
 describe("FOCUS_INPUT", () => {
     it("Should return simple action", () => {
         const result = a.FOCUS_INPUT()
-        const expected: SimpleAction = { type: "FOCUS_INPUT" }
+        const expected: PAction = { type: "FOCUS_INPUT" }
 
         expect(result).to.deep.eq(expected)
     })
@@ -105,7 +123,7 @@ describe("FOCUS_INPUT", () => {
 describe("CLEAR_VENUES", () => {
     it("Should return simple action", () => {
         const result = a.CLEAR_VENUES()
-        const expected: SimpleAction = { type: "CLEAR_VENUES" }
+        const expected: PAction = { type: "CLEAR_VENUES" }
 
         expect(result).to.deep.eq(expected)
     })
@@ -113,7 +131,7 @@ describe("CLEAR_VENUES", () => {
 
 describe("CLOSE_SETTINGS_PAGE", () => {
     const result = a.CLOSE_SETTINGS_PAGE()
-    const expected: SimpleAction = { type: "CLOSE_SETTINGS_PAGE" }
+    const expected: PAction = { type: "CLOSE_SETTINGS_PAGE" }
     it("Should return simple action", () => {
 
         expect(result).to.deep.eq(expected)
@@ -122,7 +140,12 @@ describe("CLOSE_SETTINGS_PAGE", () => {
 
 describe("SHOW_SETTINGS_PAGE", () => {
     const result = a.SHOW_SETTINGS_PAGE("preferences")
-    const expected: SHOW_SETTINGS_PAGE = { type: "SHOW_SETTINGS_PAGE", page: "preferences" }
+    const expected: PAction = {
+        type: "SHOW_SETTINGS_PAGE",
+        payload: {
+            page: "preferences"
+        }
+    }
 
     it("Should return settings page to show", () => {
         expect(result).to.deep.eq(expected)
@@ -131,7 +154,13 @@ describe("SHOW_SETTINGS_PAGE", () => {
 
 describe("VISITED_VENUE", () => {
     const result = a.VISITED_VENUE({}, "123")
-    const expected: VISITED_VENUE = { type: "VISITED_VENUE", venue: {}, id: "123" }
+    const expected: PAction = {
+        type: "VISITED_VENUE",
+        payload: {
+            venue: {},
+            id: "123"
+        }
+    }
 
     it("Should return venue + ID", () => {
         expect(result).to.deep.eq(expected)
@@ -140,16 +169,21 @@ describe("VISITED_VENUE", () => {
 
 describe("LETS_GO", () => {
     const result = a.LETS_GO({})
-    const expected: VenuePayload = { type: "LETS_GO", venue: {} }
+    const expected: PAction = {
+        type: "LETS_GO",
+        payload: {
+            venue: {}
+        }
+    }
 
-    it("Should return simple action", () => {
+    it("Should return empty venue", () => {
         expect(result).to.deep.eq(expected)
     })
 })
 
 describe("DISMISS_MAIN_INPUT_HELP", () => {
     const result = a.DISMISS_MAIN_INPUT_HELP()
-    const expected: SimpleAction = { type: "DISMISS_MAIN_INPUT_HELP" }
+    const expected: PAction = { type: "DISMISS_MAIN_INPUT_HELP" }
 
     it("Should return simple action", () => {
         expect(result).to.deep.eq(expected)
@@ -157,10 +191,16 @@ describe("DISMISS_MAIN_INPUT_HELP", () => {
 })
 
 describe("LOG_IN", () => {
-    const newUser: User = { email: "Leo@leo.com", id: "123" }
-    const result = a.LOG_IN(newUser)
-    const expected: UserPayload = { type: "LOG_IN", user: newUser }
-    it("should return simple action", () => {
+    const newUser: User = { email: "Leo@leo.com", userName: "Leo", profilePic: "www.123.com" }
+    const result = a.LOG_IN(newUser, {})
+    const expected: PAction = {
+        type: "LOG_IN",
+        payload: {
+            profileInfo: newUser,
+            dbInfo: {}
+        }
+    }
+    it("should return LogIn action", () => {
 
         expect(result).to.deep.eq(expected)
     })
@@ -168,7 +208,7 @@ describe("LOG_IN", () => {
 
 describe("LOG_OUT", () => {
     const result = a.LOG_OUT()
-    const expected: SimpleAction = { type: "LOG_OUT" }
+    const expected: PAction = { type: "LOG_OUT" }
     it("should return simple action", () => {
 
         expect(result).to.deep.eq(expected)

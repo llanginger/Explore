@@ -11,7 +11,7 @@ import {
     naviMiddleware,
     directionsMiddleware,
     fetchingMiddleware
-} from "./actions/actions"
+} from "./middleware/middleware"
 import {
     currentResults,
     currentVenue,
@@ -80,7 +80,7 @@ export const Reducers = combineReducers<Reducers>({
     settingsPages
 })
 
-const enhancer = compose(
+const enhancer: any = compose(
     applyMiddleware(
         thunk,
         fireVenueMiddleware,

@@ -1,4 +1,6 @@
 import { Reducer } from "redux"
+import { PAction } from "../Interfaces"
+
 export interface initState {
     showMainInputHelp: boolean;
     showOverlay: boolean;
@@ -11,7 +13,7 @@ const init: initState = {
     showThemeOptions: false
 }
 
-export const initState: Reducer<initState> = (state: initState = init, action) => {
+export const initState: Reducer<initState> = (state: initState = init, action: PAction) => {
     switch (action.type) {
         case "DISMISS_MAIN_INPUT_HELP":
             return { ...state, showMainInputHelp: false }

@@ -9,7 +9,7 @@
         "test-reducers": "mocha -r ts-node/register src/client/reducers/tests/test.ts",
         "test-actions": "mocha -r ts-node/register src/client/actions/tests/test.ts",
         "test-components": "mocha -r ts-node/register src/client/components/tests/test.ts",
-        "test": "yarn run test-reducers && yarn run test-actions && yarn run test-components",
+        "test": "yarn run test-reducers && yarn run test-actions",
         "start": "node server.js",
         "postinstall": "gulp build-production"
     },

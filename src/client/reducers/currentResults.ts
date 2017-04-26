@@ -1,31 +1,22 @@
 import { Reducer } from "redux"
-import { Venue, QueryInfo } from "../Interfaces"
+import { Venue, QueryInfo, PAction } from "../Interfaces"
 
 export interface currentResults {
     queryInfo?: {};
     venues: Venue[]
 }
 
-interface CRAction {
-    type?: string;
-    queryInfo?: QueryInfo;
-    venues?: Venue[];
-    venue?: Venue;
-    oldVenue?: Venue;
-    visitedVenues?: string[];
-    id?: string;
-}
 
 const initState = {
     queryInfo: {},
     venues: []
 }
 
-export const currentResults: Reducer<currentResults> = (state: currentResults = initState, action: CRAction) => {
+export const currentResults: Reducer<currentResults> = (state: currentResults = initState, action: PAction) => {
     switch (action.type) {
         case "VISITED_VENUE":
             const newVisitedState = state.venues.map((venue) => {
-                if (venue.id === action.id) {
+                if (venue.id === action.payload.id) {
                     return { ...venue, visited: true }
                 } else {
                     return venue
@@ -36,7 +27,7 @@ export const currentResults: Reducer<currentResults> = (state: currentResults = 
         case "LETS_GO":
         case "NEXT_VENUE":
             const nextSeenState = state.venues.map((venue) => {
-                if (venue.id === action.venue.id) {
+                if (venue.id === action.payload.venue.id) {
                     return { ...venue, seen: true }
                 } else {
                     return venue
@@ -45,7 +36,7 @@ export const currentResults: Reducer<currentResults> = (state: currentResults = 
             return { ...state, venues: nextSeenState }
         case "PREV_VENUE":
             const prevSeenState = state.venues.map((venue) => {
-                if (venue.id === action.oldVenue.id) {
+                if (venue.id === action.payload.oldVenue.id) {
                     return { ...venue, seen: false }
                 } else {
                     return venue
@@ -57,7 +48,7 @@ export const currentResults: Reducer<currentResults> = (state: currentResults = 
                 ...state,
                 venues: [
                     ...state.venues,
-                    action.venue
+                    action.payload.venue
                 ]
             }
         case "FETCHED_VENUES":
@@ -65,9 +56,9 @@ export const currentResults: Reducer<currentResults> = (state: currentResults = 
 
             return {
                 ...state,
-                queryInfo: action.queryInfo,
-                venues: action.venues.filter((venue) => {
-                    return (action.visitedVenues.indexOf(venue.id) === -1)
+                queryInfo: action.payload.queryInfo,
+                venues: action.payload.venues.filter((venue) => {
+                    return (action.payload.visitedVenues.indexOf(venue.id) === -1)
                 })
             }
         case "CLEAR_VENUES":
