@@ -2,6 +2,7 @@ import * as React from "react"
 import { Venue, BaseReduxProps } from "../Interfaces"
 import { VISITED_VENUE } from "../actions/actions"
 import styled from "styled-components";
+import { VenueTitleBar, DirectionButton, VenueImage, VenueRating } from "./venueComponents"
 
 interface ResultItemProps extends BaseReduxProps {
     venue: Venue
@@ -11,7 +12,7 @@ interface ResultItemProps extends BaseReduxProps {
 export const ResultItem = (props: ResultItemProps) => {
 
     const colors = props.store.getState().colors
-
+    const { venue } = props
     const photoUrl = () => {
         if (props.venue.photoSrc[0] === "No image here!") {
             return "./elements/photos/noPhotos.png"
@@ -40,60 +41,33 @@ export const ResultItem = (props: ResultItemProps) => {
         }
     }
 
-    const Item = styled.div`
-        width: 49%;
-        height: 150px;
-        padding: 10px;
-        background-image: url("${photoUrl()}");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        cursor: pointer;
-        position: relative;
-
-        @media(min-width: 700px) {
-            height: 200px;
-        }
-    `
-
-    const ItemName = styled.span`
-        color: ${colors.PRIMARY_TEXT};
-        background: #0732a2;
-        background: ${colors.P_COLOR_DARK};
-        padding: 4px 4px 8px 4px;
-        position: absolute;
-        top: 16px;
-        left: 0;
-        text-align: center;
-        width: 100%;
-    `
-
-    const ItemRating = styled.span`
-        color: white;
-        color: ${colors.PRIMARY_TEXT};
-        background: ${badgeColor()};
-        position: absolute;
-        padding: 7px;
-        right: 10px;
-        bottom: 10px;
-        border-radius: 5px;
-    `
+    const visitedVenue = (venue, id) => {
+        return () => props.store.dispatch(VISITED_VENUE(venue, id))
+    }
 
 
     return (
-        <Item
+        <VenueImage
+            color={colors}
+            url={photoUrl()}
+            width="49%"
+            height="200px"
             className="resultItem"
-            onClick={() => {
-                props.store.dispatch(VISITED_VENUE(props.venue, props.venue.id))
-
-            }}
         >
-            <ItemName>
-                {props.venue.name}
-            </ItemName>
-            <ItemRating>
+
+            <VenueTitleBar
+                color={colors}
+                venueName={props.venue.name}
+                onClick={visitedVenue(venue, venue.id)}
+                fontSize="14px"
+            />
+
+            <VenueRating
+                textColor={colors}
+                ratingColor={badgeColor()}
+            >
                 {thisRating(props.venue.rating)}
-            </ItemRating>
-        </Item>
+            </VenueRating>
+        </VenueImage>
     )
 }

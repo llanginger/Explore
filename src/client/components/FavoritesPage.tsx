@@ -9,18 +9,6 @@ import { Reusable } from "./Components"
 import { DirectionButton, VenueImage, VenueTitleBar } from "./venueComponents"
 import { createNewMarker } from "./createMarker"
 
-interface FPProps {
-    color: Colors;
-    url?: string;
-}
-
-const Placeholder: any = styled.div`
-    width: 100%;
-    height: 200px;
-    position: relative;
-    background: ${(props: FPProps) => props.color.P_COLOR};
-`
-
 interface FavoritesPageProps extends BaseReduxProps {
     onClick: any;
 }
@@ -50,41 +38,6 @@ export const FavoritesPage = (props: FavoritesPageProps) => {
         :last-child {
             margin-bottom: 0px;
         }
-    `
-
-    const NameBar = styled.div`
-        color: ${colors.PRIMARY_TEXT};
-        background: ${colors.P_COLOR};
-        position: absolute;
-        top: 16px;
-        left: 0;
-        text-align: center;
-        width: 100%;
-        height: 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    `
-
-    const RemoveFavorite = styled.span`
-        width: 40px;
-        height: 100%;
-        margin-right: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-    `
-
-    const LeftPad = styled.span`
-        width: 40px;
-        height: 100%;
-        margin-left: 10px;
-    `
-
-    const ItemName = styled.span`
-        color: white;
-        font-size: 20px;
     `
 
     const removeFavorite = (venue) => {
@@ -120,14 +73,6 @@ export const FavoritesPage = (props: FavoritesPageProps) => {
                     </VenueImage>
                 )
             })
-        } else {
-            return (
-                <Placeholder
-                    color={colors}
-                >
-                    <ItemName>Go Favorite Some Places!</ItemName>
-                </Placeholder>
-            )
         }
     }
 

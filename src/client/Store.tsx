@@ -96,5 +96,3 @@ const enhancer: any = compose(
 )
 
 export const store: Store<Reducers> = createStore(Reducers, enhancer) as Store<Reducers>
-console.log("Store: ", store);
-console.log("Reducers: ", Reducers);

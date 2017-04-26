@@ -34,8 +34,8 @@ export const markerMiddleware = store => next => action => {
             mapRef.setCenter({ lat: action.payload.gpsData.lat, lng: action.payload.gpsData.lng })
             return next(action)
         case "FOCUS_USER_MARKER":
-            console.log("Marker: ", action.payload.marker);
-            mapRef.panTo(action.payload.marker)
+            console.log("Marker: ", action.payload.markerPos);
+            mapRef.panTo(action.payload.markerPos)
             return next(action);
         case "SET_GPS_DATA":
             if (userReducer.positionMarker) {

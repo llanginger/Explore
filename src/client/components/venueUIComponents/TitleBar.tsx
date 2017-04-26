@@ -12,12 +12,13 @@ interface TitleBarProps {
     height?: string;
     iconClass?: string;
     onClick?: any;
+    fontSize?: string;
     children?: any;
 }
 
 const NameBar: any = styled.div`
     color: ${(props: TitleBarProps) => props.color.PRIMARY_TEXT};
-    background: ${(props: TitleBarProps) => props.color.P_COLOR};
+    background: ${(props: TitleBarProps) => props.color.P_COLOR_DARK};
     position: absolute;
     top: ${(props: TitleBarProps) => props.top};
     left: ${(props: TitleBarProps) => props.left};
@@ -47,9 +48,9 @@ const LeftPad = styled.span`
     margin-left: 10px;
 `
 
-const ItemName = styled.span`
+const ItemName: any = styled.span`
     color: white;
-    font-size: 20px;
+    font-size: ${(props: TitleBarProps) => props.fontSize};
 `
 
 export const VenueTitleBar: React.StatelessComponent<TitleBarProps> = (props: TitleBarProps) => {
@@ -61,6 +62,7 @@ export const VenueTitleBar: React.StatelessComponent<TitleBarProps> = (props: Ti
         width = "100%",
         height = "40px",
         iconClass = "pt-icon-large pt-icon-cross",
+        fontSize = "20px",
         venueName,
         onClick
     } = props
@@ -74,7 +76,7 @@ export const VenueTitleBar: React.StatelessComponent<TitleBarProps> = (props: Ti
             width={width}
         >
             <LeftPad />
-            <ItemName>{venueName}</ItemName>
+            <ItemName fontSize={fontSize}>{venueName}</ItemName>
             <RightIcon
                 className={iconClass}
                 onClick={onClick}

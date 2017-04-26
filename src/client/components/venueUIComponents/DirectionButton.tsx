@@ -9,8 +9,10 @@ interface DirectionsProps {
     iconClass: string;
     width?: string;
     height?: string;
+    top?: string;
     bottom?: string;
     right?: string;
+    left?: string;
 }
 
 
@@ -20,8 +22,10 @@ const Button: any = styled.div`
     border-radius: 50%;
     background: ${(props: DirectionsProps) => props.color.ACCENT};
     position: absolute;
+    top: ${(props: DirectionsProps) => props.top};
     bottom: ${(props: DirectionsProps) => props.bottom};
     right: ${(props: DirectionsProps) => props.right};
+    left: ${(props: DirectionsProps) => props.left};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,15 +52,17 @@ const Icon: any = styled.span`
 
 export const DirectionButton = (props: DirectionsProps) => {
 
-    const { width = "45px", height = "45px", bottom = "16px", right = "16px" } = props
+    const { width = "45px", height = "45px", top = "auto", bottom = "16px", right = "16px", left = "auto" } = props
     return (
         <Button
             color={props.color}
             onClick={props.onClick}
             height={height}
             width={width}
+            top={top}
             bottom={bottom}
             right={right}
+            left={left}
         >
             <Icon className={props.iconClass} />
         </Button>
