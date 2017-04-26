@@ -6,6 +6,7 @@ import * as firebase from "firebase"
 import styled from "styled-components"
 import * as P from "polished"
 import { Reusable } from "./Components"
+import { DirectionButton, VenueImage, VenueTitleBar } from "./venueComponents"
 import { createNewMarker } from "./createMarker"
 
 interface FPProps {
@@ -13,61 +14,11 @@ interface FPProps {
     url?: string;
 }
 
-
-const Item: any = styled.li`
-    width: 100%;
-    height: 250px;
-    background: ${(props: FPProps) => props.color.P_COLOR};
-    margin-bottom: 10px;
-`
-
-
-const Image: any = styled.div`
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background-image: url("${(props: FPProps) => props.url}");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-`
-
 const Placeholder: any = styled.div`
     width: 100%;
     height: 200px;
     position: relative;
     background: ${(props: FPProps) => props.color.P_COLOR};
-`
-
-const Directions: any = styled.div`
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: ${(props: FPProps) => props.color.ACCENT};
-    position: absolute;
-    bottom: 16px;
-    right: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 4px 4px 15px #222;
-    transition: all .05s ease-in-out;
-    cursor: pointer;
-
-    &:hover {
-        background: ${P.desaturate(0.1, "#536DFE")};
-    }
-
-    &:active {
-        background: ${P.desaturate(0.1, "#536DFE")};
-        transform: translateY(3px);
-        box-shadow: 1px 1px 10px #222;
-    }
-`
-
-const DirIcon: any = styled.span`
-    color: white;
-    font-size: 20px;
 `
 
 interface FavoritesPageProps extends BaseReduxProps {
@@ -151,30 +102,22 @@ export const FavoritesPage = (props: FavoritesPageProps) => {
         if (favorites.favoriteVenues.length > 0) {
             return favorites.favoriteVenues.map((venue, i) => {
                 return (
-                    <Item
+                    <VenueImage
                         color={colors}
                         key={i}
+                        url={venue.photoSrc[0]}
                     >
-                        <Image
-                            url={venue.photoSrc[0]}
-
-                        >
-                            <NameBar>
-                                <LeftPad />
-                                <ItemName>{venue.name}</ItemName>
-                                <RemoveFavorite
-                                    className="pt-icon-large pt-icon-cross"
-                                    onClick={removeFavorite(venue)}
-                                />
-                            </NameBar>
-                            <Directions
-                                color={colors}
-                                onClick={showFavorite(venue)}
-                            >
-                                <DirIcon className="pt-icon-geolocation" />
-                            </Directions>
-                        </Image>
-                    </Item>
+                        <VenueTitleBar
+                            color={colors}
+                            venueName={venue.name}
+                            onClick={removeFavorite(venue)}
+                        />
+                        <DirectionButton
+                            iconClass={"pt-icon-geolocation"}
+                            color={colors}
+                            onClick={showFavorite(venue)}
+                        />
+                    </VenueImage>
                 )
             })
         } else {
