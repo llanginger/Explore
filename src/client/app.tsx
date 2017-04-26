@@ -32,10 +32,10 @@ firebase.initializeApp(config);
 ReactDOM.render(
     <div>
         <Body store={store} />
-        {/*<DevTools store={store} />*/}
     </div>,
     document.getElementById("app")
 )
 
+{/*<DevTools store={store} />*/ }
 
 //  
