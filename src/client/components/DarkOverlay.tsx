@@ -14,7 +14,7 @@ const Overlay: any = styled.div`
         z-index: 10;
         background-color: #333;
         pointer-events: ${(props: DOProps) => props.active ? "all" : "none"};
-        opacity: ${(props: DOProps) => props.active ? "0.5" : "0"};
+        opacity: ${(props: DOProps) => props.active ? "0.7" : "0"};
         transition: all .5s linear;
     `
 export const DarkOverlay = (props: DOProps) => {
