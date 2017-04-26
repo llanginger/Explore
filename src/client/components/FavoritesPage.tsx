@@ -133,6 +133,7 @@ export const FavoritesPage = (props: FavoritesPageProps) => {
 
     const ItemName = styled.span`
         color: white;
+        font-size: 20px;
     `
 
     const removeFavorite = (venue) => {
