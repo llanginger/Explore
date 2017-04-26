@@ -1,7 +1,7 @@
 import { Venue, PAction } from "../Interfaces"
 import { newUserMarker } from "../components/Utility/createUserMarker"
 
-export const markerMiddleware = store => next => (action: PAction) => {
+export const markerMiddleware = store => next => action => {
     const currentVenue: Venue = store.getState().currentVenue
     const mapRef: google.maps.Map = store.getState().map.mapRef
     const userReducer = store.getState().userReducer

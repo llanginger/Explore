@@ -1,7 +1,7 @@
 import * as firebase from "firebase"
 import { GPS, PAction } from "../Interfaces"
 
-export const fireVenueMiddleware = store => next => (action: PAction) => {
+export const fireVenueMiddleware = store => next => action => {
     const user = firebase.auth().currentUser
     const venueDbRef = firebase.database().ref("users/" + user.uid + "/visitedVenues/")
     const venues = store.getState().visitedVenues
@@ -51,9 +51,9 @@ export const syncLocationInfo = store => next => action => {
                 console.log("Syc data snap: ", snap.val());
                 console.log("DB ref: ", locDbRef);
             })
-            if (action.gpsData && action.gpsData !== undefined) {
+            if (action.payload.gpsData && action.payload.gpsData !== undefined) {
 
-                locDbRef.update(action.gpsData)
+                locDbRef.update(action.payload.gpsData)
             }
             return next(action)
     }

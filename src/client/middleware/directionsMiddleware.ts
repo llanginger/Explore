@@ -4,7 +4,7 @@ let routeBounds: any = false;
 
 const service: google.maps.DirectionsService = new google.maps.DirectionsService
 
-const calcRoute = (renderer: google.maps.DirectionsRenderer, map: google.maps.Map, start, end) => {
+const calcRoute = (renderer: google.maps.DirectionsRenderer, map: google.maps.Map, start: google.maps.LatLngLiteral, end: google.maps.LatLngLiteral) => {
     const request: google.maps.DirectionsRequest = {
         origin: start,
         destination: end,
@@ -45,7 +45,7 @@ const offsetMap = (map: google.maps.Map) => {
 }
 
 
-export const directionsMiddleware = store => next => (action: PAction) => {
+export const directionsMiddleware = store => next => action => {
     const renderer: google.maps.DirectionsRenderer = store.getState().map.directionsRenderer
     const colors = store.getState().colors
     const map: google.maps.Map = store.getState().map.mapRef

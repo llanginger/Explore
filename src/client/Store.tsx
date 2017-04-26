@@ -80,7 +80,7 @@ export const Reducers = combineReducers<Reducers>({
     settingsPages
 })
 
-const enhancer = compose(
+const enhancer: any = compose(
     applyMiddleware(
         thunk,
         fireVenueMiddleware,
