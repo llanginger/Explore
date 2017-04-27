@@ -41,7 +41,7 @@ export const markerMiddleware = store => next => action => {
             if (userReducer.positionMarker) {
                 console.log("Positionmarker found");
                 const userMarker: google.maps.Marker = userReducer.positionMarker
-                const newCoords = action.payload.gpsData
+                const newCoords = action.payload.gpsData.geometry
                 userMarker.setPosition(newCoords)
             } else {
                 console.log("No PositionMarker");

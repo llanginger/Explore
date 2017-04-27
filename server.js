@@ -83,6 +83,7 @@ app.get("/queryFourSquare", (req, res) => {
 
     request(fourSqSearch_URL, (error, response, body) => {
         console.log("Foursquare venue search url: ", fourSqSearch_URL);
+        // ParseJson this next line!
         const venues = JSON.parse(body).response.groups[0].items;
         // console.log("venues: ", venues)
         for (const venue of venues) {
