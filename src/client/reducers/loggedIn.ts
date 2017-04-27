@@ -1,11 +1,19 @@
 import { Reducer } from "redux"
 import { User, PAction } from "../Interfaces"
 export interface loggedIn {
+    error: {
+        error: boolean;
+        message: string;
+    }
     loggedIn: boolean;
     user: User
 }
 
 const initState = {
+    error: {
+        error: false,
+        message: ""
+    },
     loggedIn: false,
     user: {
         email: "",
@@ -27,6 +35,22 @@ export const loggedIn: Reducer<loggedIn> = (state: loggedIn = initState, action:
             }
         case "LOG_OUT":
             return { ...initState }
+        case "LOGIN_ERROR":
+            return {
+                ...state,
+                error: {
+                    error: true,
+                    message: action.payload.errorMessage
+                }
+            }
+        case "DISMISS_LOGIN_ERROR":
+            return {
+                ...state,
+                error: {
+                    error: false,
+                    message: ""
+                }
+            }
         case "UPDATE_PROFILE_INFO":
             return {
                 ...state,

@@ -8,6 +8,7 @@ import {
     SettingsPageAction,
     LogInAction,
     InputGPSAction,
+    LoginErrorAction,
     SetGPSDataAction,
     UpdateProfileInfoAction,
     UpdateProfilePicAction,
@@ -147,6 +148,13 @@ export const UPLOADING_PROFILE_PIC: () => Action = () => {
     return action
 }
 
+export const DISMISS_LOGIN_ERROR: () => Action = () => {
+    const action: Action = {
+        type: "DISMISS_LOGIN_ERRPR"
+    }
+    return action
+}
+
 // --- VENUE PAYLOAD --- //
 
 export const ADD_TO_FAVORITES: (venue: Venue) => VenueAction = (venue: Venue) => {
@@ -201,6 +209,16 @@ export const LETS_GO: (venue: Venue) => VenueAction = (venue: Venue) => {
 }
 
 // --- ASSORTED PAYLOADS --- //
+
+export const LOGIN_ERROR: (errorMessage: string) => LoginErrorAction = (errorMessage: string) => {
+    const action: LoginErrorAction = {
+        type: "LOGIN_ERR0R",
+        payload: {
+            errorMessage
+        }
+    }
+    return action
+}
 
 
 export const PREV_VENUE: (venue: Venue, oldVenue: Venue) => PrevVenueAction = (venue: Venue, oldVenue: Venue) => {

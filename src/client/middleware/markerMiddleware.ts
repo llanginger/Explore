@@ -45,7 +45,7 @@ export const markerMiddleware = store => next => action => {
                 userMarker.setPosition(newCoords)
             } else {
                 console.log("No PositionMarker");
-                const marker = newUserMarker(action.payload.gpsData, mapRef)
+                const marker = newUserMarker(action.payload.gpsData.geometry, mapRef)
                 store.dispatch({
                     type: "USER_MARKER_CREATED",
                     userInfo: {

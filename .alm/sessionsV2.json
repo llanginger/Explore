@@ -1,0 +1,32 @@
+{
+  "sessions": [
+    {
+      "id": "deda5122-b975-44db-8268-4e4640045231",
+      "tabLayout": {
+        "type": "stack",
+        "width": 100,
+        "height": 100,
+        "tabs": [
+          {
+            "id": "6d5a0883-c4ed-4187-bafb-9f846760c5cd",
+            "relativeUrl": "file://./src/client/components/AccountPage.tsx",
+            "additionalData": null
+          },
+          {
+            "id": "d7f263ce-049d-42e8-bd53-6cdcfc199204",
+            "relativeUrl": "file://./tsconfig.json",
+            "additionalData": null
+          }
+        ],
+        "subItems": [],
+        "activeItemIndex": 0
+      },
+      "lastUsed": 1493256684898,
+      "selectedTabId": "6d5a0883-c4ed-4187-bafb-9f846760c5cd",
+      "errorsExpanded": false,
+      "fileTreeExpanded": true,
+      "mainPanelHeight": 348
+    }
+  ],
+  "relativePathToTsconfig": "./node_modules/@blueprintjs/core/tsconfig.json"
+}

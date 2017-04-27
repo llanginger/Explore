@@ -1,20 +1,14 @@
 import * as React from "react"
 import { BaseReduxProps, User } from "../Interfaces"
-import { LOG_IN } from "../actions/actions"
+import { LOG_IN, LOGIN_ERROR, DISMISS_LOGIN_ERROR } from "../actions/actions"
 import * as firebase from "firebase"
 import styled from "styled-components"
 import { Colors } from "../Interfaces"
+import { LoginError } from "./LoginError"
 
 interface LCProps {
     color: any
 }
-
-const dummyUser: User = {
-    email: "Leo",
-    userName: "LEO",
-    profilePic: "www.google.com"
-}
-
 
 const Page = styled.div`
     height: 100%;
@@ -99,6 +93,7 @@ interface LoginPageState {
     newAccount: boolean;
 }
 
+// App's Login Page. A little Monolithic at the moment.
 export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
     private email: HTMLInputElement;
@@ -106,7 +101,6 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
     private passwordCheck: HTMLInputElement;
     constructor(props) {
         super(props)
-
         this._logIn = this._logIn.bind(this)
         this._logOut = this._logOut.bind(this)
         this._signUp = this._signUp.bind(this)
@@ -114,6 +108,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
         this._showLogIn = this._showLogIn.bind(this)
         this._showNewAccount = this._showNewAccount.bind(this)
         this._showHome = this._showHome.bind(this)
+        this._handleError = this._handleError.bind(this)
 
         this.state = {
             logIn: false,
@@ -121,6 +116,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
         }
     }
 
+    // --- Firebase Authentication section --- //
 
     _logIn(e) {
         const email = this.email.value.trim();
@@ -135,6 +131,10 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
         e.preventDefault()
     }
 
+    _handleError(error) {
+        this.props.store.dispatch(LOGIN_ERROR(error))
+    }
+
     _signUp(e) {
         e.preventDefault()
         const email = this.email.value.trim();
@@ -145,8 +145,8 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 firebase.database().ref("users/" + firebase.auth().currentUser.uid).set({
                     visitedVenues: {}
                 })
-            });
-            promise.catch(e => alert(e.message))
+            }).catch(e => alert(e.message));
+            // promise.catch(e => alert(e.message))
         } else {
             alert("Oops, your passwords did not match! Please try again")
             this.password.value = ""
@@ -155,6 +155,9 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
     }
 
     componentDidMount() {
+
+        // --- Check to see if a user has already logged on from this machine --- //
+        // ---                      This needs paring down                    --- //
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 const dbRef = firebase.database().ref("users/" + user.uid)
@@ -191,6 +194,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                         const initFireState = snap.val()
                         console.log("Init fire db state: ", initFireState);
 
+                        // --- Firebase doesn't like empty objects/data - if there is placeholder data, strip it out --- //
                         const removePlaceholder = (venues) => {
                             if (venues[0].hasOwnProperty("placeholder")) {
                                 console.log("Has prop", venues[0]);
@@ -373,6 +377,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
     render() {
         const colors = this.props.store.getState().colors
+        const error = this.props.store.getState().loggedIn.error
         return (
             <Page
                 className="logginPage"

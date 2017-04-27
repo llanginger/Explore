@@ -166,6 +166,7 @@ export interface StartEnd {
 }
 export interface Payload {
     venue?: Venue;
+    errorMessage?: string;
     oldVenue?: Venue;
     venues?: Venue[];
     queryInfo?: QueryInfo;

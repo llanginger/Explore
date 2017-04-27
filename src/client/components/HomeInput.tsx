@@ -207,7 +207,7 @@ export class HomeInput extends React.Component<InputProps, HomeInputState> {
                     >
                         <PlacesAuto
                             onPlaceSelected={(place) => {
-                                console.log(place)
+                                console.log("PlacesAuto response object", place)
                                 const mapRef = store.getState().map.mapRef as google.maps.Map
                                 mapRef.setCenter({ lat: place.geometry.lat, lng: place.geometry.lng })
                                 store.dispatch(SET_GPS_DATA(place))

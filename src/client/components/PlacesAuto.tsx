@@ -120,6 +120,7 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
     _onSelected() {
         if (this.props.onPlaceSelected) {
             const response = this.autocomplete.getPlace();
+            console.log("Response: ", response);
             const formattedResponse = {
                 formattedAddress: response.formatted_address,
                 geometry: {
@@ -130,7 +131,7 @@ export class PlacesAuto extends React.Component<PlacesAutoProps, PlacesAutoState
                 types: response.types ? response.types : "",
                 vicinity: response.vicinity ? response.vicinity : ""
             }
-            console.log("response: ", response)
+            console.log("response: ", formattedResponse)
             this.props.onPlaceSelected(formattedResponse);
         }
     }

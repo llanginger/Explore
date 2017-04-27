@@ -108,4 +108,9 @@ export interface ColorUpdateAction extends Action {
     }
 }
 
+export interface LoginErrorAction extends Action {
+    payload: {
+        errorMessage: string;
+    }
+}
 
